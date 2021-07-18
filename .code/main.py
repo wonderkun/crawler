@@ -184,7 +184,7 @@ class Anquanke(Article):
             fd.write(markdown)
 
         self.downArticles.add(article)
-        self.articleUrls[title] = "./" + title + ".index.html"
+        self.articleUrls[title] = "./" + title + ".html"
         
 # class Lesuo360(object):
 #     def __init__(self):

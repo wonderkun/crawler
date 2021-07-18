@@ -1,7 +1,23 @@
 # 2021-07-18
-1. [2019 xctf final fault writeup](./2019 xctf final fault writeup.index.html)
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
+# 2021-07-18
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
+# 2021-07-18
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
+# 2021-07-18
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
+# 2021-07-18
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
+# 2021-07-18
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
+# 2021-07-18
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
+# 2021-07-18
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
 # 2021-07-18
 # 2021-07-18
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
 # 2021-07-18
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
 # 2021-07-18
-# 2021-07-18
+1. [【技术分享】利用ssrf漏洞获取google内部的dns信息](./【技术分享】利用ssrf漏洞获取google内部的dns信息.index.html)
