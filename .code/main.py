@@ -17,9 +17,9 @@ class Httpx():
         chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--disable-xss-auditor')
         chrome_options.add_argument('--no-sandbox')
-        driverpath = '/usr/local/bin/chromedriver'
+        # driverpath = '/usr/local/bin/chromedriver'
 
-        self.client = webdriver.Chrome(options=chrome_options,executable_path=driverpath)
+        self.client = webdriver.Chrome(options=chrome_options)
         # client = webdriver.Chrome(chrome_options=chrome_options)
         self.client.set_page_load_timeout(20)
         self.client.set_script_timeout(20)

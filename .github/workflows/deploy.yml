@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    name: Build on node ${{ matrix.python_version }} and ${{ matrix.os }}
+    name: Build on python ${{ matrix.python_version }} and ${{ matrix.os }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -45,10 +45,7 @@ jobs:
         uses: BSFishy/pip-action@v1
         with:
           requirements: ./crawler/.code/requirements.txt
-          run: |
-            cd ./crawler/.code/
-            python main.py
-      
+
       - name: Setup chromedriver ${{ matrix.chrome_version }}
         uses: nanasess/setup-chromedriver@master
         with:
@@ -65,7 +62,9 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
-    
+          cd ./crawler/.code/
+          python main.py
+      
       - name: Deploy github
         run: |
           cd ./crawler/ 
