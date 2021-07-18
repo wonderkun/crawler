@@ -1,6 +1,8 @@
 import re
 import requests
 import os
+import time
+import base64
 
 __all__ = ['Tomd', 'convert']
 
@@ -103,29 +105,39 @@ class Element:
                 match = pattern.search(self.content)
                 if match:
                     url = match.group(1)
+                    # print(self.content,url)
                     if url and "store" in self.options and "img" in self.options:
-                        
+
                         base = self.options["base"]
                         store = self.options["store"]
                         img = self.options["img"]
                         article = self.options["article"]
                         if not os.path.exists(os.path.join( base,store,img,article )):
                             os.makedirs( os.path.join( base,store,img,article ) )
-                            
-                        filename = url.split("/")[-1]
-                        imagePath = os.path.join(base,store,img,article,filename)
-                        try:
-                            response = requests.get(url)
-                            if response.status_code!=200:
+                        if url.startswith("http"):
+                            print("[*] download image from url: {}.".format(url))
+                            filename = url.split("/")[-1]
+                            imagePath = os.path.join(base,store,img,article,filename)
+                            try:
+                                response = requests.get(url)
+                                if response.status_code!=200:
+                                    content = b"not found: {}" + url.encode()
+                                else:
+                                    content = response.content
+                            except Exception as e:
                                 content = b"not found: {}" + url.encode()
-                            else:
-                                content = response.content
-                        except Exception as e:
-                            content = b"not found: {}" + url.encode()
-                        with open(imagePath,"wb") as fd:
-                            fd.write(content)
-                        self.content = self.content.replace(url, os.path.join("./",img,article,filename))
-
+                            with open(imagePath,"wb") as fd:
+                                fd.write(content)
+                            self.content = self.content.replace(url, os.path.join("./",img,article,filename))
+                        elif url.startswith("data:image"):
+                            print("[*] download image from data base64.")
+                            filename = "{}.png".format(int(time.time()*1000))
+                            imagePath = os.path.join(base,store,img,article,filename)
+                            data = url.split(",")[-1].encode()
+                            content = base64.b64decode(data)
+                            with open(imagePath,"wb") as fd:
+                                fd.write(content)
+                        
                 self.content = re.sub(pattern, '![\g<2>](\g<1>)\g<3>', self.content)
             elif tag == 'a':
                 self.content = re.sub(pattern, '[\g<2>](\g<1>)', self.content)

@@ -21,18 +21,27 @@ class Httpx():
 
         self.client = webdriver.Chrome(options=chrome_options,executable_path=driverpath)
         # client = webdriver.Chrome(chrome_options=chrome_options)
-        self.client.set_page_load_timeout(10)
-        self.client.set_script_timeout(10)
+        self.client.set_page_load_timeout(20)
+        self.client.set_script_timeout(20)
 
     def get(self,url):
         # 重试 3 次 
+        self.client.implicitly_wait(8)
         for i in range(3):
             try:
                 self.client.get(url)
             except Exception as e:
                 logging.warning("Read url error info :{},retrying ... {}.".format( url,i))
+                return None
             else:
                 break
+
+        for i in range(1, 11):
+            # 滑到页面底部，让所有懒加载的图片全部加载出来
+            self.client.execute_script(
+                "window.scrollTo(0, document.body.scrollHeight/10*%s);" % i
+            )
+            time.sleep(0.5)
         return self.client.page_source
 
 httpx = Httpx()
