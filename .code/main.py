@@ -27,12 +27,12 @@ class Httpx():
     def get(self,url):
         # 重试 3 次 
         self.client.implicitly_wait(8)
-        for i in range(3):
+        for i in range(5):
             try:
                 self.client.get(url)
             except Exception as e:
                 logging.warning("Read url error info :{},retrying ... {}.".format( url,i))
-                return None
+                time.sleep(1)
             else:
                 break
 

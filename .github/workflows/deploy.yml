@@ -1,66 +1,74 @@
-# name: crawler
+name: crawler
 
-# on:
-#   push:
-#     branches:
-#       - master
-#   schedule:
-#     # 定时任务，每晚 22:30 更新数据
-#     - cron: '30 22 * * *'
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    # 定时任务，每晚 22:30 更新数据
+    - cron: '30 22 * * *'
     
-# env:
-#   GIT_USER: wonderkun
-#   GIT_EMAIL: dekunwang2014@gmail.com
-#   THEME_BRANCH: master
-#   DEPLOY_REPO: wonderkun/crawler
-#   DEPLOY_BRANCH: master
+env:
+  GIT_USER: wonderkun
+  GIT_EMAIL: dekunwang2014@gmail.com
+  DEPLOY_REPO: wonderkun/crawler
+  DEPLOY_BRANCH: master
 
-# jobs:
-#   build:
-#     name: Build on node ${{ matrix.node_version }} and ${{ matrix.os }}
-#     runs-on: ubuntu-latest
-#     strategy:
-#       matrix:
-#         os: [ubuntu-latest]
-#         node_version: [12.x]
-
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v2
-#       - name: Checkout deploy repo
-#         uses: actions/checkout@v2
-#         with:
-#           repository: ${{ env.DEPLOY_REPO }}
-#           ref: ${{ env.DEPLOY_BRANCH }}
-#           path: .deploy_git
-
-#       - name: Use Node.js ${{ matrix.node_version }}
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: ${{ matrix.node_version }}
-
-#       - name: Configuration environment
-#         env:
-#           HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_PRI}}
-#         run: |
-#           sudo timedatectl set-timezone "Asia/Shanghai"
-#           mkdir -p ~/.ssh/
-#           echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
-#           chmod 600 ~/.ssh/id_rsa
-#           ssh-keyscan github.com >> ~/.ssh/known_hosts
-#           git config --global user.name $GIT_USER
-#           git config --global user.email $GIT_EMAIL
-          
-#       - name: Install dependencies
-#         run: |
-#           npm install -g hexo-cli
-#           npm install
-          
-#       - name: Deploy hexo
-#         run: |
-#           hexo generate
-#           cd ./public/
-#           git init 
-#           git add . 
-#           git commit -m "Github action auto deploy my blog."
-#           git push --force git@github.com:wonderkun/wonderkun.github.io.git master:master 
+jobs:
+  build:
+    name: Build on node ${{ matrix.python_version }} and ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python_version: [3.x]
+        chrome_version: '91.0.4472.19'
+      
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Checkout deploy repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ env.DEPLOY_REPO }}
+          ref: ${{ env.DEPLOY_BRANCH }}
+          path: crawler
+      
+      - name: Setup python ${{ matrix.python_version }}
+        uses: actions/setup-python@v2
+        with: 
+          python-version: ${{ matrix.python_version }}
+          architecture: x64
+      
+      - name: Set pip 
+        uses: BSFishy/pip-action@v1
+        with:
+          requirements: ./crawler/.code/requirements.txt
+          run: |
+            cd ./crawler/.code/
+            python main.py
+      
+      - name: Setup chromedriver ${{ matrix.chrome_version }}
+        uses: nanasess/setup-chromedriver@master
+        with:
+          chromedriver-version: ${{ matrix.chrome_version }}
+        
+      - name: Configuration environment
+        env:
+          HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_PRI}}
+        run: |
+          sudo timedatectl set-timezone "Asia/Shanghai"
+          mkdir -p ~/.ssh/
+          echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.name $GIT_USER
+          git config --global user.email $GIT_EMAIL
+    
+      - name: Deploy github
+        run: |
+          cd ./crawler/ 
+          git add . 
+          git commit -m "Github action auto deploy my blog."
+          git push git@github.com:wonderkun/crawler.git master:master
