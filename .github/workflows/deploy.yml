@@ -22,7 +22,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python_version: [3.x]
-        chrome_version: '91.0.4472.19'
+        chrome_version: [91.0.4472.19]
       
     steps:
       - name: Checkout
