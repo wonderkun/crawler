@@ -61,10 +61,10 @@ class Article(object):
         self.articleUrls = {}
 
     def validateTitle(self,title):
-        rstr = r"[\/\\\:\*\?\"\<\>\|]"  # '/ \ : * ? " < > |'
+        rstr = r"[\/\\\:\*\?\"\<\>\|\】\【]"  # '/ \ : * ? " < > |'
         new_title = re.sub(rstr, "_", title)  # 替换为下划线
-        new_title = new_title.replace("【","[")
-        new_title = new_title.replace("】","]")
+        # new_title = new_title.replace("【","[")
+        # new_title = new_title.replace("】","]")
         return new_title
 
     def get_name(self):
