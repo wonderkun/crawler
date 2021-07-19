@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **64251**
+                                **64351**
                             
                         |
                         
@@ -168,7 +168,7 @@ WaqopdocLdr方法将UserForm2中的文本写入到正文文档当中去。
 由于笔者分析时，该C&amp;C服务器以关停，故无法获取其返回的命令格式，以及相关数据，但可以通过内置的部分指令以及功能来获取其对应的恶意行为，该Rat的服务端是由Web进行控制的。<br>
 可以看到会首先获取服务端返回的数据。
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p4.ssl.qhimg.com/t01e2ce35f228c4ad67.png)
+[![](https://p4.ssl.qhimg.com/t01e2ce35f228c4ad67.png)](https://p4.ssl.qhimg.com/t01e2ce35f228c4ad67.png)
 
 然后将数据赋值给&lt;&gt;c__DisplayClasse结构并对其进行拆分/判断。
 
