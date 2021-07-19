@@ -1,5 +1,5 @@
 theme: jekyll-theme-hacker
 liquid:
-  error_mode        : warn
+  error_mode        : lax
   strict_filters    : false
   strict_variables  : false
