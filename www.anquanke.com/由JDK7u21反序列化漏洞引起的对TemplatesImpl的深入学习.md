@@ -1,9 +1,11 @@
+> 原文链接: https://www.anquanke.com//post/id/247044 
+
 
 # 由JDK7u21反序列化漏洞引起的对TemplatesImpl的深入学习
 
 
                                 阅读量   
-                                **22201**
+                                **24871**
                             
                         |
                         

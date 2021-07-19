@@ -1,9 +1,11 @@
+> 原文链接: https://www.anquanke.com//post/id/146832 
+
 
 # 对近期Iron组织的恶意软件分析
 
 
                                 阅读量   
-                                **120329**
+                                **120346**
                             
                         |
                         
@@ -104,7 +106,7 @@ Iron Backdoor本身嵌入了[adblockplusie](https://github.com/adblockplus/adblo
 – **挖矿**.txt<br>
 – “Mining”<br>
 – **blockchain**.txt<br>
-– **coinbase**<br>**4. 利用加密货币劫持正在进行的付款：** IronStealer会持续监控用户的剪贴板上的比特币，Monero以及Ethereum钱包地址正则表达式模式。一旦匹配，它会自动将其替换为攻击者的钱包地址，以便受害者不知不觉将资金转移到攻击者的帐户<br>[![](https://p3.ssl.qhimg.com/t0199717c9d1e2a250f.png)](https://p3.ssl.qhimg.com/t0199717c9d1e2a250f.png)<br>**Pastebin帐户：**<br>
+– **coinbase**<br>**4. 利用加密货币劫持正在进行的付款：** IronStealer会持续监控用户的剪贴板上的比特币，Monero以及Ethereum钱包地址正则表达式模式。一旦匹配，它会自动将其替换为攻击者的钱包地址，以便受害者不知不觉将资金转移到攻击者的帐户<br>[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p3.ssl.qhimg.com/t0199717c9d1e2a250f.png)<br>**Pastebin帐户：**<br>
 作为调查的一部分，我们还试图找出我们可能从攻击者的Pastebin帐户中学到的额外信息：<br>
 该帐户可能是使用邮件&lt;a href=”https://community.riskiq.com/search/whois/email/[fineisgood123@gmail.com](mailto:fineisgood123@gmail.com)“&gt;fineisgood123 @ gmail [。] com创建的 – 用于注册blockbitcoin [。] com（攻击者的加密挖掘池和恶意软件主机）和swb [。] com（旧服务器用于主机恶意软件和泄露的文件。由u.cacheoffer [。] tk取代：）<br>[![](https://p1.ssl.qhimg.com/t018939a6df4334a57b.png)](https://p1.ssl.qhimg.com/t018939a6df4334a57b.png)<br>**1. Index.html：** HTML页面，指的是一个虚假的Firefox下载页面。<br>**2. crystal_ext-min + angular：**JS注入使用恶意Chrome扩展。<br>**3. android：**这个粘贴包含一个命令行，用于在受感染的Android设备上执行未知的后台应用程序。该命令行调用远程[Metasploit stager](https://www.virustotal.com/#/file/fc37713a25e32cee8a2748b8d8fde641f4a67a1987c5a26f8ec7951b091f634e)（android.apk）并删除为ARM处理器构建的[cpuminer 2.3.2](https://www.virustotal.com/#/file/3b92f3b878112fc093392421281aff4449aac0ade84b840b044dee824592f2d5)（minerd.txt）。考虑到上次更新日期（18/11/17）以及较少的浏览次数，我们认为该粘贴已过时。<br>**4. androidminer：**保存cpuminer命令行来执行未知的恶意android应用程序，在写这篇文章时，这个贴子获得了近2000次点击。<br>
 Aikapool [。] com是一个公共采矿池，端口7915用于DogeCoin：<br>[![](https://p0.ssl.qhimg.com/t01ce3adddaf975cd21.png)](https://p0.ssl.qhimg.com/t01ce3adddaf975cd21.png)<br>

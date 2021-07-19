@@ -216,7 +216,10 @@ class Anquanke(Article):
                 "localimg":False
             }
         )
-        markdown = tomd.markdown.encode()       
+        base = "> 原文链接: {} \n\n".format( url )
+        base = base.encode()
+        markdown = tomd.markdown.encode() 
+        markdown = base + markdown     
         articlePath = os.path.join("../",self.store,title+".md")
         with open(articlePath,"wb") as fd:
             fd.write(markdown)

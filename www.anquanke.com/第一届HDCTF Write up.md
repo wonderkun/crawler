@@ -1,9 +1,11 @@
+> 原文链接: https://www.anquanke.com//post/id/178909 
+
 
 # 第一届HDCTF Write up
 
 
                                 阅读量   
-                                **527581**
+                                **527586**
                             
                         |
                         
@@ -36,7 +38,7 @@
 
 循环冗余码，CRC32，然后题目说密码是QQ号，
 
-[![](https://p0.ssl.qhimg.com/t013621338a8e13cb42.png)](https://p0.ssl.qhimg.com/t013621338a8e13cb42.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t013621338a8e13cb42.png)
 
 从包里可以看到是8位QQ号，很自然的可以想到是CRC碰撞了，虽然超过6个字节的内容CRC碰撞就不合适了，不过已经知道内容是八位数字，那就很容易写脚本碰撞了，以下是py2脚本
 
@@ -62,7 +64,7 @@ for a in range(10):
 
 输入密码拿到一份流量包，流量包分析，wireshark打开，追踪TCP流，一条一条查看过去
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p4.ssl.qhimg.com/t01b632cff440a7bcd5.png)
+[![](https://p4.ssl.qhimg.com/t01b632cff440a7bcd5.png)](https://p4.ssl.qhimg.com/t01b632cff440a7bcd5.png)
 
 拿到一条被加密的flag：
 
@@ -357,9 +359,9 @@ openssl rsa -pubin -text -modulus -in warmup -in pubkey1.pem
 
 openssl rsa -pubin -text -modulus -in warmup -in pubkey2.pem
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t01c636c5c8c397f305.png)
+[![](https://p1.ssl.qhimg.com/t01c636c5c8c397f305.png)](https://p1.ssl.qhimg.com/t01c636c5c8c397f305.png)
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p3.ssl.qhimg.com/t01a547bca31e7fbfef.png)
+[![](https://p3.ssl.qhimg.com/t01a547bca31e7fbfef.png)](https://p3.ssl.qhimg.com/t01a547bca31e7fbfef.png)
 
 获得
 
@@ -425,7 +427,7 @@ print hex(m)[2:].decode('hex')
 
 运行得到：
 
-[![](https://p3.ssl.qhimg.com/t011cd8c74c1986d7c3.png)](https://p3.ssl.qhimg.com/t011cd8c74c1986d7c3.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p3.ssl.qhimg.com/t011cd8c74c1986d7c3.png)
 
 get flag：flag{23re_SDxF_y78hu_5rFgS}
 
@@ -447,7 +449,7 @@ get flag：flag{23re_SDxF_y78hu_5rFgS}
 
 呃，签到题，那f12一下咯？
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p2.ssl.qhimg.com/t018e6cb404b6c06888.png)
+[![](https://p2.ssl.qhimg.com/t018e6cb404b6c06888.png)](https://p2.ssl.qhimg.com/t018e6cb404b6c06888.png)
 
 没什么端倪，那就按照描述改0.html为1.html吧
 
@@ -479,7 +481,7 @@ get flag：flag{23re_SDxF_y78hu_5rFgS}
 
 呃？是这啥？随便复制一段百度搜索，知道是QUOTED-PRINTABLE编码，找到在线解密网址解密得到：
 
-[![](https://p0.ssl.qhimg.com/t01219ecdc098407c32.png)](https://p0.ssl.qhimg.com/t01219ecdc098407c32.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t01219ecdc098407c32.png)
 
 wtf？啥玩意儿，这么整的嘛？回到最初页面，f12大法！发现
 

@@ -1,9 +1,11 @@
+> 原文链接: https://www.anquanke.com//post/id/245945 
+
 
 # IoT固件分析入门
 
 
                                 阅读量   
-                                **232039**
+                                **235056**
                             
                         |
                         
@@ -190,7 +192,7 @@ unyaffs提取yaffs2
 
 接下来查看配置文件，有可能从配置文件中发现敏感信息
 
-[![](https://p4.ssl.qhimg.com/t017c050f048bad9d06.png)](https://p4.ssl.qhimg.com/t017c050f048bad9d06.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p4.ssl.qhimg.com/t017c050f048bad9d06.png)
 
 > 其中的inadyn-mt.conf文件引起了我们注意，这是no-ip应用的配置文件，no-ip就是一个相当于花生壳的东西，可以申请动态域名
 
@@ -228,7 +230,7 @@ It will search through the extracted or mounted firmware file system for things 
 
 把appmgr拖到ida[![](https://p3.ssl.qhimg.com/t01065f98787b192c39.png)](https://p3.ssl.qhimg.com/t01065f98787b192c39.png)
 
-凭借一点点pwn的经验，我们发现了一个backdoor[![](https://p5.ssl.qhimg.com/t016658bcc929373872.png)](https://p5.ssl.qhimg.com/t016658bcc929373872.png)
+凭借一点点pwn的经验，我们发现了一个backdoor[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p5.ssl.qhimg.com/t016658bcc929373872.png)
 
 这个漏洞被收录到CVE-2016-10178：[Multiple vulnerabilities found in the Dlink DWR-932B (backdoor, backdoor accounts, weak WPS, RCE …) – IT Security Research by Pierre (pierrekim.github.io)](https://pierrekim.github.io/blog/2016-09-28-dlink-dwr-932b-lte-routers-vulnerabilities.html)
 
@@ -348,7 +350,7 @@ netstat -nlp |grep 5432
 
 安装作者提供的binwalk的时候一直报错(kali2021 &amp; ubuntu18 both)，导致一直卡在提取固件的步骤（emmmm哪位大哥部署成功后教我一下)
 
-[![](https://p1.ssl.qhimg.com/t0183cee528f432f3af.png)](https://p1.ssl.qhimg.com/t0183cee528f432f3af.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t0183cee528f432f3af.png)
 
 对此提了个issue
 
@@ -436,7 +438,7 @@ gdb attach后继续让程序运行，触发vul
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p4.ssl.qhimg.com/t01e847f5d778e84c20.png)
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t0174eb0892a9c09b29.png)
+[![](https://p0.ssl.qhimg.com/t0174eb0892a9c09b29.png)](https://p0.ssl.qhimg.com/t0174eb0892a9c09b29.png)
 
 接下来就直接ret2system，但经过尝试后发现，如果直接把跳转地址设置为后门函数dat_shell的起始地址0x400950会触发异常
 
@@ -509,7 +511,7 @@ DIR-882的固件发布方案为第一种，示意图如下[![](data:image/png;ba
 
 用binwalk分析最新和最早的两个固件
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p3.ssl.qhimg.com/t01e0d0054d7ec4e821.png)
+[![](https://p3.ssl.qhimg.com/t01e0d0054d7ec4e821.png)](https://p3.ssl.qhimg.com/t01e0d0054d7ec4e821.png)
 
 经过binwalk分析，FW104B02正是存在解密程序的中间版本（从文件名也能看出）
 
@@ -634,7 +636,7 @@ QEMU的远程调试不需要gdbserver，-g 指定端口，ida 远程调试选项
 
 查看报错的页面（用vim看代码舒服一些），嗯，前端的东西：
 
-[![](https://p2.ssl.qhimg.com/t01baa89f0b103550fd.png)](https://p2.ssl.qhimg.com/t01baa89f0b103550fd.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p2.ssl.qhimg.com/t01baa89f0b103550fd.png)
 
 从文件名可以猜到是个跟路由器界面语言选择有关的文件。
 

@@ -1,9 +1,11 @@
+> 原文链接: https://www.anquanke.com//post/id/246100 
+
 
 # Struts2-001 远程代码执行漏洞浅析
 
 
                                 阅读量   
-                                **22154**
+                                **25248**
                             
                         |
                         
@@ -224,7 +226,7 @@ invokeAction调用了action（LoginAction）的method（execute），
 
 跟进this.component.end()，进入了`org.apache.struts2.components.UIBean#end`，
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p5.ssl.qhimg.com/t01394e37f7164adbc7.png)
+[![](https://p5.ssl.qhimg.com/t01394e37f7164adbc7.png)](https://p5.ssl.qhimg.com/t01394e37f7164adbc7.png)
 
 跟进this.evaluateParams();，
 
@@ -238,7 +240,7 @@ invokeAction调用了action（LoginAction）的method（execute），
 
 跟进this.findValue(expr, valueClazz)，
 
-[![](https://p1.ssl.qhimg.com/t01cedd3fca6f0b7560.png)](https://p1.ssl.qhimg.com/t01cedd3fca6f0b7560.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t01cedd3fca6f0b7560.png)
 
 由前面可知，TextField 的valueClassType为class java.lang.String，且altSyntax默认开启，
 
@@ -254,7 +256,7 @@ invokeAction调用了action（LoginAction）的method（execute），
 
 此处传入的expression为%{password}，
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t01fd2b90eda5eba914.png)
+[![](https://p1.ssl.qhimg.com/t01fd2b90eda5eba914.png)](https://p1.ssl.qhimg.com/t01fd2b90eda5eba914.png)
 
 接下来的while循环的目的是确定start和end的位置，
 
@@ -395,7 +397,7 @@ getValue:210, SimpleNode (ognl)，
 
 接下来简单步出，可将流程结束。
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t019beb5dd8441ec35a.png)
+[![](https://p0.ssl.qhimg.com/t019beb5dd8441ec35a.png)](https://p0.ssl.qhimg.com/t019beb5dd8441ec35a.png)
 
 
 

@@ -1,9 +1,11 @@
+> 原文链接: https://www.anquanke.com//post/id/247544 
+
 
 # Ransomwhere项目计划创建一个勒索软件付款信息数据库
 
 
                                 阅读量   
-                                **235454**
+                                **237908**
                             
                         |
                         

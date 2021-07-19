@@ -1,9 +1,11 @@
+> 原文链接: https://www.anquanke.com//post/id/246080 
+
 
 # AFL源码分析（Ex.4）——附录（Part 4）
 
 
                                 阅读量   
-                                **239411**
+                                **241562**
                             
                         |
                         
