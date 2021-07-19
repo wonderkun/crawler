@@ -3,7 +3,7 @@ name: crawler
 on:
   push:
     branches:
-      - master
+      - code
   schedule:
     # 定时任务，每晚 22:30 更新数据
     - cron: '30 22 * * *'
