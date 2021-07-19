@@ -6,7 +6,7 @@ import time
 from selenium import webdriver
 import os
 import logging
-
+import re
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s', datefmt='%a %d %b %Y %H:%M:%S')
 
@@ -59,6 +59,13 @@ class Article(object):
             self.config = json.load(fd)
         self.downArticles = set()
         self.articleUrls = {}
+
+    def validateTitle(self,title):
+        rstr = r"[\/\\\:\*\?\"\<\>\|]"  # '/ \ : * ? " < > |'
+        new_title = re.sub(rstr, "_", title)  # 替换为下划线
+        new_title = new_title.replace("【","[")
+        new_title = new_title.replace("】","]")
+        return new_title
 
     def get_name(self):
         raise NotImplementedError
@@ -178,7 +185,7 @@ class Anquanke(Article):
         else:
             logging.error("Get url content error!")
             return None
-    
+
     async def get_article(self,article):
         # 读取一篇具体的文章
         articleId = article.split("/")[-1]
@@ -197,6 +204,7 @@ class Anquanke(Article):
         selector = Selector(text) 
 
         title = selector.xpath("/html/body/main/div/div/div[1]/div[1]/h1/text()").get().strip()
+        title = self.validateTitle(title)
         content = selector.xpath("/html/body/main/div/div/div[1]/div[1]").get()
 
         tomd = Tomd(content,
