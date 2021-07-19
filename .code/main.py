@@ -41,7 +41,7 @@ class Httpx():
             self.client.execute_script(
                 "window.scrollTo(0, document.body.scrollHeight/20*%s);" % i
             )
-            time.sleep(0.2)
+            time.sleep(0.5)
         return self.client.page_source
 
 httpx = Httpx()
