@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **125298**
+                                **125341**
                             
                         |
                         
@@ -229,7 +229,7 @@ echo 'C:windowssystem32cmd.exe /c calc.exe' '.' |  macro_pack.exe -G README.txt.
     &lt;/ApplicationInformation&gt;
     &lt;SettingIdentity&gt;
       &lt;PageID&gt;&lt;/PageID&gt;
-      &lt;HostID&gt;%7B12B1697E-D3A0-4DBC-B568-CCF64A3F934D%7D&lt;/HostID&gt;
+      &lt;HostID&gt;`{`12B1697E-D3A0-4DBC-B568-CCF64A3F934D`}`&lt;/HostID&gt;
     &lt;/SettingIdentity&gt;
     &lt;SettingInformation&gt;
       &lt;Description&gt;@shell32.dll,-4161&lt;/Description&gt;

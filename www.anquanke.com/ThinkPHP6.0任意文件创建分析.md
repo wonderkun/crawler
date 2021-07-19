@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **1138810**
+                                **1138842**
                             
                         |
                         
@@ -45,18 +45,18 @@ namespace appcontroller;
 use appBaseController;
 
 class Index extends BaseController
-%7B
+`{`
     public function index()
-    %7B
+    `{`
         session('demo', $_GET['c']);
         return 'ThinkPHP V6.0.0';
-    %7D
+    `}`
 
     public function hello($name = 'ThinkPHP6')
-    %7B
+    `{`
         return 'hello,' . $name;
-    %7D
-%7D
+    `}`
+`}`
 ```
 
 修改 **/var/www/html/tp60/app/middleware.php** 文件如下（开启Session功能，可参考： [https://www.kancloud.cn/manual/thinkphp6_0/1037635](https://www.kancloud.cn/manual/thinkphp6_0/1037635) ）

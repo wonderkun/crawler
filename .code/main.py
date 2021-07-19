@@ -68,8 +68,8 @@ class Article(object):
         return new_title
 
     def validateMarkdown(self,markdown):
-        markdown = markdown.replace(b"{",b"%7B")
-        markdown = markdown.replace(b"}",b"%7D")
+        markdown = markdown.replace(b"{",b"`{`")
+        markdown = markdown.replace(b"}",b"`}`")
         return markdown
 
     def get_name(self):
@@ -226,7 +226,7 @@ class Anquanke(Article):
         markdown = tomd.markdown.encode() 
         markdown = base + markdown     
         markdown = self.validateMarkdown(markdown)
-        
+
         articlePath = os.path.join("../",self.store,title+".md")
         with open(articlePath,"wb") as fd:
             fd.write(markdown)

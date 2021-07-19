@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **527653**
+                                **527693**
                             
                         |
                         
@@ -38,7 +38,7 @@
 
 循环冗余码，CRC32，然后题目说密码是QQ号，
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t013621338a8e13cb42.png)
+[![](https://p0.ssl.qhimg.com/t013621338a8e13cb42.png)](https://p0.ssl.qhimg.com/t013621338a8e13cb42.png)
 
 从包里可以看到是8位QQ号，很自然的可以想到是CRC碰撞了，虽然超过6个字节的内容CRC碰撞就不合适了，不过已经知道内容是八位数字，那就很容易写脚本碰撞了，以下是py2脚本
 
@@ -64,7 +64,7 @@ for a in range(10):
 
 输入密码拿到一份流量包，流量包分析，wireshark打开，追踪TCP流，一条一条查看过去
 
-[![](https://p4.ssl.qhimg.com/t01b632cff440a7bcd5.png)](https://p4.ssl.qhimg.com/t01b632cff440a7bcd5.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p4.ssl.qhimg.com/t01b632cff440a7bcd5.png)
 
 拿到一条被加密的flag：
 
@@ -74,7 +74,7 @@ V20xNGFGb3pkR2hOUkdoc1RUSk5lazFFVlRCTk1scG9XbFJGZDAxSFdtMU9WMDB5V2xSTk5WcEVTWGxh
 
 虽然末尾没有等于号那么明显的标志，但base64应该八九不离十，最后通过三次base64解密后get flag：
 
-flag%7Ba08e3c30543fae100ff5c6e39d22d07d%7D
+flag`{`a08e3c30543fae100ff5c6e39d22d07d`}`
 
 #### <a class="reference-link" name="%E6%80%BB%E7%BB%93%EF%BC%9A"></a>总结：
 
@@ -84,7 +84,7 @@ flag%7Ba08e3c30543fae100ff5c6e39d22d07d%7D
 
 ### <a class="reference-link" name="%E4%BF%A1%E5%8F%B7%E5%88%86%E6%9E%90%20150"></a>信号分析 150
 
-题目描述：xx同学使用 hackcube 截获到了一段停车杆的遥控信息，你能还原这个原始信号吗？flag格式：flag%7Bmd5(得到的信号格式)%7D
+题目描述：xx同学使用 hackcube 截获到了一段停车杆的遥控信息，你能还原这个原始信号吗？flag格式：flag`{`md5(得到的信号格式)`}`
 
 提示：
 
@@ -106,7 +106,7 @@ hint2：试试波形分析吧！ Audacity
 
 即可知道题目所给文件中的波形的含义为：FFFFFFFF0001
 
-再根据flag格式，get flag：flag%7Ba2720cc18b1410daaf83555eb262387a%7D
+再根据flag格式，get flag：flag`{`a2720cc18b1410daaf83555eb262387a`}`
 
 #### <a class="reference-link" name="%E6%80%BB%E7%BB%93%EF%BC%9A"></a>总结：
 
@@ -160,7 +160,7 @@ jfXvUoypb8p3zvmPks8kJ5Kt0vmEw0xUZyRGOicraY4=
 
 第一眼以为是base64，随即试了一下，解出来是乱码，然后根据上图的key以及iv，应该是AES加密，找到一个在线解AES的网址：[http://tool.chacuo.net/cryptaes](http://tool.chacuo.net/cryptaes)<br>[![](https://p3.ssl.qhimg.com/t01a20bb6632db24aa8.png)](https://p3.ssl.qhimg.com/t01a20bb6632db24aa8.png)
 
-昂吭，get flag！flag%7BF0uNd_s0m3th1ng_1n_M3mory%7D
+昂吭，get flag！flag`{`F0uNd_s0m3th1ng_1n_M3mory`}`
 
 #### <a class="reference-link" name="%E6%80%BB%E7%BB%93%EF%BC%9A"></a>总结：
 
@@ -239,7 +239,7 @@ print hex(m)[2:].decode('hex')
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t01211dc77589ae8098.png)
 
-get flag：flag%7BB4by_Rs4%7D
+get flag：flag`{`B4by_Rs4`}`
 
 ### <a class="reference-link" name="bbbbbbrsa%20100"></a>bbbbbbrsa 100
 
@@ -334,7 +334,7 @@ for e in range(50000,70000):
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t018eb2d76caaa9f1d2.png)
 
-在十六进制转换过去得到flag：flag%7Brs4_1s_s1mpl3!#%7D
+在十六进制转换过去得到flag：flag`{`rs4_1s_s1mpl3!#`}`
 
 ### <a class="reference-link" name="together%20200together%20200"></a>together 200together 200
 
@@ -359,9 +359,9 @@ openssl rsa -pubin -text -modulus -in warmup -in pubkey1.pem
 
 openssl rsa -pubin -text -modulus -in warmup -in pubkey2.pem
 
-[![](https://p1.ssl.qhimg.com/t01c636c5c8c397f305.png)](https://p1.ssl.qhimg.com/t01c636c5c8c397f305.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t01c636c5c8c397f305.png)
 
-[![](https://p3.ssl.qhimg.com/t01a547bca31e7fbfef.png)](https://p3.ssl.qhimg.com/t01a547bca31e7fbfef.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p3.ssl.qhimg.com/t01a547bca31e7fbfef.png)
 
 获得
 
@@ -427,9 +427,9 @@ print hex(m)[2:].decode('hex')
 
 运行得到：
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p3.ssl.qhimg.com/t011cd8c74c1986d7c3.png)
+[![](https://p3.ssl.qhimg.com/t011cd8c74c1986d7c3.png)](https://p3.ssl.qhimg.com/t011cd8c74c1986d7c3.png)
 
-get flag：flag%7B23re_SDxF_y78hu_5rFgS%7D
+get flag：flag`{`23re_SDxF_y78hu_5rFgS`}`
 
 （脚本构造参考V爷爷博客：
 
@@ -449,13 +449,13 @@ get flag：flag%7B23re_SDxF_y78hu_5rFgS%7D
 
 呃，签到题，那f12一下咯？
 
-[![](https://p2.ssl.qhimg.com/t018e6cb404b6c06888.png)](https://p2.ssl.qhimg.com/t018e6cb404b6c06888.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p2.ssl.qhimg.com/t018e6cb404b6c06888.png)
 
 没什么端倪，那就按照描述改0.html为1.html吧
 
 [![](https://p2.ssl.qhimg.com/t01a9b35303dee584b0.png)](https://p2.ssl.qhimg.com/t01a9b35303dee584b0.png)
 
-呃，将段落一级一级展开最终get flag：flag%7Bwelcome_t0_HDctf%7D
+呃，将段落一级一级展开最终get flag：flag`{`welcome_t0_HDctf`}`
 
 测试你与flag的缘分 100
 
@@ -481,7 +481,7 @@ get flag：flag%7B23re_SDxF_y78hu_5rFgS%7D
 
 呃？是这啥？随便复制一段百度搜索，知道是QUOTED-PRINTABLE编码，找到在线解密网址解密得到：
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t01219ecdc098407c32.png)
+[![](https://p0.ssl.qhimg.com/t01219ecdc098407c32.png)](https://p0.ssl.qhimg.com/t01219ecdc098407c32.png)
 
 wtf？啥玩意儿，这么整的嘛？回到最初页面，f12大法！发现
 
@@ -491,7 +491,7 @@ wtf？啥玩意儿，这么整的嘛？回到最初页面，f12大法！发现
 
 将图中十六进制转为字符串，然后两次base64解码得到flag
 
-HDCTF%7BJsfuck_1s_l0vely!%7D
+HDCTF`{`Jsfuck_1s_l0vely!`}`
 
 这是web题吗？最后才发现网页标题已经说了，
 
@@ -532,19 +532,19 @@ content = "text/html; charset=GBK" &gt; &lt; title &gt; Once More &lt; /title&gt
 
 &lt;? php error_reporting(0);
 include_once('./flag/flag0.php');
-if (isset($_GET['password'])) %7B
-    if (ereg("^[a-zA-Z0-9]+$", $_GET['password']) === FALSE) %7B
+if (isset($_GET['password'])) `{`
+    if (ereg("^[a-zA-Z0-9]+$", $_GET['password']) === FALSE) `{`
         echo '&lt;p&gt;You password must be alphanumeric&lt;/p&gt;';
-    %7D else if (strlen($_GET['password']) &lt; 8 &amp;&amp; $_GET['password'] &gt; 999999999) %7B
-        if (strpos($_GET['password'], '*-*') !== FALSE) %7B
+    `}` else if (strlen($_GET['password']) &lt; 8 &amp;&amp; $_GET['password'] &gt; 999999999) `{`
+        if (strpos($_GET['password'], '*-*') !== FALSE) `{`
             die('Flag: '.$flag);
-        %7D else %7B
+        `}` else `{`
             echo('&lt;p&gt;*-* have not been found&lt;/p&gt;');
-        %7D
-    %7D else %7B
+        `}`
+    `}` else `{`
         echo '&lt;p&gt;Invalid password&lt;/p&gt;';
-    %7D
-%7D ?&gt;
+    `}`
+`}` ?&gt;
 ```
 
 果然是审计代码，一步步来，首先输入密码，密码需满足条件：
@@ -577,7 +577,7 @@ if (isset($_GET['password'])) %7B
 http://149.28.22.177:10003/once.php?password=1e9%00*-*
 ```
 
-get flag：HDCTF%7BIs_V3ry_1nteresting!%7D
+get flag：HDCTF`{`Is_V3ry_1nteresting!`}`
 
 #### <a class="reference-link" name="%E6%80%BB%E7%BB%93%EF%BC%9A"></a>总结：
 
@@ -639,7 +639,7 @@ get flag：HDCTF%7BIs_V3ry_1nteresting!%7D
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p5.ssl.qhimg.com/t011b3a6e3a6d9cebdc.png)
 
-get flag： flag%7Bwasaix_hndxctf2019%7D
+get flag： flag`{`wasaix_hndxctf2019`}`
 
 如果这里不写ctf.flag，而只是写flag，便会报错：
 
@@ -665,7 +665,7 @@ get flag： flag%7Bwasaix_hndxctf2019%7D
 
 ```
 int __cdecl main(int argc, const char **argv, const char **envp)
-%7B
+`{`
   int result; // eax@12
   __int64 v4; // rdi@12
   int v5; // [sp+Ch] [bp-B4h]@1
@@ -735,29 +735,29 @@ int __cdecl main(int argc, const char **argv, const char **envp)
   for ( i = 0; i &lt;= 26; ++i )
     *(&amp;v8 + i) -= i % 5;
   for ( j = 0; j &lt;= 26; ++j )
-  %7B
+  `{`
     if ( (*(&amp;v8 + j) ^ v35[j]) != aDegbslvQsizobw[j] )
-    %7B
+    `{`
       puts("Try again!");
       exit(0);
-    %7D
+    `}`
     ++v5;
-  %7D
+  `}`
   if ( v5 == 27 )
     puts("Coungratulations!");
   result = 0;
   v4 = *MK_FP(__FS__, 40LL) ^ v36;
   return result;
-%7D
+`}`
 ```
 
-确实很简单，伪代码看下来，就是将给定的字符先按一定规则移位，然后分别和flag的各个字符异或，最后得到一个加密后的字符串。点开aDegbslvQsizobw[j]可以看到加密后的字符串为：degbsLv%7BqSiZObwyZKekmua%7Dli|
+确实很简单，伪代码看下来，就是将给定的字符先按一定规则移位，然后分别和flag的各个字符异或，最后得到一个加密后的字符串。点开aDegbslvQsizobw[j]可以看到加密后的字符串为：degbsLv`{`qSiZObwyZKekmua`}`li|
 
 那么构造脚本进行解密。大致思路为：先将给定的字符按一定规则移位，然后将其与加密后的字符串按位异或，python脚本如下：
 
 ```
 a=[2,10,8,8,12,6,4,10,8,16,8,6,12,6,8,0,6,12,12,16,2,8,10,12,8,4,2]
-enc='degbsLv%7BqSiZObwyZKekmua%7Dli|'
+enc='degbsLv`{`qSiZObwyZKekmua`}`li|'
 ans=''
 for i in range(27):
     a[i]=a[i]-i%5
@@ -766,7 +766,7 @@ for i in range(27):
 print ans
 ```
 
-得到flag：flag%7BJust_a_Easy_Algorithm%7D
+得到flag：flag`{`Just_a_Easy_Algorithm`}`
 
 #### <a class="reference-link" name="%E6%80%BB%E7%BB%93%EF%BC%9A"></a>总结：
 
@@ -798,7 +798,7 @@ print("Do you know pyc?")
 a = "=Q2N1MDN2QmNmVDN2UmNxYjZ1MjN5cDM3YWN5czM3EjN1YjY3cjNxYzY2YjN"
 ```
 
-见到一串类似base64编码后的字符串，但是等于号在前面，猜测大概是逆序了，那就将其逆序后base64解码，然后十六进制转化为字符串，最后得到flag：flag%7Beasy_pyc_and_md5%7D
+见到一串类似base64编码后的字符串，但是等于号在前面，猜测大概是逆序了，那就将其逆序后base64解码，然后十六进制转化为字符串，最后得到flag：flag`{`easy_pyc_and_md5`}`
 
 
 
@@ -850,7 +850,7 @@ p.interactive()
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t01bb8d6fb6214a1f9e.png)
 
-get flag：flag%7Bbb01b3f2-96cB-47ad-8768-188dcf34fbf5%7D
+get flag：flag`{`bb01b3f2-96cB-47ad-8768-188dcf34fbf5`}`
 
 总结：本题也是新手向的一道pwn题，可以引导新手了解pwn最基础而核心的原理：利用各种漏洞达到溢出从而执行自己所期望的shell命令来获取flag。当然，更多的其他的pwn题远比这一道babystack要来的复杂以及有深度，所以，慢慢学吖！
 

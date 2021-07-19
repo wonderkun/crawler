@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **264126**
+                                **264225**
                             
                         |
                         
@@ -71,7 +71,7 @@ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - 
 
 ```
 gedit ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
-#然后把%%7B$fg[cyan]%%7D%c%%7B$reset_color%%7D的%c改为[$PWD]
+#然后把%`{`$fg[cyan]%`}`%c%`{`$reset_color%`}`的%c改为[$PWD]
 ```
 
 如果想用别的桌面系统：

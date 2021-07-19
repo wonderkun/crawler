@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **234321**
+                                **234592**
                             
                         |
                         
@@ -29,38 +29,38 @@
 
 ```
 __int64 __fastcall main(__int64 a1, char **a2, char **a3)
-%7B
+`{`
   int v3; // eax
 
   sub_15DA();
   init_rand();
   while ( 1 )
-  %7B
+  `{`
     while ( 1 )
-    %7B
+    `{`
       while ( 1 )
-      %7B
+      `{`
         v3 = (char)sub_18F1();
         if ( (char)v3 != 'd' )
           break;
         dec();
-      %7D
+      `}`
       if ( v3 &gt; 'd' )
         break;
       if ( v3 != 'c' )
         goto LABEL_13;
       check();                                  // rsa 加密rand
-    %7D
+    `}`
     if ( v3 != 'e' )
       break;
     enc();
-  %7D
+  `}`
   if ( v3 == 's' )
     shell();                                    // 需要rand值
 LABEL_13:
   puts("wrong option");
   return 0LL;
-%7D
+`}`
 ```
 
 题目保护全开，程序有以下几个功能：
@@ -80,14 +80,14 @@ printf02x((__int64)&amp;output, 16);
 ```
 sub_22FF((__int64)v16, rand_1, 0);            // addRoundKeys
 for ( k = 1; k &lt; dword_20545C; ++k )
-%7B
+`{`
  if ( k == 8 )
    v16[v7] ^= v8;                            // --&gt;key point  越界写一个字节，修改output地址为rand地址，可实现将key覆盖为密文输出
  sub_2886((__int64)v16);                     // subBytes
  sub_26B5((__int64)v16);                     // shiftRows
  sub_24B9((__int64)v16);                     // MixColumns
  sub_22FF((__int64)v16, rand_1, k);          // addRoundKeys
-%7D
+`}`
 sub_2886((__int64)v16);
 sub_26B5((__int64)v16);
 sub_22FF((__int64)v16, rand_1, dword_20545C);
@@ -111,10 +111,10 @@ getchar();
 scanf("%32s", v4);
 sub_177C(v5, (__int64)&amp;rand, 16);
 for ( i = 0; i &lt;= 31; ++i )
-%7B
+`{`
  if ( v4[i] != v5[i] )                       // 需要泄露rand内容，或者修改rand
    exit(0);
-%7D
+`}`
 std::ifstream::basic_ifstream(v3, "/flag", 8LL);
 ```
 
@@ -360,8 +360,8 @@ randkey已经变成了密文。随后只要使用shell函数，输入密文即�
     '\n'
 [*] Process './fault_bibi' stopped with exit code 0 (pid 106809)
 [DEBUG] Received 0x16 bytes:
-    'flag%7B1111111111111111%7D'
-[*] flag%7B1111111111111111%7D
+    'flag`{`1111111111111111`}`'
+[*] flag`{`1111111111111111`}`
 [*] Switching to interactive mode
 [*] Got EOF while reading in interactive
 ```
