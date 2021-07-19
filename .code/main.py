@@ -21,12 +21,12 @@ class Httpx():
 
         self.client = webdriver.Chrome(options=chrome_options)
         # client = webdriver.Chrome(chrome_options=chrome_options)
-        self.client.set_page_load_timeout(20)
-        self.client.set_script_timeout(20)
+        self.client.set_page_load_timeout(10)
+        self.client.set_script_timeout(10)
 
     def get(self,url):
         # 重试 3 次 
-        self.client.implicitly_wait(8)
+        self.client.implicitly_wait(3)
         for i in range(5):
             try:
                 self.client.get(url)
@@ -36,12 +36,12 @@ class Httpx():
             else:
                 break
 
-        for i in range(1, 11):
+        for i in range(1, 21):
             # 滑到页面底部，让所有懒加载的图片全部加载出来
             self.client.execute_script(
-                "window.scrollTo(0, document.body.scrollHeight/10*%s);" % i
+                "window.scrollTo(0, document.body.scrollHeight/20*%s);" % i
             )
-            time.sleep(0.5)
+            time.sleep(0.2)
         return self.client.page_source
 
 httpx = Httpx()
@@ -139,19 +139,41 @@ class Anquanke(Article):
 
     def get_index(self):
         #读取首页解析最新的文章
-        logging.info("Deal with index content.")
+        logging.info("Deal with {} index content.".format(self.name))
         text = httpx.get(self.url)
-        
+        # 
         if text:
             selector = Selector(text)
-            articles = selector.xpath('//*[@id="includeList"]/table/tbody/tr/td').getall()
+            articles = selector.xpath('//*[@id="post-list"]/div').getall()
+
             hrefs = list()
+            # print(articles)
             for article in articles:
+                # print(article)
                 selector = Selector(article)
-                href = selector.xpath('//p[1]/a/@href').get()
-                hrefs.append(href)
+                href = selector.xpath('//div/div[2]/div/div[1]/a/@href').get()
+                if href:
+                    hrefs.append(href)
+                    
             logging.info("article: {},len: {}".format( hrefs,len(hrefs) ))
-            return hrefs
+
+            hrefs = list(set(hrefs) - set(self.config["id"]))
+            logging.info("Index page have start page hrefs:{}.".format(hrefs)) 
+            #读取历史的所有文章
+            if not hrefs:
+                return 
+            loop = asyncio.get_event_loop()
+
+            # Python 3.6之前用ayncio.ensure_future或loop.create_task方法创建单个协程任务
+            # Python 3.7以后可以用户asyncio.create_task方法创建单个协程任务
+            tasks = []
+
+            for href in hrefs:
+                tasks.append(self.get_article( href ))
+
+            # 还可以使用asyncio.gather(*tasks)命令将多个协程任务加入到事件循环
+            loop.run_until_complete(asyncio.wait(tasks))
+            loop.close()
 
         else:
             logging.error("Get url content error!")
@@ -177,7 +199,15 @@ class Anquanke(Article):
         title = selector.xpath("/html/body/main/div/div/div[1]/div[1]/h1/text()").get().strip()
         content = selector.xpath("/html/body/main/div/div/div[1]/div[1]").get()
 
-        tomd = Tomd(content,options = {"base":"../","store":self.store,"img":"img","article":articleId})
+        tomd = Tomd(content,
+            options = {
+                "base":"../",
+                "store":self.store,
+                "img":"img",
+                "article":articleId,
+                "localimg":False
+            }
+        )
         markdown = tomd.markdown.encode()       
         articlePath = os.path.join("../",self.store,title+".md")
         with open(articlePath,"wb") as fd:
@@ -186,67 +216,6 @@ class Anquanke(Article):
         self.downArticles.add(article)
         self.articleUrls[title] = "./" + title + ".html"
         
-# class Lesuo360(object):
-#     def __init__(self):
-#         self.ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
-#         self.cookie = "csrftoken=vD7jwzx5yCcPCSXBh7JnzuXQl6OHZbaIg0MP1iD3rMGlssk8XvKsBTvmvVfP9E59; aliyun_lang=zh; aliyun_choice=CN; UM_distinctid=179f9d68a80ad5-06fad2edd4f851-1f3a6255-1fa400-179f9d68a81a8b; bs_n_lang=zh_CN; cna=EGBlGdRwUFICASp4S/NrOVtO; activeRegionId=cn-hangzhou; currentRegionId=cn-hangzhou; UC-XSRF-TOKEN=969e6b96-a967-4758-8b75-8c220e56d54d; FECS-UMID=%7B%22token%22%3A%22Yc1a3dbd31eb091a8c086c8337436f68c%22%2C%22timestamp%22%3A%2220576943535C5C475740617E%22%7D; _samesite_flag_=true; login_aliyunid_pk=1068723216148614; login_aliyunid_ticket=WQgyKFeuf0vpmV*s*CT58JlM_1t$w39y$p4twKxc1erIygRICzRsPgWHvg6H8xf3gqqHQlMp_wdpof_BNTwUhTOoNC1ZBeeMfKJzxdnb95hYssNIZor6q7SCxRtgmGCbifG2Cd4ZWazmBdHI6sgXZqX40; login_aliyunid_csrf=_csrf_tk_1286326428422898; hssid=; hsite=6; aliyun_country=CN; aliyun_site=CN; login_aliyunid_luid=BG+O08kl5GP9e32a13a7176349814bfdc8e4f6d4125+Bvxb1irp5DJfV+qLrKLT9A==; login_aliyunid_pks=BG+DaCJkdvf9+1W+vvt90XA3buterxglpvQYkaqxu6WD/8=; login_aliyunid_abi=BG+geXJf5cq8b66d07f9bc56395f53529b9afaa7548+0APhZdT0hDJvW/OE3OBv82aVC2OGonwWVx9/6M84VlCUu0bzsw0=; login_aliyunid=s****@aliyun-inner.com; FECS-XSRF-TOKEN=426f0bcc; isg=BMHBJy9wReJhM5YUDuO-tm9w0Avb7jXgMQGRliMWsEgjCuHcazzdsP4I6H5MRs0Y; tfstk=cNmlBPTalS1_7K4m53ZSEp1T4k5lZoLzsDox0DORu2a0HJnViN7V7SsJn7lovw1..; l=eBOcZH2qOSOcBzxEBOfZlurza77OIIRYfuPzaNbMiOCPOCXyzvJRW6T4pMK2CnGVh6JWR3k0kl4WBeYBcIf1cAfNFIstRVHmn; CNZZDATA1260716569=794856705-1596520585-https%253A%252F%252Fwww.google.com.hk%252F%7C1626563318; acw_tc=2f624a6916265679509188473e1b5d8078eddbcbef72cb82a07d4c44b64d2c; acw_sc__v2=60f3751868fd0ce818a99605e6a120ea789d62b1"
-#         self.headers = {"User-Agent": self.ua,"Cookie":self.cookie}
-#         self.data = list()
-#         self.url = "https://xz.aliyun.com/"
-#         self.id = []
-#         self.httpx = Httpx()
-
-#     def get_max_page(self):
-#         text = self.httpx.get(self.url)
-#         if text:
-#         # 创建Selector类实例
-#             selector = Selector(text)
-#             # 采用css选择器获取最大页码div Boxl
-#             c = selector.xpath("/html/body/div[2]/div/div[1]/div/div/div[3]/ul/li[2]/a/text()")
-#             max_page = int(c.get().split("/")[1])
-#             # a = selector.css('a[class="last"]')
-#             # # 使用eval将page-data的json字符串转化为字典格式
-#             # max_page = int(a.xpath('string(.)')[0].get().strip('.'))
-
-#             print("[*] 最大页码数:{} .".format(max_page))
-#             return max_page
-#         else:
-#             # print("请求失败 status:{}".format())
-
-#             return None
-
-#     async def parse_page_id(self, url):
-#         return
-
-#     def get_all_pages_id(self,max_page):
-        
-#         ALL_ID = []
-#         for i in range(1,max_page+1):
-#             url = "https://xz.aliyun.com/?page={}".format(i)
-#             print("[*] Deal with url : {}.".format(url))
-
-#             # response = httpx.get(self.url, headers=self.headers)
-#             text = self.httpx.get(url)
-
-#             # import IPython
-#             # IPython.embed()
-
-#             selector = Selector(text)
-#             a = selector.xpath('//*[@id="includeList"]/table/tbody/tr/td').getall()
-#             # print(a)
-#             allar = []
-#             for i in a:
-#                 t = Selector(i)
-#                 # title = t.xpath('//*[@class="topic-title"]/').get()
-#                 allar.append( t.xpath('//p[1]/a/@href').get())
-
-#             print("[*] get id : {},len: {}.".format( allar,len(allar) ))
-#             ALL_ID.extend(allar)
-
-#         time.sleep(0.1)
-
-#         return ALL_ID
-
 
 config = {
     "Anquanke":"www.anquanke.com"
@@ -258,9 +227,12 @@ def main():
         instance = subclass(name)
         if not instance.config["read"]:
             instance.get_history()
-            # instance.update_config()
+            instance.update_config()
             instance.update_readme()
-        
+        else:
+            instance.get_index()
+            instance.update_config()
+            instance.update_readme()
 
 if __name__ == "__main__":
     main()

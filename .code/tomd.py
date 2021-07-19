@@ -106,8 +106,12 @@ class Element:
                 if match:
                     url = match.group(1)
                     # print(self.content,url)
-                    if url and "store" in self.options and "img" in self.options:
-
+                    # 勒索后缀，勒索信文件名。 加密我分析了一部分。
+                    # 
+                    # | | | | 
+                    localimg = self.options["localimg"] 
+                    # 如果需要download img
+                    if localimg and url and "store" in self.options and "img" in self.options:
                         base = self.options["base"]
                         store = self.options["store"]
                         img = self.options["img"]
@@ -115,7 +119,7 @@ class Element:
                         if not os.path.exists(os.path.join( base,store,img,article )):
                             os.makedirs( os.path.join( base,store,img,article ) )
                         if url.startswith("http"):
-                            print("[*] download image from url: {}.".format(url))
+                            print("[*] download image from url: {} .".format(url))
                             filename = url.split("/")[-1]
                             imagePath = os.path.join(base,store,img,article,filename)
                             try:
@@ -130,7 +134,7 @@ class Element:
                                 fd.write(content)
                             self.content = self.content.replace(url, os.path.join("./",img,article,filename))
                         elif url.startswith("data:image"):
-                            print("[*] download image from data base64.")
+                            print("[*] download image from data base64 .")
                             filename = "{}.png".format(int(time.time()*1000))
                             imagePath = os.path.join(base,store,img,article,filename)
                             data = url.split(",")[-1].encode()
