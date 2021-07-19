@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **289922**
+                                **290187**
                             
                         |
                         
@@ -137,9 +137,9 @@ burp给出了一段防护代码示例
 
 ```
 File file = new File(BASE_DIRECTORY, userInput);
-if (file.getCanonicalPath().startsWith(BASE_DIRECTORY)) {
+if (file.getCanonicalPath().startsWith(BASE_DIRECTORY)) %7B
     // process file
-}
+%7D
 ```
 
 

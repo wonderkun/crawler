@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **114777**
+                                **114817**
                             
                         |
                         
@@ -261,7 +261,7 @@ vsrss.exe是一个下载执行模块，该模块会先创建自身的快捷方�
 
 [![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p3.ssl.qhimg.com/t011fb97bb1511453ce.png)
 
-机器码的算法是获取用户名和机器名，用_连接起来，然后和加密密钥{$%^^%$}运算生成256字节的字典，然后数据和生成的字典异或运算后(类RC4算法)，转换成hex值：
+机器码的算法是获取用户名和机器名，用_连接起来，然后和加密密钥%7B$%^^%$%7D运算生成256字节的字典，然后数据和生成的字典异或运算后(类RC4算法)，转换成hex值：
 
 [![](https://p3.ssl.qhimg.com/t01357a0a8b8acfa218.png)](https://p3.ssl.qhimg.com/t01357a0a8b8acfa218.png)
 
@@ -354,8 +354,8 @@ GET请求中的各参数含义：
 
 
 <td width="470">**执行命令行命令**</td><td width="98">**说明**</td>
-<td width="470">reg add “HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Common\COM Compatibility\{F20DA720-C02F-11CE-927B-0800095AE340}” /v “Compatibility Flags” /t REG_DWORD /d 0x400</td><td width="98">32位系统版本或64位系统中的64位版本</td>
-<td width="470">reg add “HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Office\Common\COM Compatibility\{F20DA720-C02F-11CE-927B-0800095AE340}” /v “Compatibility Flags” /t REG_DWORD /d 0x400</td><td width="98">64位系统中的32位版本</td>
+<td width="470">reg add “HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\Common\COM Compatibility\%7BF20DA720-C02F-11CE-927B-0800095AE340%7D” /v “Compatibility Flags” /t REG_DWORD /d 0x400</td><td width="98">32位系统版本或64位系统中的64位版本</td>
+<td width="470">reg add “HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Office\Common\COM Compatibility\%7BF20DA720-C02F-11CE-927B-0800095AE340%7D” /v “Compatibility Flags” /t REG_DWORD /d 0x400</td><td width="98">64位系统中的32位版本</td>
 
 ## 总结
 

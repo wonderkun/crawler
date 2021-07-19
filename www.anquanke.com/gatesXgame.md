@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **122298**
+                                **122330**
                             
                         |
                         
@@ -59,7 +59,7 @@ ida一打开发现是个标准的UPX的代码
 
 [![](https://p5.ssl.qhimg.com/t01147b444b9e8d9e6f.png)](https://p5.ssl.qhimg.com/t01147b444b9e8d9e6f.png)
 
-去除混淆后保存，这里就不细看了主要是比较了下输入是否是npointer{开头
+去除混淆后保存，这里就不细看了主要是比较了下输入是否是npointer%7B开头
 
 [![](https://p2.ssl.qhimg.com/t01e598023909c49a3b.png)](https://p2.ssl.qhimg.com/t01e598023909c49a3b.png)
 
@@ -151,7 +151,7 @@ Index=6
 import  idc
 import  idautils
 import  idaapi
-flag_map={}
+flag_map=%7B%7D
 Is_first=True
 eip=0
 block_address=0
@@ -204,7 +204,7 @@ from capstone import *
 from struct import *
 md_64 = Cs(CS_ARCH_X86, CS_MODE_64)
 md_32 = Cs(CS_ARCH_X86, CS_MODE_32)
-nodes = {}
+nodes = %7B%7D
 with open("code", "rb") as f:
     code = f.read()
 def dis32(addr):
@@ -424,7 +424,7 @@ get_graph(0, 0)
 def dfs(addr, flag, path):
     if addr == 0x30d0:
         print("found!")
-        print("npointer{"+flag+"}")
+        print("npointer%7B"+flag+"%7D")
         return
     node = nodes[addr]
     for i in node:
@@ -437,5 +437,5 @@ dfs(0, "", [])
 
 ```
 found!
-npointer{f4fce95b63f57187c9424ae06cf1a86f}
+npointer%7Bf4fce95b63f57187c9424ae06cf1a86f%7D
 ```

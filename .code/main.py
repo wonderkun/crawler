@@ -67,6 +67,11 @@ class Article(object):
         # new_title = new_title.replace("】","]")
         return new_title
 
+    def validateMarkdown(self,markdown):
+        markdown = markdown.replace(b"{",b"%7B")
+        markdown = markdown.replace(b"}",b"%7D")
+        return markdown
+
     def get_name(self):
         raise NotImplementedError
 
@@ -220,6 +225,8 @@ class Anquanke(Article):
         base = base.encode()
         markdown = tomd.markdown.encode() 
         markdown = base + markdown     
+        markdown = self.validateMarkdown(markdown)
+        
         articlePath = os.path.join("../",self.store,title+".md")
         with open(articlePath,"wb") as fd:
             fd.write(markdown)

@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **239183**
+                                **239192**
                             
                         |
                         
@@ -27,7 +27,7 @@
 
 
 
-[![](https://p3.ssl.qhimg.com/t01b1716e4413fc281a.png)](https://p3.ssl.qhimg.com/t01b1716e4413fc281a.png)
+[![](https://p5.ssl.qhimg.com/t01b1716e4413fc281a.png)](https://p5.ssl.qhimg.com/t01b1716e4413fc281a.png)
 
 翻译：[testvul_001](http://bobao.360.cn/member/contribute?uid=780092473)
 
@@ -55,23 +55,23 @@ username=test&amp;id=16
 
 我最近研究的带内，带外攻击技巧刚好适用于这个场景，要理解我的技巧，我们可以先看下Mysql 是如何处理字符串的。在Mysql 中一个字符串等于 ‘0’，我们来看一下：
 
-[![](https://p2.ssl.qhimg.com/t01cc281a4e0b2273e5.png)](https://p2.ssl.qhimg.com/t01cc281a4e0b2273e5.png)
+[![](https://p1.ssl.qhimg.com/t01cc281a4e0b2273e5.png)](https://p1.ssl.qhimg.com/t01cc281a4e0b2273e5.png)
 
 假如我们把字符串和数字相加，结果和0 加这个数字一样：
 
-[![](https://p4.ssl.qhimg.com/t01a5d3f314475c813a.png)](https://p4.ssl.qhimg.com/t01a5d3f314475c813a.png)
+[![](https://p0.ssl.qhimg.com/t01a5d3f314475c813a.png)](https://p0.ssl.qhimg.com/t01a5d3f314475c813a.png)
 
 Mysql的这个属性给了我一些灵感，我们来看看BIGINT的最大值加上一个字符串会怎样？
 
-[![](https://p1.ssl.qhimg.com/t01b604af8353f73320.png)](https://p1.ssl.qhimg.com/t01b604af8353f73320.png)
+[![](https://p3.ssl.qhimg.com/t01b604af8353f73320.png)](https://p3.ssl.qhimg.com/t01b604af8353f73320.png)
 
 结果是 ‘1.8446744073709552e19’，这表明字符串实际上作为八字节的DOUBEL类型来处理。
 
-[![](https://p5.ssl.qhimg.com/t0100a4f0da080b0577.png)](https://p5.ssl.qhimg.com/t0100a4f0da080b0577.png)
+[![](https://p4.ssl.qhimg.com/t0100a4f0da080b0577.png)](https://p4.ssl.qhimg.com/t0100a4f0da080b0577.png)
 
 将一个DOUBLE类型和大数字相加会返回IEEE格式的值，为了解决这个问题我们可以使用OR。
 
-[![](https://p1.ssl.qhimg.com/t0137dca0c4a3280ddb.png)](https://p1.ssl.qhimg.com/t0137dca0c4a3280ddb.png)
+[![](https://p2.ssl.qhimg.com/t0137dca0c4a3280ddb.png)](https://p2.ssl.qhimg.com/t0137dca0c4a3280ddb.png)
 
 现在我们得到了最大的64bit无符号的BIGINT值0xffffffffffffffff。我们需要注意通过OR获取数据时，这个值必须小于BIGINT（不能超过64bit）。
 
@@ -85,7 +85,7 @@ Mysql的这个属性给了我一些灵感，我们来看看BIGINT的最大值加
 String -&gt; Hexadecimal -&gt; Decimal
 ```
 
-[![](https://p0.ssl.qhimg.com/t010a9008eb233745ae.png)](https://p0.ssl.qhimg.com/t010a9008eb233745ae.png)
+[![](https://p2.ssl.qhimg.com/t010a9008eb233745ae.png)](https://p2.ssl.qhimg.com/t010a9008eb233745ae.png)
 
 通过SQL，Python和Ruby等语言我们可以将数字转回字符串，如下：
 
@@ -93,11 +93,11 @@ String -&gt; Hexadecimal -&gt; Decimal
 Decimal -&gt; Hexadecimal -&gt; String
 ```
 
-[![](https://p2.ssl.qhimg.com/t0162c38655fe29fbab.png)](https://p2.ssl.qhimg.com/t0162c38655fe29fbab.png)
+[![](https://p5.ssl.qhimg.com/t0162c38655fe29fbab.png)](https://p5.ssl.qhimg.com/t0162c38655fe29fbab.png)
 
 如上面提到的，Mysql中的最大值为BIGINT，我们不能超过它，也就是说每次提取的字符串不能超过8位。
 
-[![](https://p4.ssl.qhimg.com/t01844be893e5213c30.png)](https://p4.ssl.qhimg.com/t01844be893e5213c30.png)
+[![](https://p5.ssl.qhimg.com/t01844be893e5213c30.png)](https://p5.ssl.qhimg.com/t01844be893e5213c30.png)
 
 4702111234474983745可以被解码为AAAAAAAA，如果再加一个A,我们就不能正确解码了，因为返回的结果会是无符号的BIGINT值0xffffffffffffffff。
 
@@ -111,11 +111,11 @@ select conv(hex(substr(user(),1 + (n-1) * 8, 8 * n)), 16, 10);
 
 n的取值为1、2、3…比如我们要获取的username长度超过8个字符，我们首先获取前八个字符，然后继续获取后面的8个直到得到NULL。
 
-[![](https://p2.ssl.qhimg.com/t0112037d2bc764e2c3.png)](https://p2.ssl.qhimg.com/t0112037d2bc764e2c3.png)
+[![](https://p5.ssl.qhimg.com/t0112037d2bc764e2c3.png)](https://p5.ssl.qhimg.com/t0112037d2bc764e2c3.png)
 
 最后我们把user()函数获得的数据解码。
 
-[![](https://p5.ssl.qhimg.com/t01a7a74317de6f00ae.png)](https://p5.ssl.qhimg.com/t01a7a74317de6f00ae.png)
+[![](https://p0.ssl.qhimg.com/t01a7a74317de6f00ae.png)](https://p0.ssl.qhimg.com/t01a7a74317de6f00ae.png)
 
 <br>
 
@@ -137,13 +137,13 @@ select conv(hex(substr((select column_name from information_schema.columns 
 
 下面我们通过一个例子来说明如何利用更新语句。
 
-[![](https://p1.ssl.qhimg.com/t01a73d6a1edd5b0f4d.png)](https://p1.ssl.qhimg.com/t01a73d6a1edd5b0f4d.png)
+[![](https://p0.ssl.qhimg.com/t01a73d6a1edd5b0f4d.png)](https://p0.ssl.qhimg.com/t01a73d6a1edd5b0f4d.png)
 
 实际的查询语句可能是这样的：
 
-[![](https://p1.ssl.qhimg.com/t011d353490f781c9c2.png)](https://p1.ssl.qhimg.com/t011d353490f781c9c2.png)
+[![](https://p2.ssl.qhimg.com/t011d353490f781c9c2.png)](https://p2.ssl.qhimg.com/t011d353490f781c9c2.png)
 
-[![](https://p1.ssl.qhimg.com/t01f035c0c8d3056e1c.png)](https://p1.ssl.qhimg.com/t01f035c0c8d3056e1c.png)
+[![](https://p4.ssl.qhimg.com/t01f035c0c8d3056e1c.png)](https://p4.ssl.qhimg.com/t01f035c0c8d3056e1c.png)
 
 **利用INSERT语句**
 
@@ -167,15 +167,15 @@ insert into users values (17,'james', 'bond'|conv(hex(substr(user(),1 + (
 
 你可能注意到这种方法在MySQL 5.7.5之后的版本并不奏效。
 
-[![](https://p4.ssl.qhimg.com/t01b2d273751c10ecc4.png)](https://p4.ssl.qhimg.com/t01b2d273751c10ecc4.png)
+[![](https://p1.ssl.qhimg.com/t01b2d273751c10ecc4.png)](https://p1.ssl.qhimg.com/t01b2d273751c10ecc4.png)
 
 通过研究MySQL 5.7发现Mysql服务器默认运行在‘Strict SQL Mode’下，在MySQL 5.7.5里，默认的模式包含‘STRICT_TRANS_TABLES’。在 ‘Strict SQL Mode’ 下我们不能将integer转换为string。
 
-[![](https://p3.ssl.qhimg.com/t01b58383a4c7198204.png)](https://p3.ssl.qhimg.com/t01b58383a4c7198204.png)
+[![](https://p1.ssl.qhimg.com/t01b58383a4c7198204.png)](https://p1.ssl.qhimg.com/t01b58383a4c7198204.png)
 
 为了解决这个问题，我们需要在注入时一直使用一个integer类型，这样就不会有任何问题了。
 
-[![](https://p2.ssl.qhimg.com/t01c0f333a1564337c4.png)](https://p2.ssl.qhimg.com/t01c0f333a1564337c4.png)
+[![](https://p1.ssl.qhimg.com/t01c0f333a1564337c4.png)](https://p1.ssl.qhimg.com/t01c0f333a1564337c4.png)
 
 另外任何用户都可以在他的会话里关闭‘Strict Mode’。
 
@@ -183,11 +183,11 @@ insert into users values (17,'james', 'bond'|conv(hex(substr(user(),1 + (
 
 如果想设置影响所有客户端的全局属性需要SUPER权限。
 
-[![](https://p2.ssl.qhimg.com/t01705d4634503b37c6.png)](https://p2.ssl.qhimg.com/t01705d4634503b37c6.png)
+[![](https://p4.ssl.qhimg.com/t01705d4634503b37c6.png)](https://p4.ssl.qhimg.com/t01705d4634503b37c6.png)
 
 开发者也可以使用‘IGNORE’关键字来忽略‘Strict Mode’，如‘INSERT IGNORE’或者‘UPDATE IGNORE’。
 
-[![](https://p2.ssl.qhimg.com/t018bc3ee06bf7f0821.png)](https://p2.ssl.qhimg.com/t018bc3ee06bf7f0821.png)
+[![](https://p1.ssl.qhimg.com/t018bc3ee06bf7f0821.png)](https://p1.ssl.qhimg.com/t018bc3ee06bf7f0821.png)
 
 <br>
 
@@ -210,6 +210,6 @@ Ruby
 
 
 ```
-dec = lambda { |x| puts x.to_s(16).scan(/../).map { |x| x.hex.chr }.join }或
-dec = lambda { |x| puts x.to_s(16).scan(/w+/).pack("H*") }
+dec = lambda %7B |x| puts x.to_s(16).scan(/../).map %7B |x| x.hex.chr %7D.join %7D或
+dec = lambda %7B |x| puts x.to_s(16).scan(/w+/).pack("H*") %7D
 ```

