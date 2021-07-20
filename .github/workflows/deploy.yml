@@ -68,6 +68,7 @@ jobs:
       - name: Deploy github
         run: |
           cd ./crawler/ 
+          git checkout master
           git add . 
           git commit -m "Github action auto deploy my blog."
           git push git@github.com:wonderkun/crawler.git master:master

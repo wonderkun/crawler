@@ -119,26 +119,98 @@ class Article(object):
         with open(self.readme_file,'wb') as fd:
             fd.write(content)
 
-# class Xianzhi(Article):
-#     def __init__(self,name):
-#         super(Anquanke, self).__init__(name)
+class Xianzhi(Article):
+    def __init__(self,name):
+        super(Xianzhi, self).__init__(name)
+
+    def get_name(self):
+        # raise NotImplementedError
+        return self.name
+
+    def get_index(self):
+        #读取首页解析最新的文章
+        logging.info("Deal with {} index content.".format(self.name))
+        text = httpx.get(self.url)
+        # 
+        if text:
+            selector = Selector(text)
+            articles = selector.xpath('//*[@id="post-list"]/div').getall()
+
+            hrefs = list()
+            # print(articles)
+            for article in articles:
+                # print(article)
+                selector = Selector(article)
+                href = selector.xpath('//div/div[2]/div/div[1]/a/@href').get()
+                if href:
+                    hrefs.append(href)
+                    
+            logging.info("article: {},len: {}".format( hrefs,len(hrefs) ))
+
+            hrefs = list(set(hrefs) - set(self.config["id"]))
+            logging.info("Index page have start page hrefs:{}.".format(hrefs)) 
+            #读取历史的所有文章
+            if not hrefs:
+                return 
+            loop = asyncio.get_event_loop()
+
+            # Python 3.6之前用ayncio.ensure_future或loop.create_task方法创建单个协程任务
+            # Python 3.7以后可以用户asyncio.create_task方法创建单个协程任务
+            tasks = []
+
+            for href in hrefs:
+                tasks.append(self.get_article( href ))
+
+            # 还可以使用asyncio.gather(*tasks)命令将多个协程任务加入到事件循环
+            loop.run_until_complete(asyncio.wait(tasks))
+            loop.close()
+
+        else:
+            logging.error("Get url content error!")
+            return None
+
+    async def get_article(self,article):
+        # 读取一篇具体的文章
+        articleId = article.split("/")[-1]
+        if not articleId:
+            articleId = article.split("/")[-2]
+
+        url = "https://{}{}".format(self.name,article)
+        logging.info("Read the article {} .".format(url))
+        # /html/body/main/div/div/div[1]/div[1]
+        text = httpx.get(url)
+        # print(text)
         
+        if not text:
+            logging.error("Get article {} content error!".format( url ))
+            return
+        selector = Selector(text) 
+        # print(text)
+        title = selector.xpath("/html/head/title/text()").get().strip()
+        title = self.validateTitle(title)
+        content = selector.xpath("/html/body/div[2]/div/div[1]/div[1]/div/div").get()
+        
+        tomd = Tomd(content,
+            options = {
+                "base":"../",
+                "store":self.store,
+                "img":"img",
+                "article":articleId,
+                "localimg":False
+            }
+        )
+        base = "> 原文链接: {} \n\n".format( url )
+        base = base.encode()
+        markdown = tomd.markdown.encode() 
+        markdown = base + markdown     
+        markdown = self.validateMarkdown(markdown)
 
-#     def get_name(self):
-#         # raise NotImplementedError
-#         return self.name
+        articlePath = os.path.join("../",self.store,title+".md")
+        with open(articlePath,"wb") as fd:
+            fd.write(markdown)
 
-#     def get_history(self):
-#         #读取历史的所有文章
-#         raise NotImplementedError
-    
-#     def get_index(self):
-#         #读取首页解析最新的文章
-#         raise NotImplementedError
-
-#     def get_article(self):
-#         # 读取一篇具体的文章
-#         raise NotImplementedError
+        self.downArticles.add(article)
+        self.articleUrls[title] = "./" + title + ".html"
 
 class Anquanke(Article):
     def __init__(self,name):
@@ -236,11 +308,14 @@ class Anquanke(Article):
         
 
 config = {
-    "Anquanke":"www.anquanke.com"
+    # "Anquanke":"www.anquanke.com",
+    "Xianzhi":"xz.aliyun.com"
 }
 
 def main():
     for subclass in Article.__subclasses__():
+        if subclass.__name__ not in config:
+            continue
         name = config[subclass.__name__]
         instance = subclass(name)
         if not instance.config["read"]:
@@ -254,4 +329,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # import IPython
+    # IPython.embed()
 
