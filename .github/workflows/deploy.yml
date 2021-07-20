@@ -78,7 +78,7 @@ jobs:
           cp ./code/xz.aliyun.com/all.json ./master/xz.aliyun.com/all.json
           cd ./master/.code/
           python main.py
-          cd ../../
+          cd ../
           git add . 
           git commit -m "update blog"
           git push git@github.com:wonderkun/crawler.git master:master
