@@ -69,7 +69,8 @@ jobs:
         run: |
           cd ./crawler/ 
           git fetch origin master:refs/remotes/origin/master
-          git checkout master
           git add . 
-          git commit -m "Github action auto deploy my blog."
+          git commit -m "update blog"
+          git checkout master
+          git merge code --no-commit
           git push git@github.com:wonderkun/crawler.git master:master
