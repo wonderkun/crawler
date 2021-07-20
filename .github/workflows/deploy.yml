@@ -63,8 +63,6 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
-          cd ./code/.code/
-          python main.py
 
       - name: Checkout master repo
         uses: actions/checkout@v2
@@ -75,8 +73,12 @@ jobs:
 
       - name: Deploy github
         run: |
-          cp -rf ./code/* ./master
-          cd ./master 
+          cp ./code/.code/main.py ./master/.code/main.py
+          cp ./code/www.anquanke.com/all.json ./master/www.anquanke.com/all.json
+          cp ./code/xz.aliyun.com/all.json ./master/xz.aliyun.com/all.json
+          cd ./master/.code/
+          python main.py
+          cd ../../
           git add . 
           git commit -m "update blog"
           git push git@github.com:wonderkun/crawler.git master:master
