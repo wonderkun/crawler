@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **146915**
+                                **146940**
                             
                         |
                         
@@ -17,7 +17,7 @@
 
 
 
-**[![](https://p2.ssl.qhimg.com/t0132f44711bda16c52.jpg)](https://p2.ssl.qhimg.com/t0132f44711bda16c52.jpg)**
+**[![](https://p3.ssl.qhimg.com/t0132f44711bda16c52.jpg)](https://p3.ssl.qhimg.com/t0132f44711bda16c52.jpg)**
 
 **小介绍**
 
@@ -55,23 +55,23 @@ Mooder从设计之初想法就是“封闭”，也就是说该社区严格控�
 
 Mooder支持登录、邀请码注册、找回密码、登录激活。
 
-[![](https://p2.ssl.qhimg.com/t0172607d8f3ff3a196.jpg)](https://p2.ssl.qhimg.com/t0172607d8f3ff3a196.jpg)
+[![](https://p5.ssl.qhimg.com/t0172607d8f3ff3a196.jpg)](https://p5.ssl.qhimg.com/t0172607d8f3ff3a196.jpg)
 
 注册：<br>
 
-[![](https://p0.ssl.qhimg.com/t0150a81daca7ff7928.jpg)](https://p0.ssl.qhimg.com/t0150a81daca7ff7928.jpg)
+[![](https://p3.ssl.qhimg.com/t0150a81daca7ff7928.jpg)](https://p3.ssl.qhimg.com/t0150a81daca7ff7928.jpg)
 
 **查看贡献**
 
 贡献列表，列出所有贡献：
 
-[![](https://p1.ssl.qhimg.com/t0171f9579491004363.jpg)](https://p1.ssl.qhimg.com/t0171f9579491004363.jpg)
+[![](https://p5.ssl.qhimg.com/t0171f9579491004363.jpg)](https://p5.ssl.qhimg.com/t0171f9579491004363.jpg)
 
 详情页面，根据贡献的私密程度判断用户是否可读。
 
 用户在提交贡献的时候可以选择该贡献的可见性：公开、出售或私密。公开的贡献，所有平台注册用户均可查看；出售的贡献，其他用户需要付出一定价格购买，才能查看当前贡献，而贡献提交者将可以或者这笔费用；私密的贡献，除贡献作者与审核员外任何人无法查看。
 
-[![](https://p4.ssl.qhimg.com/t019c0f89ba0dbd4b9a.jpg)](https://p4.ssl.qhimg.com/t019c0f89ba0dbd4b9a.jpg)
+[![](https://p5.ssl.qhimg.com/t019c0f89ba0dbd4b9a.jpg)](https://p5.ssl.qhimg.com/t019c0f89ba0dbd4b9a.jpg)
 
 **提交与审核贡献**
 
@@ -81,25 +81,25 @@ Mooder支持登录、邀请码注册、找回密码、登录激活。
 
 管理员后台审核贡献：
 
-[![](https://p4.ssl.qhimg.com/t01286bcdb89d01b5a7.jpg)](https://p4.ssl.qhimg.com/t01286bcdb89d01b5a7.jpg)
+[![](https://p2.ssl.qhimg.com/t01286bcdb89d01b5a7.jpg)](https://p2.ssl.qhimg.com/t01286bcdb89d01b5a7.jpg)
 
 **礼品中心**
 
 团队负责人可以在后台进行礼品上架，用于奖励乐于分享的成员。前台礼品中心：
 
-[![](https://p5.ssl.qhimg.com/t0180e953dc12c8a53b.jpg)](https://p5.ssl.qhimg.com/t0180e953dc12c8a53b.jpg)
+[![](https://p3.ssl.qhimg.com/t0180e953dc12c8a53b.jpg)](https://p3.ssl.qhimg.com/t0180e953dc12c8a53b.jpg)
 
 用户填写收货地址进行礼品兑换：
 
-[![](https://p4.ssl.qhimg.com/t01c12e726f415ba5d1.jpg)](https://p4.ssl.qhimg.com/t01c12e726f415ba5d1.jpg)
+[![](https://p5.ssl.qhimg.com/t01c12e726f415ba5d1.jpg)](https://p5.ssl.qhimg.com/t01c12e726f415ba5d1.jpg)
 
 管理员后台查看购买记录：
 
-[![](https://p0.ssl.qhimg.com/t016c705f2c30f9d6b9.jpg)](https://p0.ssl.qhimg.com/t016c705f2c30f9d6b9.jpg)
+[![](https://p2.ssl.qhimg.com/t016c705f2c30f9d6b9.jpg)](https://p2.ssl.qhimg.com/t016c705f2c30f9d6b9.jpg)
 
 虚拟物品可以直接通过“管理员回复”发货：
 
-[![](https://p2.ssl.qhimg.com/t011be42575447baa9c.jpg)](https://p2.ssl.qhimg.com/t011be42575447baa9c.jpg)
+[![](https://p1.ssl.qhimg.com/t011be42575447baa9c.jpg)](https://p1.ssl.qhimg.com/t011be42575447baa9c.jpg)
 
 **后台管理**
 
@@ -107,18 +107,18 @@ Mooder支持登录、邀请码注册、找回密码、登录激活。
 
 后台首页显示一些统计信息：
 
-[![](https://p5.ssl.qhimg.com/t01ffe0debdee40d2a4.jpg)](https://p5.ssl.qhimg.com/t01ffe0debdee40d2a4.jpg)
+[![](https://p1.ssl.qhimg.com/t01ffe0debdee40d2a4.jpg)](https://p1.ssl.qhimg.com/t01ffe0debdee40d2a4.jpg)
 
 一键生成邀请码：
 
-[![](https://p2.ssl.qhimg.com/t01a238ac7070306b01.jpg)](https://p2.ssl.qhimg.com/t01a238ac7070306b01.jpg)
+[![](https://p5.ssl.qhimg.com/t01a238ac7070306b01.jpg)](https://p5.ssl.qhimg.com/t01a238ac7070306b01.jpg)
 
 增加内部应用：
 
-[![](https://p0.ssl.qhimg.com/t012669d1f90a78a97c.jpg)](https://p0.ssl.qhimg.com/t012669d1f90a78a97c.jpg)
+[![](https://p5.ssl.qhimg.com/t012669d1f90a78a97c.jpg)](https://p5.ssl.qhimg.com/t012669d1f90a78a97c.jpg)
 
 用户奖惩：
 
-[![](https://p3.ssl.qhimg.com/t0124f0d422005559c1.jpg)](https://p3.ssl.qhimg.com/t0124f0d422005559c1.jpg)
+[![](https://p0.ssl.qhimg.com/t0124f0d422005559c1.jpg)](https://p0.ssl.qhimg.com/t0124f0d422005559c1.jpg)
 
 

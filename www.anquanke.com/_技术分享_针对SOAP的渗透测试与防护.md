@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **279715**
+                                **279764**
                             
                         |
                         
@@ -21,7 +21,7 @@
 
 译文仅供参考，具体内容表达以及含义原文为准
 
-[![](https://p4.ssl.qhimg.com/t019b9915bde700fe46.jpg)](https://p4.ssl.qhimg.com/t019b9915bde700fe46.jpg)
+[![](https://p5.ssl.qhimg.com/t019b9915bde700fe46.jpg)](https://p5.ssl.qhimg.com/t019b9915bde700fe46.jpg)
 
 
 
@@ -63,7 +63,7 @@ Envelope: 标识XML文档，具有名称空间和编码详细信息。
 </li>
 
 
-[![](https://p1.ssl.qhimg.com/t018f7cf9c753ae9457.jpg)](https://p1.ssl.qhimg.com/t018f7cf9c753ae9457.jpg)
+[![](https://p4.ssl.qhimg.com/t018f7cf9c753ae9457.jpg)](https://p4.ssl.qhimg.com/t018f7cf9c753ae9457.jpg)
 
 图2 SOAP请求和响应的示例
 
@@ -83,13 +83,13 @@ SOAP请求易受SQL注入攻击，提交参数作为变种 sql查询可以泄露
 
 在执行攻击之前，必须知道Web服务的功能，如图3所示，可以看到以string作为输入的username参数。
 
-[![](https://p4.ssl.qhimg.com/t01b7a4ded3160840d4.jpg)](https://p4.ssl.qhimg.com/t01b7a4ded3160840d4.jpg)
+[![](https://p1.ssl.qhimg.com/t01b7a4ded3160840d4.jpg)](https://p1.ssl.qhimg.com/t01b7a4ded3160840d4.jpg)
 
 图3请求功能分析
 
 输入随机用户名以检查其操作，此时它回应用户名不存在的消息，这可以帮助执行具有可能性的攻击。
 
-[![](https://p1.ssl.qhimg.com/t01240cffbcb9175de5.jpg)](https://p1.ssl.qhimg.com/t01240cffbcb9175de5.jpg)
+[![](https://p2.ssl.qhimg.com/t01240cffbcb9175de5.jpg)](https://p2.ssl.qhimg.com/t01240cffbcb9175de5.jpg)
 
 图4响应信息分析
 
@@ -101,19 +101,19 @@ SOAP请求易受SQL注入攻击，提交参数作为变种 sql查询可以泄露
 
 下面显示的请求是一个攻击者试图通过在参数的位置传递一个sql查询来访问用户详细信息，数据库的错误消息将有助于猜测查询的内容。
 
-[![](https://p0.ssl.qhimg.com/t01e1e34cc12ec9b742.jpg)](https://p0.ssl.qhimg.com/t01e1e34cc12ec9b742.jpg)
+[![](https://p1.ssl.qhimg.com/t01e1e34cc12ec9b742.jpg)](https://p1.ssl.qhimg.com/t01e1e34cc12ec9b742.jpg)
 
 图5数据库错误消息
 
-[![](https://p4.ssl.qhimg.com/t018bdb5a33d3c6c2c4.jpg)](https://p4.ssl.qhimg.com/t018bdb5a33d3c6c2c4.jpg)
+[![](https://p3.ssl.qhimg.com/t018bdb5a33d3c6c2c4.jpg)](https://p3.ssl.qhimg.com/t018bdb5a33d3c6c2c4.jpg)
 
 图6 SQL注入请求
 
 如果传递的查询成功中断了数据库语句查询，那么它将回应用户的信息。
 
-[![](https://p0.ssl.qhimg.com/t01d71acb5f2171e537.jpg)](https://p0.ssl.qhimg.com/t01d71acb5f2171e537.jpg)
+[![](https://p3.ssl.qhimg.com/t01d71acb5f2171e537.jpg)](https://p3.ssl.qhimg.com/t01d71acb5f2171e537.jpg)
 
-[![](https://p5.ssl.qhimg.com/t017d53bd8ce9a64c34.jpg)](https://p5.ssl.qhimg.com/t017d53bd8ce9a64c34.jpg)
+[![](https://p4.ssl.qhimg.com/t017d53bd8ce9a64c34.jpg)](https://p4.ssl.qhimg.com/t017d53bd8ce9a64c34.jpg)
 
 图7 SQL注入响应
 
@@ -131,7 +131,7 @@ payload: SQL注入的payload是简单的变形查询，它使数据库获取详
 
 命令注入是通常通过传递具有数据的命令以获得诸如目录结构，网站地图或甚至与web应用相关的敏感信息的攻击。
 
-[![](https://p3.ssl.qhimg.com/t010d442f9864a42675.jpg)](https://p3.ssl.qhimg.com/t010d442f9864a42675.jpg)
+[![](https://p4.ssl.qhimg.com/t010d442f9864a42675.jpg)](https://p4.ssl.qhimg.com/t010d442f9864a42675.jpg)
 
 图8命令注入请求（1）
 
@@ -145,11 +145,11 @@ payload: SQL注入的payload是简单的变形查询，它使数据库获取详
 
 在其他请求ping命令传递与IP地址ping主机，如下所示:
 
-[![](https://p1.ssl.qhimg.com/t01c35c8c2f34384a1f.jpg)](https://p1.ssl.qhimg.com/t01c35c8c2f34384a1f.jpg) 
+[![](https://p0.ssl.qhimg.com/t01c35c8c2f34384a1f.jpg)](https://p0.ssl.qhimg.com/t01c35c8c2f34384a1f.jpg) 
 
 图10命令注入请求（2）
 
-[![](https://p5.ssl.qhimg.com/t01f230cbcebc546d5f.jpg)](https://p5.ssl.qhimg.com/t01f230cbcebc546d5f.jpg)
+[![](https://p4.ssl.qhimg.com/t01f230cbcebc546d5f.jpg)](https://p4.ssl.qhimg.com/t01f230cbcebc546d5f.jpg)
 
 图11命令注入响应（2）
 
@@ -173,7 +173,7 @@ payload：对于这种类型的攻击，payload是与用户输入相结合的命
 
 <br>
 
-**[![](https://p0.ssl.qhimg.com/t017e5f84d239978200.jpg)](https://p0.ssl.qhimg.com/t017e5f84d239978200.jpg)**
+**[![](https://p2.ssl.qhimg.com/t017e5f84d239978200.jpg)](https://p2.ssl.qhimg.com/t017e5f84d239978200.jpg)**
 
 图12 XML请求
 
@@ -181,7 +181,7 @@ payload：对于这种类型的攻击，payload是与用户输入相结合的命
 
 
 
-[![](https://p0.ssl.qhimg.com/t01411e57af531d65ab.jpg)](https://p0.ssl.qhimg.com/t01411e57af531d65ab.jpg)
+[![](https://p4.ssl.qhimg.com/t01411e57af531d65ab.jpg)](https://p4.ssl.qhimg.com/t01411e57af531d65ab.jpg)
 
 图13 XML响应
 
@@ -189,13 +189,13 @@ payload：对于这种类型的攻击，payload是与用户输入相结合的命
 
 在实际的XML注入中，代码的一部分被变形并与请求一起发送，使得代码将在另一侧执行，在图14中，创建用户功能被添加有附加代码以利用服务。
 
-[![](https://p5.ssl.qhimg.com/t01409aa4e6d5a94f81.jpg)](https://p5.ssl.qhimg.com/t01409aa4e6d5a94f81.jpg)
+[![](https://p2.ssl.qhimg.com/t01409aa4e6d5a94f81.jpg)](https://p2.ssl.qhimg.com/t01409aa4e6d5a94f81.jpg)
 
 图14 变形的XML请求
 
 从图15可以看出，web服务被执行具有插入了用户名帐户的消息的代码。该功能执行攻击者插入的参数，而不是实际请求。
 
-[![](https://p4.ssl.qhimg.com/t01e8b330ad86a98c2a.jpg)](https://p4.ssl.qhimg.com/t01e8b330ad86a98c2a.jpg)
+[![](https://p5.ssl.qhimg.com/t01e8b330ad86a98c2a.jpg)](https://p5.ssl.qhimg.com/t01e8b330ad86a98c2a.jpg)
 
 图15 变形请求的响应
 
@@ -211,13 +211,13 @@ payload：这种类型攻击的有效载荷实际上是在另一端提交的参�
 
 下面显示的请求消息包含一个称为create user的功能，它可以在SOAP Action字段和SOAP主体中看到。
 
-[![](https://p2.ssl.qhimg.com/t019b7c8609db56a225.jpg)](https://p2.ssl.qhimg.com/t019b7c8609db56a225.jpg)
+[![](https://p0.ssl.qhimg.com/t019b7c8609db56a225.jpg)](https://p0.ssl.qhimg.com/t019b7c8609db56a225.jpg)
 
 图16带有SOAP动作字段的SOAP请求
 
 简单地变形（可能不是一个）可以改变其功能，如图17所示
 
-[![](https://p0.ssl.qhimg.com/t011e84fae1f893b0f4.jpg)](https://p0.ssl.qhimg.com/t011e84fae1f893b0f4.jpg)
+[![](https://p2.ssl.qhimg.com/t011e84fae1f893b0f4.jpg)](https://p2.ssl.qhimg.com/t011e84fae1f893b0f4.jpg)
 
 图17 变形的SOAP动作的请求
 
@@ -237,7 +237,7 @@ payload：对于这种类型的攻击没有特定的有效载荷，SOAP动作字
 
 每个SOAP请求包含一个被传递以获取一些数据的参数，有一些请求，攻击者可以利用这些请求来执行拒绝服务攻击。 如果应用程序无法执行输入验证或没有参数的边界，可能导致缓冲区溢出，这将使服务不可用。 下图显示的参数用户名没有任何边界限制，因此任何一个都可以将任意长度的字符串传递给应用程序。
 
-[![](https://p5.ssl.qhimg.com/t011cfdb4970c4059c3.jpg)](https://p5.ssl.qhimg.com/t011cfdb4970c4059c3.jpg)
+[![](https://p4.ssl.qhimg.com/t011cfdb4970c4059c3.jpg)](https://p4.ssl.qhimg.com/t011cfdb4970c4059c3.jpg)
 
  图19没有限制条件的SOAP请求
 
@@ -249,7 +249,7 @@ payload：这种类型的攻击的有效载荷是知道在请求中传递的数�
 
 补丁：为了减轻这种类型的攻击，必须使用最小和最大长度或某些边界来定义参数，例如参数用户名包含5个最小值和35个字符串最大长度，可以在处理中轻松验证。
 
-[![](https://p2.ssl.qhimg.com/t01007bcd5ac4d6e56d.jpg)](https://p2.ssl.qhimg.com/t01007bcd5ac4d6e56d.jpg)
+[![](https://p5.ssl.qhimg.com/t01007bcd5ac4d6e56d.jpg)](https://p5.ssl.qhimg.com/t01007bcd5ac4d6e56d.jpg)
 
 图20 带条件的SOAP请求
 
@@ -263,7 +263,7 @@ WSDL泄露不能被视为攻击，而是攻击的一个步骤，就像我们所�
 
 图21 wsdl搜索
 
-[![](https://p1.ssl.qhimg.com/t015084e41398e93882.jpg)](https://p1.ssl.qhimg.com/t015084e41398e93882.jpg)
+[![](https://p0.ssl.qhimg.com/t015084e41398e93882.jpg)](https://p0.ssl.qhimg.com/t015084e41398e93882.jpg)
 
 图22 Web服务WSDL
 

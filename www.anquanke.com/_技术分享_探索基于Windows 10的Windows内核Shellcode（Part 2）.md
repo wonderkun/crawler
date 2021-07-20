@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **106173**
+                                **106253**
                             
                         |
                         
@@ -21,7 +21,7 @@
 
 译文仅供参考，具体内容表达以及含义原文为准
 
-[![](https://p4.ssl.qhimg.com/t015cc408a9080c9c88.jpg)](https://p4.ssl.qhimg.com/t015cc408a9080c9c88.jpg)
+[![](https://p0.ssl.qhimg.com/t015cc408a9080c9c88.jpg)](https://p0.ssl.qhimg.com/t015cc408a9080c9c88.jpg)
 
 ****
 
@@ -59,11 +59,11 @@
 
 清空特权进程的SecurityDescriptor，例如winlogon.exe，会导致BugCheck。我们可以通过查找winlogon.exe的EPROCESS和它的SecurityDescriptor来验证这一点：
 
-[![](https://p2.ssl.qhimg.com/t0194c68da7df4ef1df.png)](https://p2.ssl.qhimg.com/t0194c68da7df4ef1df.png)
+[![](https://p3.ssl.qhimg.com/t0194c68da7df4ef1df.png)](https://p3.ssl.qhimg.com/t0194c68da7df4ef1df.png)
 
 手动设置为0，模拟shellcode，得到：
 
-[![](https://p4.ssl.qhimg.com/t01c97506d3716012a4.png)](https://p4.ssl.qhimg.com/t01c97506d3716012a4.png)
+[![](https://p3.ssl.qhimg.com/t01c97506d3716012a4.png)](https://p3.ssl.qhimg.com/t01c97506d3716012a4.png)
 
 然后出现蓝屏死机：
 
@@ -77,11 +77,11 @@
 
 既然我们不能完全删除ACL，我们就必须想办法如何去修改它。ACL由很多部分组成，主要结构来自于MSDN上定义的_SECURITY_DESCRIPTOR，如下图：
 
-[![](https://p4.ssl.qhimg.com/t017ab02fe4bb8a485c.png)](https://p4.ssl.qhimg.com/t017ab02fe4bb8a485c.png)
+[![](https://p1.ssl.qhimg.com/t017ab02fe4bb8a485c.png)](https://p1.ssl.qhimg.com/t017ab02fe4bb8a485c.png)
 
 我们注意到DACL或任意访问控制列表，它指定了特定用户对对象的访问权，在本例子中为winlogon.exe。根据MSDN，ACL具有以下的结构：
 
-[![](https://p1.ssl.qhimg.com/t0121c0c3ef0e7e18de.png)](https://p1.ssl.qhimg.com/t0121c0c3ef0e7e18de.png)
+[![](https://p4.ssl.qhimg.com/t0121c0c3ef0e7e18de.png)](https://p4.ssl.qhimg.com/t0121c0c3ef0e7e18de.png)
 
 ACL对象只是一个header，实际内容是在随后的访问控制条目或ACE中。对于DACL，有两种类型的ACE，ACCESS_ALLOWED_ACE和ACCESS_DENIED_ACE，我们对ACCESS_ALLOWED_ACE更感兴趣。ACCESS_ALLOWED_ACE具有以下的结构：
 
@@ -91,23 +91,23 @@ ACCESS_ALLOWED_ACE通过ACCESS_MASK显示某个SID拥有哪些权限。
 
 总结来说，SecurityDescriptor指针指向一个SECURITY_DESCRIPTOR对象，该对象包含具有一个或多个ACCESS_ALLOWED_ACE结构的DACL。有相当多的结构需要理清，可以使用！sd命令将其全部转储在WinDBG中。！sd将SecurityDescriptor指针作为参数。 我们可以找到SecurityDescriptor指针，如下图所示：
 
-[![](https://p3.ssl.qhimg.com/t01e463f657708cb0df.png)](https://p3.ssl.qhimg.com/t01e463f657708cb0df.png)
+[![](https://p4.ssl.qhimg.com/t01e463f657708cb0df.png)](https://p4.ssl.qhimg.com/t01e463f657708cb0df.png)
 
 但是当调用！sd命令时，我们遇到了如下问题：
 
-[![](https://p5.ssl.qhimg.com/t011cd32e06c21f86b9.png)](https://p5.ssl.qhimg.com/t011cd32e06c21f86b9.png)
+[![](https://p4.ssl.qhimg.com/t011cd32e06c21f86b9.png)](https://p4.ssl.qhimg.com/t011cd32e06c21f86b9.png)
 
 低位实际上是一个快速引用，在x64的情况下为4位，所以我们必须将它们置零，然后就能得到正确的结果：
 
-[![](https://p3.ssl.qhimg.com/t01ae1203529f751ce8.png)](https://p3.ssl.qhimg.com/t01ae1203529f751ce8.png)
+[![](https://p0.ssl.qhimg.com/t01ae1203529f751ce8.png)](https://p0.ssl.qhimg.com/t01ae1203529f751ce8.png)
 
 我们从转储中得到很多信息。首先DACL的AceCount是2，这意味着它包含两个ACE，而且两个都是ACCESS_ALLOWED_ACE。一个用于NT AUTHORITY  SYSTEM，另一个用于BUILTIN  Administrators。它还显示SYSTEM对该进程拥有全部权限。有很多路线可以实现访问winlogon.exe，对于我来说，我想把SYSTEM权利给其他人。我的想法是更改SYSTEM SID到低特权组，然后给此组别里的任何成员该进程的全部权限。我们需要在内存中找到该ACE的SID。回到结构，DACL ACL结构应该在offset 0x20处，从WinDBG中可以看出：
 
-[![](https://p5.ssl.qhimg.com/t01ef791942eeebf857.png)](https://p5.ssl.qhimg.com/t01ef791942eeebf857.png)
+[![](https://p0.ssl.qhimg.com/t01ef791942eeebf857.png)](https://p0.ssl.qhimg.com/t01ef791942eeebf857.png)
 
 转储ACL结构，得出：
 
-[![](https://p2.ssl.qhimg.com/t0154de2e2753474845.png)](https://p2.ssl.qhimg.com/t0154de2e2753474845.png)
+[![](https://p0.ssl.qhimg.com/t0154de2e2753474845.png)](https://p0.ssl.qhimg.com/t0154de2e2753474845.png)
 
 这显然是错误的，因为我们看到DACL只有两个ACE。我发现在offset 0x30处转储，能得出正确的结果，这使我想到显示的符号不是最新的：
 
@@ -115,27 +115,27 @@ ACCESS_ALLOWED_ACE通过ACCESS_MASK显示某个SID拥有哪些权限。
 
 不幸的是，ACE结构的符号不存在，所以剩下的必须通过十六进制转储，在offset 0x30处我们发现：
 
-[![](https://p5.ssl.qhimg.com/t014679c2b40a41453c.png)](https://p5.ssl.qhimg.com/t014679c2b40a41453c.png)
+[![](https://p2.ssl.qhimg.com/t014679c2b40a41453c.png)](https://p2.ssl.qhimg.com/t014679c2b40a41453c.png)
 
 ACL header占用8个字节，然后是每个ACE。每个ACE都以ACE_HEADER开始，根据MSDN，结构如下图：
 
-[![](https://p2.ssl.qhimg.com/t0108062ad53b2f49e0.png)](https://p2.ssl.qhimg.com/t0108062ad53b2f49e0.png)
+[![](https://p5.ssl.qhimg.com/t0108062ad53b2f49e0.png)](https://p5.ssl.qhimg.com/t0108062ad53b2f49e0.png)
 
 这说明它的大小为4字节，然后是Mask，Mask只是一个DWORD，在本例子中为0x1FFFFF，最后是SID，SID从SecurityDescriptor的offset 0x40处开始。从上面的！sd命令，我们注意到第一个SID是S-1-5-18，这匹配我们有的十六进制数据，1在offset 0x41处，5在offset 0x47处，18或0x12在offset 0x48处。现在我们知道了拥有进程所有权限的SID所在的位置，以及它在内存中的结构。问题的关键是如何修改它，查找全局的SID我们发现S-1-5-11是已通过身份验证的用户SID，也就是我们自己。然后我们只需要将一个字节从0x12更改为0xb，我们便能将用户从SYSTEM更改为Authenticated Users（已通过身份验证的用户），如下图所示：
 
-[![](https://p3.ssl.qhimg.com/t01ad646dbd87da9818.png)](https://p3.ssl.qhimg.com/t01ad646dbd87da9818.png)
+[![](https://p0.ssl.qhimg.com/t01ad646dbd87da9818.png)](https://p0.ssl.qhimg.com/t01ad646dbd87da9818.png)
 
 进程管理器也向我们展示了相同的结果：
 
-[![](https://p0.ssl.qhimg.com/t0142b4bb1920d514a7.png)](https://p0.ssl.qhimg.com/t0142b4bb1920d514a7.png)
+[![](https://p4.ssl.qhimg.com/t0142b4bb1920d514a7.png)](https://p4.ssl.qhimg.com/t0142b4bb1920d514a7.png)
 
 按照惯例下一步是在winlogon.exe中创建一个线程，并用SYSTEM权限运行usermode shellcode。但是，当我们尝试操作的时候出现了错误：
 
-[![](https://p0.ssl.qhimg.com/t0165ace73a41b21920.png)](https://p0.ssl.qhimg.com/t0165ace73a41b21920.png)
+[![](https://p5.ssl.qhimg.com/t0165ace73a41b21920.png)](https://p5.ssl.qhimg.com/t0165ace73a41b21920.png)
 
 我们没有权限处理进程，因为winlogon.exe在一个比Shellcode.exe进程更高的完整性级别上运行，所以即便我们是已通过身份验证的用户组的成员，并且对winlogon.exe有完全控制权，我们也无法处理进程，因为我们目前的完整性级别较低。这个问题不是来自winlogon.exe，而是来自我们自己的进程，以及我们的token。当前进程的token位于EPROCESS的offset 0x358处，如下图所示：
 
-[![](https://p1.ssl.qhimg.com/t01e9161a16f92a56ce.png)](https://p1.ssl.qhimg.com/t01e9161a16f92a56ce.png)
+[![](https://p0.ssl.qhimg.com/t01e9161a16f92a56ce.png)](https://p0.ssl.qhimg.com/t01e9161a16f92a56ce.png)
 
 我们注意到指向token的指针是一个快速引用，所以我们需要忽略低4位，然后我们得到：
 
@@ -143,11 +143,11 @@ ACL header占用8个字节，然后是每个ACE。每个ACE都以ACE_HEADER开�
 
 在本例中， MandatoryPolicy很有趣：
 
-[![](https://p1.ssl.qhimg.com/t0100c17fc15554d4b5.png)](https://p1.ssl.qhimg.com/t0100c17fc15554d4b5.png)
+[![](https://p2.ssl.qhimg.com/t0100c17fc15554d4b5.png)](https://p2.ssl.qhimg.com/t0100c17fc15554d4b5.png)
 
 值0x3显示TOKEN_MANDATORY_POLICY_NO_WRITE_UP标志已经设置了，这意味着我们不能访问具有比当前级别更高的完整性级别的对象。我们还注意到，如果这个值变为0，我们将被允许执行此操作。在调试器中手动修改，结果如下：
 
-[![](https://p2.ssl.qhimg.com/t01b25964ff4301fc4d.png)](https://p2.ssl.qhimg.com/t01b25964ff4301fc4d.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t01b25964ff4301fc4d.png)
 
 很明显，通过修改这两个字节，我们将能够注入代码到winlogon.exe，就像NULL ACL。
 
@@ -157,23 +157,23 @@ ACL header占用8个字节，然后是每个ACE。每个ACE都以ACE_HEADER开�
 
 我们的做法是首先从GS寄存器中找到KTHREAD，然后从offset 0x220找到EPROCESS：
 
-[![](https://p5.ssl.qhimg.com/t01ce48010285e388df.png)](https://p5.ssl.qhimg.com/t01ce48010285e388df.png)
+[![](https://p4.ssl.qhimg.com/t01ce48010285e388df.png)](https://p4.ssl.qhimg.com/t01ce48010285e388df.png)
 
 在EPROCSS的offset 0x450处，我们找到了进程可执行文件的名称：
 
-[![](https://p4.ssl.qhimg.com/t017fca20af17b18ecd.png)](https://p4.ssl.qhimg.com/t017fca20af17b18ecd.png)
+[![](https://p2.ssl.qhimg.com/t017fca20af17b18ecd.png)](https://p2.ssl.qhimg.com/t017fca20af17b18ecd.png)
 
 我们可以使用它来循环访问所有的EPROCESSES，直到我们找到正确的那一个，这可以通过搜索名称的前4个字节来完成：
 
-[![](https://p1.ssl.qhimg.com/t01f003513c9d11510d.png)](https://p1.ssl.qhimg.com/t01f003513c9d11510d.png)
+[![](https://p0.ssl.qhimg.com/t01f003513c9d11510d.png)](https://p0.ssl.qhimg.com/t01f003513c9d11510d.png)
 
 实现过程如下：
 
-[![](https://p5.ssl.qhimg.com/t0186485d11c9766724.png)](https://p5.ssl.qhimg.com/t0186485d11c9766724.png)
+[![](https://p3.ssl.qhimg.com/t0186485d11c9766724.png)](https://p3.ssl.qhimg.com/t0186485d11c9766724.png)
 
 一旦我们定位到winlogon.exe的EPROCESS，我们就找到了它的SecurityDescriptor，删除快速引用，并将offset 0x48处的字节更改为0xb：
 
-[![](https://p0.ssl.qhimg.com/t018f782fdf06bc5cfe.png)](https://p0.ssl.qhimg.com/t018f782fdf06bc5cfe.png)
+[![](https://p1.ssl.qhimg.com/t018f782fdf06bc5cfe.png)](https://p1.ssl.qhimg.com/t018f782fdf06bc5cfe.png)
 
 现在我们需要更改被利用进程的MandatoryPolicy，我们已经有了EPROCESS地址，所以接下来我们找到了Token指针，删除了快速引用，并将offset 0xd4处的字节更改为0：
 

@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **114911**
+                                **114974**
                             
                         |
                         
@@ -71,7 +71,7 @@ Z24UY3F0IYDULRD.sct为Scriptletfile，其主要功能为通过WScript.Shell接�
 
 释放的qrat.exe为C#编译的Dropper，使用.NET Reactor 4.x加壳，程序内的Form1.dllcopy函数负责从资源中释放出Microsoft.Win32.TaskScheduler.dll，并释放到同目录下，Form1.Stask函数则设置计划任务，而Form1.execopy负责从资源中释放文件到：%appdata%\Microsoft Network\microsoft_network\1.0.0.0\ microsoft_network.exe，最后删除自身以及Microsoft.Win32.TaskScheduler.dll并退出：
 
-[![](https://p0.ssl.qhimg.com/t01dc1804d179410e56.png)](https://p0.ssl.qhimg.com/t01dc1804d179410e56.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t01dc1804d179410e56.png)
 
 [![](https://p0.ssl.qhimg.com/t017a4f6a8252145405.png)](https://p0.ssl.qhimg.com/t017a4f6a8252145405.png)
 
@@ -89,11 +89,11 @@ microsoft_network.exe由C++编译，其会从从资源取数据，每1024字节�
 
 解密算法：
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p2.ssl.qhimg.com/t0156646848225ad10d.png)
+[![](https://p2.ssl.qhimg.com/t0156646848225ad10d.png)](https://p2.ssl.qhimg.com/t0156646848225ad10d.png)
 
 解密后的数据通过zlib解压：
 
-[![](https://p1.ssl.qhimg.com/t0119863c6ac362fbe6.png)](https://p1.ssl.qhimg.com/t0119863c6ac362fbe6.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t0119863c6ac362fbe6.png)
 
 解压后的PE为C#编写的DLL文件：
 
@@ -101,7 +101,7 @@ microsoft_network.exe由C++编译，其会从从资源取数据，每1024字节�
 
 最后通过CLR寄宿在C++的进程空间中加载C# DLL程序，调用类名为”_._”中”___”函数：
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p3.ssl.qhimg.com/t016ed18bc75db5ddbe.png)
+[![](https://p3.ssl.qhimg.com/t016ed18bc75db5ddbe.png)](https://p3.ssl.qhimg.com/t016ed18bc75db5ddbe.png)
 
 通过“___” 函数加载资源“_”并运行：
 
@@ -115,13 +115,13 @@ microsoft_network.exe由C++编译，其会从从资源取数据，每1024字节�
 
 使用GitHub上下载的xRAT客户端源码进行编译，并劫持上线域名到本地成功上线：
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t01f6f293cf9456e099.png)
+[![](https://p1.ssl.qhimg.com/t01f6f293cf9456e099.png)](https://p1.ssl.qhimg.com/t01f6f293cf9456e099.png)
 
 #### 远控功能
 
 样本运行后，首先利用AES算法解密自身的配置文件：
 
-[![](https://p0.ssl.qhimg.com/t01d3a7710bc1362c02.png)](https://p0.ssl.qhimg.com/t01d3a7710bc1362c02.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t01d3a7710bc1362c02.png)
 
 解密后的配置信息：
 
@@ -161,7 +161,7 @@ winfont.exe为文档收集模块，主要功能为遍历计算机目录获取特
 
 而在定时器函数内部，首先会获取过滤文件的后缀进行解密，解密前的文件夹名称字符串和文件类型字符串存储于TFORM1窗口中不同的TlistBox控件处，并通过发送类型为LB_GETTEXT消息到指定窗口，获取字符串进行解密：
 
-[![](https://p4.ssl.qhimg.com/t01580c67901217c128.png)](https://p4.ssl.qhimg.com/t01580c67901217c128.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p4.ssl.qhimg.com/t01580c67901217c128.png)
 
 字符串解密算法为将字符串”odsf””qdsd”反转、拼接操作后，和0x1F按位与运算作为密钥，解密字符串：
 
@@ -267,11 +267,11 @@ vsrss.exe是一个下载执行模块，该模块会先创建自身的快捷方�
 
 下图为生成字典的代码：
 
-[![](https://p1.ssl.qhimg.com/t0119f32ded6965d8b2.png)](https://p1.ssl.qhimg.com/t0119f32ded6965d8b2.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t0119f32ded6965d8b2.png)
 
 下图为和生成的字典运算生成加密数据的代码：
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p5.ssl.qhimg.com/t018080d935b9c9935d.png)
+[![](https://p5.ssl.qhimg.com/t018080d935b9c9935d.png)](https://p5.ssl.qhimg.com/t018080d935b9c9935d.png)
 
 定时器的内部的功能为每间隔240000ms执行一次请求URL操作，如果返回的数据是需要下载执行的，就会从返回的数据里取到URL下载文件并执行：
 

@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **78836**
+                                **78885**
                             
                         |
                         
@@ -23,7 +23,7 @@
 
 
 
-**[![](https://p2.ssl.qhimg.com/t0121fc522c0182beda.jpg)](https://p2.ssl.qhimg.com/t0121fc522c0182beda.jpg)**
+**[![](https://p4.ssl.qhimg.com/t0121fc522c0182beda.jpg)](https://p4.ssl.qhimg.com/t0121fc522c0182beda.jpg)**
 
 **翻译：**[**pwn_361******](http://bobao.360.cn/member/contribute?uid=2798962642)
 
@@ -53,11 +53,11 @@
 
 我们分析DHS提供的PHP恶意样本数据。同时，我们也试图找到完整的恶意样本。我们发现攻击者试图用它来感染WordPress网站，还好，我们成功发现了完整的恶意样本，并过滤出来了。下面就是。
 
-[![](https://p4.ssl.qhimg.com/t01f445e37a57d36b20.png)](https://p4.ssl.qhimg.com/t01f445e37a57d36b20.png)
+[![](https://p0.ssl.qhimg.com/t01f445e37a57d36b20.png)](https://p0.ssl.qhimg.com/t01f445e37a57d36b20.png)
 
 上图是头部，下图是尾部。中间包含了一个加密的文本块。
 
-[![](https://p5.ssl.qhimg.com/t016ffcc74be43f2112.png)](https://p5.ssl.qhimg.com/t016ffcc74be43f2112.png)
+[![](https://p1.ssl.qhimg.com/t016ffcc74be43f2112.png)](https://p1.ssl.qhimg.com/t016ffcc74be43f2112.png)
 
 这是上传到一个服务器上的PHP恶意软件。攻击者可以通过浏览器访问、并需要输入一个密码。这个密码同时也是一个解密密钥，这个密钥会解密中间的加密块，然后执行解密的块。一旦攻击者输入了他们的密码，会自动存储一个cookie，以后攻击者再访问PHP恶意软件时，就不用再输入密码了。
 
@@ -69,7 +69,7 @@
 
 我们将这个WEBSHELL安装到了沙盒环境中，下面是它的界面：
 
-[![](https://p2.ssl.qhimg.com/t01b49ebff2a8660013.png)](https://p2.ssl.qhimg.com/t01b49ebff2a8660013.png)
+[![](https://p5.ssl.qhimg.com/t01b49ebff2a8660013.png)](https://p5.ssl.qhimg.com/t01b49ebff2a8660013.png)
 
 这种类型的WEBSHELL，我们经常能看到，它包含了以下几个基本功能：
 
@@ -91,29 +91,29 @@
 
 我们在GOOGLE上搜索了该恶意软件，发现有一个网站可以在线生成这个恶意软件(目前已经无法访问到)。
 
-[![](https://p1.ssl.qhimg.com/t012df842d193281a55.png)](https://p1.ssl.qhimg.com/t012df842d193281a55.png)
+[![](https://p2.ssl.qhimg.com/t012df842d193281a55.png)](https://p2.ssl.qhimg.com/t012df842d193281a55.png)
 
 你可以在网页中输入一个密码，这个密码就是生成的PHP恶意软件的密码。然后点击“download”按键，可以下载一个ZIP文件。文件中包含了一个TXT文件和该PHP恶意软件。
 
-[![](https://p3.ssl.qhimg.com/t018ad5fc2a2be1cde5.png)](https://p3.ssl.qhimg.com/t018ad5fc2a2be1cde5.png)
+[![](https://p4.ssl.qhimg.com/t018ad5fc2a2be1cde5.png)](https://p4.ssl.qhimg.com/t018ad5fc2a2be1cde5.png)
 
 这个网站声称该PHP恶意软件是乌克兰人制作的，同时，PHP恶意代码的底部有乌克兰的国家代码“UA”。
 
 不过，在网站上生成的PHP恶意软件版本是3.1.7，这比DHS声称的版本(3.1.0)要新，不过，这两个版本的PHP恶意软件代码相差不多，下图是3.1.7版本的头部：
 
-[![](https://p1.ssl.qhimg.com/t013f96f3122e08d289.png)](https://p1.ssl.qhimg.com/t013f96f3122e08d289.png)
+[![](https://p0.ssl.qhimg.com/t013f96f3122e08d289.png)](https://p0.ssl.qhimg.com/t013f96f3122e08d289.png)
 
 下图是尾部：
 
-[![](https://p0.ssl.qhimg.com/t0101b7b9d8cbac8361.png)](https://p0.ssl.qhimg.com/t0101b7b9d8cbac8361.png)
+[![](https://p3.ssl.qhimg.com/t0101b7b9d8cbac8361.png)](https://p3.ssl.qhimg.com/t0101b7b9d8cbac8361.png)
 
 但是这个PAS恶意软件从3.1.7以后有了更深的发展，新版本是4.1.1b，可以从相同的网站中得到：
 
-[![](https://p3.ssl.qhimg.com/t019b84810acd4b43a5.png)](https://p3.ssl.qhimg.com/t019b84810acd4b43a5.png)
+[![](https://p5.ssl.qhimg.com/t019b84810acd4b43a5.png)](https://p5.ssl.qhimg.com/t019b84810acd4b43a5.png)
 
 下面是4.1.1b版本的info.txt文件的内容：
 
-[![](https://p2.ssl.qhimg.com/t01f4a1f13d64a0bde9.png)](https://p2.ssl.qhimg.com/t01f4a1f13d64a0bde9.png)
+[![](https://p3.ssl.qhimg.com/t01f4a1f13d64a0bde9.png)](https://p3.ssl.qhimg.com/t01f4a1f13d64a0bde9.png)
 
 并且，4.1.1b版本的代码变化相当大，下图是它的头部：
 
@@ -125,7 +125,7 @@
 
 下面是DHS的PAS 3.1.0样本的一个典型感染过程：
 
-[![](https://p1.ssl.qhimg.com/t01243529c6e3acd745.png)](https://p1.ssl.qhimg.com/t01243529c6e3acd745.png)
+[![](https://p5.ssl.qhimg.com/t01243529c6e3acd745.png)](https://p5.ssl.qhimg.com/t01243529c6e3acd745.png)
 
 上面是一个HTTP请求，包含了需要上传的PAS 3.1.0恶意软件，利用了WordPress正常插件更新机制。让我们感到惊奇的是这个请求有完整的cookies，表明这个帐号或机器已经是登录的，且这很有可能是一个实际的WEB浏览器。
 
@@ -157,19 +157,19 @@ DHST和DNI发布的联合声明是这样说的：
 
 DNS提供了876个IP地址，作为攻陷标志的一部分。让我们看一看这些IP地址位于哪里，下图显示了IP地址按国家排列的分布情况：
 
-[![](https://p4.ssl.qhimg.com/t0103dbba5e35f11667.png)](https://p4.ssl.qhimg.com/t0103dbba5e35f11667.png)
+[![](https://p1.ssl.qhimg.com/t0103dbba5e35f11667.png)](https://p1.ssl.qhimg.com/t0103dbba5e35f11667.png)
 
 正如你看到的，它们分布在全球范围内，美国占了很大一部分。
 
 下图是按ISP排列的部分结果：
 
-[![](https://p1.ssl.qhimg.com/t018e37221e83bf3be6.png)](https://p1.ssl.qhimg.com/t018e37221e83bf3be6.png)
+[![](https://p2.ssl.qhimg.com/t018e37221e83bf3be6.png)](https://p2.ssl.qhimg.com/t018e37221e83bf3be6.png)
 
 还有几个托管公司，如[OVH SAS](https://www.ovh.com/us/)，[Digital Ocean](https://www.digitalocean.com/)，[Linode](https://www.linode.com/)和[Hetzner](https://www.hetzner.de/fi/)。这些托管公司给WordPress用户和其他PHP应用软件用户提供低成本的托管服务。我们在业内可以看到一个黑客攻击的常见模式，就是托管主机上的帐户被攻破，然后被用于在网上发动攻击。
 
 在876个IP地址之外，DHS还提供了134个其他IP，占15%，全是是TOR的出口节点IP。这些是匿名网关，可以为任何人提供匿名浏览服务。
 
-[![](https://p0.ssl.qhimg.com/t01ca2f1be86159d643.png)](https://p0.ssl.qhimg.com/t01ca2f1be86159d643.png)
+[![](https://p5.ssl.qhimg.com/t01ca2f1be86159d643.png)](https://p5.ssl.qhimg.com/t01ca2f1be86159d643.png)
 
 我们检查了我们的攻击数据库，想看一看DHS提供的IP有哪些同时在攻击 Wordfence用户的网站。我们在过去60天内总共发现了385个活跃的IP地址。这些IP地址在60天内发起了21095492次复杂的攻击，这些攻击都被[Wordfence](https://www.wordfence.com/)防火墙拦截了。我们认为攻击者的每一次复杂的攻击，都有可能是在尝试利用一个漏洞，用于获取目标的权限。
 
@@ -177,11 +177,11 @@ DNS提供了876个IP地址，作为攻陷标志的一部分。让我们看一看
 
 下面的图表显示了每个IP地址的攻击次数分布。这只考虑了复杂的攻击。正如你看到的，根据我们的监测，一小部分DHS提供的IP需要对这一时间被攻击的大部分WordPress网站负责。
 
-[![](https://p0.ssl.qhimg.com/t01005fe69cde7707a6.png)](https://p0.ssl.qhimg.com/t01005fe69cde7707a6.png)
+[![](https://p2.ssl.qhimg.com/t01005fe69cde7707a6.png)](https://p2.ssl.qhimg.com/t01005fe69cde7707a6.png)
 
 下面是过去60天内，DHS报告提供的IP地址中，按复杂攻击次数排序的前50个IP地址。
 
-[![](https://p0.ssl.qhimg.com/t01fa1fa76eb593b21b.png)](https://p0.ssl.qhimg.com/t01fa1fa76eb593b21b.png)
+[![](https://p3.ssl.qhimg.com/t01fa1fa76eb593b21b.png)](https://p3.ssl.qhimg.com/t01fa1fa76eb593b21b.png)
 
 正如你看到的，有很多排名靠前的IP址是TOR的出口节点IP。根据我们的监测，还有一此相对较少的IP地址，发动了大多数对网站的攻击。
 
