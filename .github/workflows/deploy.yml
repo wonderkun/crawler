@@ -13,6 +13,7 @@ env:
   GIT_EMAIL: dekunwang2014@gmail.com
   DEPLOY_REPO: wonderkun/crawler
   DEPLOY_BRANCH: code
+  THEME_BRANCH: master
 
 jobs:
   build:
@@ -33,7 +34,7 @@ jobs:
         with:
           repository: ${{ env.DEPLOY_REPO }}
           ref: ${{ env.DEPLOY_BRANCH }}
-          path: crawler
+          path: code
       
       - name: Setup python ${{ matrix.python_version }}
         uses: actions/setup-python@v2
@@ -44,7 +45,7 @@ jobs:
       - name: Set pip 
         uses: BSFishy/pip-action@v1
         with:
-          requirements: ./crawler/.code/requirements.txt
+          requirements: ./code/.code/requirements.txt
 
       - name: Setup chromedriver ${{ matrix.chrome_version }}
         uses: nanasess/setup-chromedriver@master
@@ -62,15 +63,20 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
-          cd ./crawler/.code/
+          cd ./code/.code/
           python main.py
-      
+
+      - name: Checkout master repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ env.DEPLOY_REPO }}
+          ref: ${{ env.THEME_BRANCH }}
+          path: master
+
       - name: Deploy github
         run: |
-          cd ./crawler/ 
-          git fetch origin master:refs/remotes/origin/master
+          cp -rf ./code/* ./master
+          cd ./master 
           git add . 
           git commit -m "update blog"
-          git checkout master
-          git merge code --no-commit
           git push git@github.com:wonderkun/crawler.git master:master
