@@ -1,0 +1,542 @@
+<div class="main-topic">
+    <div class="clearfix user-info topic-list">
+        <p><span class="content-title ">智能合约变量储存机制详解</span>
+        </p>
+        <div class="topic-info">
+            <span class="info-left">
+                <a href="/u/34634">
+                    <span class="username cell"> zpan</span></a> <span class="i-seprator"> / </span>
+                <span> 2021-07-16 13:19:41</span><span class="i-seprator"> / </span>
+                <span>浏览数 518</span>
+
+
+                <span class="content-node">
+
+                    <span class="label label-default label-node-first">
+                        <a href="/tab/1">安全技术</a></span>
+                    <span class="label label-default">
+                        <a href="/node/24">区块链安全</a></span>
+
+                </span>
+            </span>
+            <span class="pull-right t-vote cell info-right"><a class="vote vote-up" href="javascript:"
+                    onclick="voteUp(9837);">
+                    顶(1)</a>
+                <a class="vote vote-down" href="javascript:" onclick="voteDown(9837);">
+                    踩(0)</a></span>
+        </div>
+    </div>
+    <hr>
+    <div id="topic_content" class="topic-content markdown-body">
+        <h1 id="toc-0">0x01 前言</h1>
+        <p>最近在研究以太坊存储机制，写一篇文章总结一下</p>
+        <h1 id="toc-1">0x02 存储机制</h1>
+        <p>每个在以太坊虚拟机（EVM）中运行的智能合约的状态都在链上永久地存储着。这些值存储在一个巨大的数组中，数组的长度为2^256，下标从零开始且每一个数组能够储存32字节(256个比特)长度的值。并且存储是稀疏的，并没有那么密集。
+        </p>
+        <h1 id="toc-2">0x03 变量类型</h1>
+        <p>Solidity的数据变量类型分为两类</p>
+        <ul>
+            <li>值类型-value type</li>
+            <li>引用类型-reference type</li>
+        </ul>
+        <p>下面列举常用的变量类型</p>
+        <h2 id="toc-3">值类型</h2>
+        <ul>
+            <li>布尔型(bool) 2bit(0/1)</li>
+            <li>整型(int/uint) 根据关键字的不同表示不同长度，int8表示8bits有符号数</li>
+            <li>定长浮点型(fixed/ufixed) Solidity 还没有完全支持定长浮点型。可以声明定长浮点型的变量，但不能给它们赋值或把它们赋值给其他变量</li>
+            <li>地址类型(adress) 160bits</li>
+            <li>地址类型成员变量(balance,transfer....) 
+                <ul>
+                    <li>.balance uint256(256bits)</li>
+                    <li>transfer() uint256(256bits)</li>
+                </ul>
+            </li>
+            <li>定长字节数组(byte[1]/bytes[1]) 定义数组时定义长度</li>
+        </ul>
+        <h2 id="toc-4">引用类型</h2>
+        <ul>
+            <li>
+                <p>不定长字节数组类型(bytes[]/byte[],string,uint[]....)</p>
+            </li>
+            <li>
+                <p>结构体(struct)</p>
+            </li>
+            <li>映射(mapping)</li>
+        </ul>
+        <h1 id="toc-5">0x04 简单分析</h1>
+        <p>写一个简单值类型的合约</p>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+    <span class="nx">bool</span> <span class="nx">a</span><span class="o">=</span><span class="kc">false</span><span class="p">;</span>
+    <span class="nx">bool</span> <span class="nx">b</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span>
+    <span class="nx">int16</span> <span class="nx">c</span><span class="o">=</span><span class="mi">32767</span><span class="p">;</span>
+    <span class="nx">uint16</span> <span class="nx">d</span><span class="o">=</span><span class="mh">0x32</span><span class="p">;</span>
+    <span class="kr">byte</span> <span class="nx">e</span><span class="o">=</span><span class="mi">10</span><span class="p">;</span>
+    <span class="nx">bytes1</span> <span class="nx">f</span><span class="o">=</span><span class="mi">11</span><span class="p">;</span>
+    <span class="nx">bytes2</span> <span class="nx">g</span><span class="o">=</span><span class="mi">22</span><span class="p">;</span>
+    <span class="nx">uint</span> <span class="nx">h</span><span class="o">=</span><span class="mh">0x1</span><span class="p">;</span> <span class="c1">//uint是uint256的简称</span>
+    <span class="nx">address</span> <span class="nx">i</span><span class="o">=</span><span class="mh">0xbc6581e11c216B17aDf5192E209a7F95a49e6837</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+        </div>
+        <p>优化存储原则：如果下一个变量长度和上一个变量长度加起来不超过256bits，它们就会存储在同一个插槽里</p>
+        <p><a id="img0" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230404-bc85945e-dffd-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230404-bc85945e-dffd-1.png"></a></p>
+        <p>根据<a href="https://ropsten.etherscan.io/tx/0xf9c22d427b6fdd2e3f29346104fd2f2b1badd318e86debea444adcdba37f821d#statechange"
+                target="_blank">交易查询</a>到的存储在以太坊虚拟机上面的值，下面进行分析</p>
+        <div class="highlight">
+            <pre><span></span><span class="mh">0x0000000000000000000000000000000000000000000000160b0a00327fff0100</span> <span class="nx">slot0</span>
+<span class="c1">//0x00 a false</span>
+<span class="c1">//0x01 b true</span>
+<span class="c1">//0x7fff c 32767</span>
+<span class="c1">//0x0032 d 0x32</span>
+<span class="c1">//0x0a e 10</span>
+<span class="c1">//0x0b f 11</span>
+<span class="c1">//0x0016 g 22</span>
+<span class="mh">0x0000000000000000000000000000000000000000000000000000000000000001</span> <span class="nx">slot1</span>
+<span class="c1">// h 0x1</span>
+<span class="mh">0x000000000000000000000000bc6581e11c216b17adf5192e209a7f95a49e6837</span> <span class="nx">slot2</span>
+<span class="c1">// i 0x2</span>
+</pre>
+        </div>
+        <p>从上面可以看出</p>
+        <ul>
+            <li>各个类型的存储长度</li>
+            <li>存储顺序从后往前</li>
+            <li>存储优化原则</li>
+            <li>byte.length==bytes1.length==8bits</li>
+        </ul>
+        <h1 id="toc-6">0x05 数组类型</h1>
+        <h2 id="toc-7">定长数组</h2>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+
+    <span class="nx">bytes8</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="kr">byte</span><span class="p">(</span><span class="mh">0x6a</span><span class="p">),</span><span class="mh">0x68</span><span class="p">,</span><span class="mh">0x79</span><span class="p">,</span><span class="mh">0x75</span><span class="p">];</span>
+    <span class="nx">bool</span> <span class="nx">b</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+        </div>
+        <p><a id="img1" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230552-fca9c172-dffd-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230552-fca9c172-dffd-1.png"></a></p>
+        <p>可以看的我虽然规定了了长度为5，但是实际上只用了4个，所以就只是用了四个bytes8的空间</p>
+        <p>是不是可以加一个，编译器会报错</p>
+        <p><a id="img2" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230558-000caece-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230558-000caece-dffe-1.png"></a></p>
+        <h2 id="toc-8">变长数组</h2>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+    <span class="nx">uint</span><span class="p">[]</span> <span class="nx">a</span><span class="o">=</span><span class="p">[</span><span class="mh">0x77</span><span class="p">,</span><span class="mh">0x88</span><span class="p">,</span><span class="mh">0x99</span><span class="p">];</span>
+    <span class="kd">function</span> <span class="nx">add</span><span class="p">(){</span>
+        <span class="nx">a</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mh">0x66</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+        </div>
+        <p><a id="img3" href="https://xzfile.aliyuncs.com/media/upload/picture/20210716124702-dd14dbf0-e5f0-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210716124702-dd14dbf0-e5f0-1.png"></a></p>
+        <p><a id="img4" href="https://xzfile.aliyuncs.com/media/upload/picture/20210717205247-e314dbdc-e6fd-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210717205247-e314dbdc-e6fd-1.png"></a></p>
+        <p>根据<a href="https://ropsten.etherscan.io/tx/0xf15acc653de386bc58eb1b9d83ad4afb6b6cf0f57560786076d4d86579b77c1f#statechange"
+                target="_blank">交易查询</a>到的存储在以太坊虚拟机上面的值，下面进行分析</p>
+        <div class="highlight">
+            <pre><span></span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000003</span> <span class="nx">slot0</span>
+<span class="c1">//存储的是数组a的长度3</span>
+<span class="mh">0x0000000000000000000000000000000000000000000000000000000000000077</span> <span class="nx">slotx</span>
+<span class="c1">//a[0]</span>
+<span class="mh">0x0000000000000000000000000000000000000000000000000000000000000088</span> <span class="nx">slot</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">//a[1]</span>
+<span class="mh">0x0000000000000000000000000000000000000000000000000000000000000099</span> <span class="nx">slot</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">//a[2]</span>
+</pre>
+        </div>
+        <p>Storage Address的由来 x=keccak_256(slot) slot是指数组长度存储的位置，此处对应的就是0，对应的值就是</p>
+        <blockquote>
+            <p>0x0000000000000000000000000000000000000000000000000000000000000000</p>
+        </blockquote>
+        <div class="highlight">
+            <pre><span></span><span class="kn">import</span> <span class="nn">sha3</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="k">def</span> <span class="nf">byte32</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s1">'</span><span class="si">%064x</span><span class="s1">'</span><span class="o">%</span><span class="n">i</span><span class="p">)</span> <span class="c1">#计算时需要进行填充</span>
+
+<span class="n">a</span><span class="o">=</span><span class="n">sha3</span><span class="o">.</span><span class="n">keccak_256</span><span class="p">(</span><span class="n">byte32</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="c1">#0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563 x</span>
+</pre>
+        </div>
+        <p>此后a[1],a[2]对应偏移1，2个插槽</p>
+        <p>然后我们在调用add()函数看，发生了什么</p>
+        <p><a id="img5" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230822-5624f708-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230822-5624f708-dffe-1.png"></a></p>
+        <p>第一步改变了数组a的长度</p>
+        <p>第二步在a[2]后面的一个插槽写入0x66</p>
+        <h1 id="toc-9">0x06 字符串类型</h1>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+
+    <span class="nx">string</span> <span class="nx">a</span><span class="o">=</span><span class="s1">'whoami'</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre>
+        </div>
+        <p><a id="img6" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230844-63899d7c-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230844-63899d7c-dffe-1.png"></a></p>
+        <div class="highlight">
+            <pre><span></span><span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">b</span><span class="o">=</span><span class="mh">0x77686f616d69</span>
+<span class="k">print</span><span class="p">(</span><span class="n">long_to_bytes</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="c1">#b'whoami'</span>
+<span class="c1">#0xc代表字符串长度 每个字母占2个十六进制位</span>
+</pre>
+        </div>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+
+    <span class="nx">string</span> <span class="nx">a</span><span class="o">=</span><span class="s1">'先知社区'</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre>
+        </div>
+        <p><a id="img7" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230855-69e60796-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230855-69e60796-dffe-1.png"></a></p>
+        <div class="highlight">
+            <pre><span></span><span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">b</span><span class="o">=</span><span class="mh">0xe58588e79fa5e7a4bee58cba</span>
+<span class="k">print</span><span class="p">(</span><span class="n">long_to_bytes</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">))</span>
+<span class="c1">#先知社区</span>
+<span class="c1">#0x18 每个汉字占6个十六进制位</span>
+</pre>
+        </div>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+
+    <span class="nx">string</span> <span class="nx">a</span><span class="o">=</span><span class="s1">'Genius only means hard-working all one\'s life.'</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre>
+        </div>
+        <p><a id="img8" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230907-70d67c52-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230907-70d67c52-dffe-1.png"></a></p>
+        <p>此时的存储方式和数组类似</p>
+        <div class="highlight">
+            <pre><span></span><span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">b</span><span class="o">=</span><span class="mh">0x47656e697573206f6e6c79206d65616e7320686172642d776f726b696e6720616c6c206f6e652773206c6966652e</span>
+<span class="k">print</span><span class="p">(</span><span class="n">long_to_bytes</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="c1">#b"Genius only means hard-working all one's life."</span>
+</pre>
+        </div>
+        <p>思考了一下，比如像下面这样写，调用add函数后会发生什么</p>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+    <span class="nx">string</span> <span class="nx">a</span><span class="o">=</span><span class="s1">'abcdf'</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">add</span><span class="p">(){</span>
+        <span class="nx">a</span><span class="o">=</span><span class="s1">'Genius only means hard-working all one\'s life.'</span><span class="p">;</span> 
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+        </div>
+        <p><a id="img9" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230923-7ac79430-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230923-7ac79430-dffe-1.png"></a></p>
+        <p><a id="img10" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230928-7da75c58-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230928-7da75c58-dffe-1.png"></a></p>
+        <h1 id="toc-10">0x07 结构体类型</h1>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+    <span class="nx">struct</span> <span class="nx">test</span><span class="p">{</span>
+        <span class="nx">bool</span> <span class="nx">a</span><span class="p">;</span>
+        <span class="nx">uint8</span> <span class="nx">b</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">c</span><span class="p">;</span>
+        <span class="nx">string</span> <span class="nx">d</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">test</span> <span class="nx">student</span><span class="o">=</span><span class="nx">test</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span><span class="mh">0x01</span><span class="p">,</span><span class="mh">0xff</span><span class="p">,</span><span class="s1">'abcd'</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre>
+        </div>
+        <p><a id="img11" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230945-875f232a-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230945-875f232a-dffe-1.png"></a></p>
+        <p>依旧按照存储优化原则</p>
+        <ul>
+            <li>a，b slot0</li>
+            <li>c slot1</li>
+            <li>d slot2</li>
+        </ul>
+        <p>如果d超出了32字节，那么此时x=x=keccak_256(2)</p>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+    <span class="nx">struct</span> <span class="nx">test</span><span class="p">{</span>
+        <span class="nx">bool</span> <span class="nx">a</span><span class="p">;</span>
+        <span class="nx">uint8</span> <span class="nx">b</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">c</span><span class="p">;</span>
+        <span class="nx">string</span> <span class="nx">d</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">test</span><span class="p">[]</span> <span class="nx">student</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">add</span><span class="p">(){</span>
+        <span class="nx">student</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">test</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span><span class="mh">0x01</span><span class="p">,</span><span class="mh">0xff</span><span class="p">,</span><span class="s1">'abcd'</span><span class="p">));</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre>
+        </div>
+        <p><a id="img12" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708230957-8edbb488-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708230957-8edbb488-dffe-1.png"></a></p>
+        <p><a id="img13" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708231001-91503c98-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708231001-91503c98-dffe-1.png"></a></p>
+        <p>和变长数组存储类似，只不过以结构体长度为一个存储周期改变</p>
+        <h1 id="toc-11">0x08 映射类型</h1>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+    <span class="nx">mapping</span><span class="p">(</span><span class="nx">address</span><span class="p">=&gt;</span><span class="nx">uint</span><span class="p">)</span> <span class="nx">blance</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">add</span><span class="p">(){</span>
+        <span class="nx">blance</span><span class="p">[</span><span class="mh">0xbc6581e11c216B17aDf5192E209a7F95a49e6837</span><span class="p">]</span><span class="o">=</span><span class="mh">0x01</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+        </div>
+        <p><a id="img14" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708231017-9adbb288-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708231017-9adbb288-dffe-1.png"></a></p>
+        <p>计算的规则是这样的，x=keccak_256(key+slot)</p>
+        <ul>
+            <li>key代表映射类型的关键字</li>
+            <li>slot代表定义映射类型变量对应的插槽</li>
+        </ul>
+        <div class="highlight">
+            <pre><span></span><span class="kn">import</span> <span class="nn">sha3</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="k">def</span> <span class="nf">byte32</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s1">'</span><span class="si">%064x</span><span class="s1">'</span><span class="o">%</span><span class="n">i</span><span class="p">)</span>
+<span class="n">key</span><span class="o">=</span><span class="mh">0xbc6581e11c216B17aDf5192E209a7F95a49e6837</span>
+<span class="n">b</span><span class="o">=</span><span class="n">byte32</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">+</span><span class="n">byte32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">a</span><span class="o">=</span><span class="n">sha3</span><span class="o">.</span><span class="n">keccak_256</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="c1">#21d25f73dd60df1532a052f5f1044cb0f7986a3f609d8674628447c29af248fb</span>
+</pre>
+        </div>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.25</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">TEST</span><span class="p">{</span>
+    <span class="nx">mapping</span><span class="p">(</span><span class="nx">uint8</span><span class="p">=&gt;</span><span class="nx">string</span><span class="p">)</span> <span class="nx">blance</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">add</span><span class="p">(){</span>
+        <span class="nx">blance</span><span class="p">[</span><span class="mh">0xb</span><span class="p">]</span><span class="o">=</span><span class="s2">"Genius only means hard-working all one's life."</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+        </div>
+        <p><a id="img15" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708231030-a280a14c-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708231030-a280a14c-dffe-1.png"></a></p>
+        <div class="highlight">
+            <pre><span></span><span class="kn">import</span> <span class="nn">sha3</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="k">def</span> <span class="nf">byte32</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="s1">'</span><span class="si">%064x</span><span class="s1">'</span><span class="o">%</span><span class="n">i</span><span class="p">)</span>
+<span class="n">key</span><span class="o">=</span><span class="mh">0xb</span>
+<span class="n">b</span><span class="o">=</span><span class="n">byte32</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">+</span><span class="n">byte32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">a</span><span class="o">=</span><span class="n">sha3</span><span class="o">.</span><span class="n">keccak_256</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="c1">#9115655cbcdb654012cf1b2f7e5dbf11c9ef14e152a19d5f8ea75a329092d5a6 slot</span>
+<span class="n">a</span><span class="o">=</span><span class="n">sha3</span><span class="o">.</span><span class="n">keccak_256</span><span class="p">(</span><span class="n">byte32</span><span class="p">(</span><span class="n">slot</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="c1">#3f6f2497fb590e494002b67c712e1fba86767d2906fb8e1ddae48d2b7d91908b</span>
+</pre>
+        </div>
+        <h1 id="toc-12">0x09 综合练习</h1>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">&gt;</span><span class="mf">0.5.0</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">StorageExample6</span> <span class="p">{</span>
+    <span class="nx">uint256</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+    <span class="nx">uint8</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+    <span class="nx">uint128</span> <span class="nx">c</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+    <span class="nx">bool</span> <span class="nx">d</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="nx">uint128</span> <span class="nx">e</span> <span class="o">=</span>  <span class="mi">14</span><span class="p">;</span>
+    <span class="nx">uint256</span><span class="p">[]</span> <span class="kr">public</span> <span class="nx">array</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">401</span><span class="p">,</span><span class="mi">402</span><span class="p">,</span><span class="mi">403</span><span class="p">,</span><span class="mi">405</span><span class="p">,</span><span class="mi">406</span><span class="p">];</span>
+
+    <span class="nx">address</span> <span class="nx">owner</span><span class="p">;</span>
+    <span class="nx">mapping</span><span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">UserInfo</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">users</span><span class="p">;</span>
+    <span class="nx">string</span>  <span class="nx">str</span><span class="o">=</span><span class="s2">"name value"</span><span class="p">;</span>
+
+    <span class="nx">struct</span> <span class="nx">UserInfo</span> <span class="p">{</span>
+        <span class="nx">string</span> <span class="nx">name</span><span class="p">;</span>
+        <span class="nx">uint8</span> <span class="nx">age</span><span class="p">;</span>
+        <span class="nx">uint8</span> <span class="nx">weight</span><span class="p">;</span>
+        <span class="nx">uint256</span><span class="p">[]</span> <span class="nx">orders</span><span class="p">;</span>
+        <span class="nx">uint64</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="nx">lastLogins</span><span class="p">;</span>
+    <span class="p">}</span>
+
+   <span class="nx">constructor</span><span class="p">()</span><span class="kr">public</span> <span class="p">{</span>
+       <span class="nx">owner</span><span class="o">=</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">;</span>
+
+       <span class="nx">addUser</span><span class="p">(</span><span class="nx">owner</span><span class="p">,</span><span class="s2">"admin"</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">120</span><span class="p">);</span>
+   <span class="p">}</span>
+
+   <span class="kd">function</span> <span class="nx">addUser</span><span class="p">(</span><span class="nx">address</span> <span class="nx">user</span><span class="p">,</span><span class="nx">string</span> <span class="nx">memory</span> <span class="nx">name</span><span class="p">,</span><span class="nx">uint8</span> <span class="nx">age</span><span class="p">,</span><span class="nx">uint8</span> <span class="nx">weight</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+       <span class="nx">require</span><span class="p">(</span><span class="nx">age</span><span class="o">&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">age</span> <span class="o">&lt;</span><span class="mi">100</span> <span class="p">,</span><span class="s2">"bad age"</span><span class="p">);</span>
+
+       <span class="nx">uint256</span><span class="p">[]</span> <span class="nx">memory</span> <span class="nx">orders</span><span class="p">;</span>
+       <span class="nx">uint64</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="nx">memory</span> <span class="nx">logins</span><span class="p">;</span>
+
+       <span class="nx">users</span><span class="p">[</span><span class="nx">user</span><span class="p">]</span> <span class="o">=</span> <span class="nx">UserInfo</span><span class="p">({</span>
+           <span class="nx">name</span><span class="o">:</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span>    <span class="nx">age</span><span class="p">,</span>  <span class="nx">weight</span><span class="o">:</span><span class="nx">weight</span><span class="p">,</span>
+           <span class="nx">orders</span><span class="o">:</span><span class="nx">orders</span><span class="p">,</span>  <span class="nx">lastLogins</span><span class="o">:</span><span class="nx">logins</span>
+       <span class="p">});</span>
+   <span class="p">}</span>
+   <span class="kd">function</span> <span class="nx">addLog</span><span class="p">(</span><span class="nx">address</span> <span class="nx">user</span><span class="p">,</span><span class="nx">uint64</span> <span class="nx">id1</span><span class="p">,</span><span class="nx">uint64</span> <span class="nx">id2</span><span class="p">,</span><span class="nx">uint64</span> <span class="nx">id3</span><span class="p">)</span> <span class="kr">public</span><span class="p">{</span>
+       <span class="nx">UserInfo</span> <span class="nx">storage</span> <span class="nx">u</span> <span class="o">=</span> <span class="nx">users</span><span class="p">[</span><span class="nx">user</span><span class="p">];</span>
+       <span class="nx">assert</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">age</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">);</span>
+
+       <span class="nx">u</span><span class="p">.</span><span class="nx">lastLogins</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="nx">id1</span><span class="p">;</span>
+       <span class="nx">u</span><span class="p">.</span><span class="nx">lastLogins</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="nx">id2</span><span class="p">;</span>
+       <span class="nx">u</span><span class="p">.</span><span class="nx">lastLogins</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="nx">id3</span><span class="p">;</span>
+   <span class="p">}</span>
+
+   <span class="kd">function</span> <span class="nx">addOrder</span><span class="p">(</span><span class="nx">address</span> <span class="nx">user</span><span class="p">,</span><span class="nx">uint256</span> <span class="nx">orderID</span><span class="p">)</span> <span class="kr">public</span><span class="p">{</span>
+       <span class="nx">UserInfo</span> <span class="nx">storage</span> <span class="nx">u</span> <span class="o">=</span> <span class="nx">users</span><span class="p">[</span><span class="nx">user</span><span class="p">];</span>
+       <span class="nx">assert</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">age</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">);</span>
+       <span class="nx">u</span><span class="p">.</span><span class="nx">orders</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">orderID</span><span class="p">);</span>
+   <span class="p">}</span>
+   <span class="kd">function</span> <span class="nx">getLogins</span><span class="p">(</span><span class="nx">address</span> <span class="nx">user</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">view</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint64</span><span class="p">,</span><span class="nx">uint64</span><span class="p">,</span><span class="nx">uint64</span><span class="p">){</span>
+        <span class="nx">UserInfo</span> <span class="nx">storage</span> <span class="nx">u</span> <span class="o">=</span> <span class="nx">users</span><span class="p">[</span><span class="nx">user</span><span class="p">];</span>
+       <span class="k">return</span>  <span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">lastLogins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="nx">u</span><span class="p">.</span><span class="nx">lastLogins</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="nx">u</span><span class="p">.</span><span class="nx">lastLogins</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+   <span class="p">}</span>
+   <span class="kd">function</span> <span class="nx">getOrders</span><span class="p">(</span><span class="nx">address</span> <span class="nx">user</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">view</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint256</span><span class="p">[]</span> <span class="nx">memory</span><span class="p">){</span>
+        <span class="nx">UserInfo</span> <span class="nx">storage</span> <span class="nx">u</span> <span class="o">=</span> <span class="nx">users</span><span class="p">[</span><span class="nx">user</span><span class="p">];</span>
+       <span class="k">return</span>  <span class="nx">u</span><span class="p">.</span><span class="nx">orders</span><span class="p">;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+        </div>
+        <p>避免太过冗长，放个图</p>
+        <p><a id="img16" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708231045-aba3c222-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708231045-aba3c222-dffe-1.png"></a></p>
+        <h1 id="toc-13">0x10 解题练习</h1>
+
+        <pre><code>web3.eth.getStorageAt(address, position [, defaultBlock] [, callback])</code></pre>
+        <ul>
+            <li><code>address</code>：String - 要读取的地址</li>
+            <li><code>position</code>：Number - 存储中的索引编号</li>
+            <li><code>defaultBlock</code>：Number|String - 可选，使用该参数覆盖 web3.eth.defaultBlock 属性值</li>
+            <li><code>callback</code>：Function - 可选的回调函数, 其第一个参数为错误对象，第二个参数为结果。</li>
+        </ul>
+        <p>举两个简单的题目</p>
+        <h2 id="toc-14"><a href="https://ethernaut.openzeppelin.com/" target="_blank">题目一</a> --Vault</h2>
+        <div class="highlight">
+            <pre><span></span><span class="c1">// SPDX-License-Identifier: MIT</span>
+<span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.6.0</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">Vault</span> <span class="p">{</span>
+  <span class="nx">bool</span> <span class="kr">public</span> <span class="nx">locked</span><span class="p">;</span>
+  <span class="nx">bytes32</span> <span class="kr">private</span> <span class="nx">password</span><span class="p">;</span>
+
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">bytes32</span> <span class="nx">_password</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+    <span class="nx">locked</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="nx">password</span> <span class="o">=</span> <span class="nx">_password</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">unlock</span><span class="p">(</span><span class="nx">bytes32</span> <span class="nx">_password</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">password</span> <span class="o">==</span> <span class="nx">_password</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">locked</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+        </div>
+        <p>定义为私有变量只能组织其他合约访问，但是无法阻止公开访问</p>
+        <p>按照其代码，可以知道password的存储位置是1</p>
+
+        <pre><code>web3.eth.getStorageAt(contract.address, 1)</code></pre>
+        <p><a id="img17" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708231101-b4ea2696-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708231101-b4ea2696-dffe-1.png"></a></p>
+        <p><a id="img18" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708231137-ca3fe2ba-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708231137-ca3fe2ba-dffe-1.png"></a></p>
+        <p>直接使用</p>
+
+        <pre><code>contract.unlock("A very strong secret password :\)")//密码错误</code></pre>
+
+        <pre><code>contract.unlock(web3.utils.hexToBytes('0x412076657279207374726f6e67207365637265742070617373776f7264203a29'))</code></pre>
+        <p><a id="img19" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708231106-b8093100-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708231106-b8093100-dffe-1.png"></a></p>
+        <h2 id="toc-15"><a href="https://blockchainctf.securityinnovation.com/#/" target="_blank">题目二</a> --Lock Box
+        </h2>
+        <div class="highlight">
+            <pre><span></span><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="mf">0.4.24</span><span class="p">;</span>
+
+<span class="kr">import</span> <span class="s2">"../CtfFramework.sol"</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">Lockbox1</span> <span class="nx">is</span> <span class="nx">CtfFramework</span><span class="p">{</span>
+
+    <span class="nx">uint256</span> <span class="kr">private</span> <span class="nx">pin</span><span class="p">;</span>
+
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_ctfLauncher</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_player</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">payable</span>
+        <span class="nx">CtfFramework</span><span class="p">(</span><span class="nx">_ctfLauncher</span><span class="p">,</span> <span class="nx">_player</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">pin</span> <span class="o">=</span> <span class="nx">now</span><span class="o">%</span><span class="mi">10000</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">unlock</span><span class="p">(</span><span class="nx">uint256</span> <span class="nx">_pin</span><span class="p">)</span> <span class="nx">external</span> <span class="nx">ctf</span><span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">pin</span> <span class="o">==</span> <span class="nx">_pin</span><span class="p">,</span> <span class="s2">"Incorrect PIN"</span><span class="p">);</span>
+        <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">balance</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre>
+        </div>
+        <ul>
+            <li>读取私有变量</li>
+            <li>constructor只在构造的时候执行一次</li>
+        </ul>
+        <p><a id="img20" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708231149-d1878906-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708231149-d1878906-dffe-1.png"></a></p>
+        <p><a id="img21" href="https://xzfile.aliyuncs.com/media/upload/picture/20210708231200-d7d4867e-dffe-1.png"><img
+                    src="https://xzfile.aliyuncs.com/media/upload/picture/20210708231200-d7d4867e-dffe-1.png"></a></p>
+
+    </div>
+
+
+    <div class="post-user-action" style="margin-top: 34px;">
+        <span class="btn btn-default pull-right" id="mark" data-action="topic" data-pk="9837">
+            <span id="mark-text">点击收藏 </span><span class="i-seprator"> | </span><span id="mark-count">0</span>
+        </span>
+
+        <span class="btn btn-default pull-right" id="follow_topic" data-pk="9837">
+            <span>关注</span><span class="i-seprator"> | </span><span id="follow-count">1</span>
+        </span>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="related-section">
+        <div class="related-box">
+
+            <span><a class="pull-left" href="/t/9826" title="Thymeleaf Fragment 注入漏洞复现及新姿势扩展"><span
+                        class="related-label" style="padding: 3px 4px;margin-right: 3px;">上一篇：</span>Thymeleaf
+                    Fragmen...</a></span>
+
+
+            <span><a class="pull-left" href="/t/9840" title="一次简单的内网渗透靶场实战2"><span class="related-label"
+                        style="">下一篇：</span>一次简单的内网渗透靶场实战2</a></span>
+
+        </div>
+    </div>
+
+</div>

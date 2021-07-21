@@ -21,6 +21,7 @@ MARKDOWN = {
     'em': ('**', '**'),
     'strong': ('**', '**'),
     'block_code': ('\n```\n', '\n```\n'),
+    'block_code_1': ('\n```\n', '\n```\n'),
     'span': ('', ''),
     'p': ('\n', '\n'),
     'p_with_out_class': ('\n', '\n'),
@@ -49,6 +50,7 @@ BlOCK_ELEMENTS = {
     'ul': '<ul.*?>(.*?)</ul>',
     'ol': '<ol.*?>(.*?)</ol>',
     'block_code': '<pre.*?><code.*?>(.*?)</code></pre>',
+    'block_code_1':'<pre.*?>(.*?)</pre>',
     'p': '<p\s.*?>(.*?)</p>',
     'p_with_out_class': '<p>(.*?)</p>',
     'thead': '<thead.*?>(.*?)</thead>',
@@ -106,9 +108,6 @@ class Element:
                 if match:
                     url = match.group(1)
                     # print(self.content,url)
-                    # 勒索后缀，勒索信文件名。 加密我分析了一部分。
-                    # 
-                    # | | | | 
                     localimg = self.options["localimg"] 
                     # 如果需要download img
                     if localimg and url and "store" in self.options and "img" in self.options:
