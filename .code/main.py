@@ -189,7 +189,7 @@ class Xianzhi(Article):
         title = selector.xpath("/html/head/title/text()").get().strip()
         title = self.validateTitle(title)
         content = selector.xpath("/html/body/div[2]/div/div[1]/div[1]/div/div").get()
-        
+        # print(content)
         tomd = Tomd(content,
             options = {
                 "base":"../",
