@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **46924**
+                                **66447**
                             
                         |
                         
@@ -157,7 +157,7 @@ openrasp xss具体检测代码实现在这个文件中`agent/java/engine/src/mai
 
 转换成get请求，并对payload进行编码。
 
-[![](https://p1.ssl.qhimg.com/t01f387d753c363ba30.png)](https://p1.ssl.qhimg.com/t01f387d753c363ba30.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t01f387d753c363ba30.png)
 
 ### <a class="reference-link" name="%E7%BB%95%E8%BF%87payload%E5%88%86%E6%9E%90"></a>绕过payload分析
 
