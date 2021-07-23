@@ -5,7 +5,7 @@
 
 
                                 阅读量   
-                                **15331**
+                                **27356**
                             
                         |
                         
@@ -117,7 +117,7 @@ IO模块前面的LED指示灯的状态说明：
 
 1、进行控制器连接时，通讯失败，出现下图错误。
 
-[![](https://p1.ssl.qhimg.com/t0119e7a28f0f6842f4.png)](https://p1.ssl.qhimg.com/t0119e7a28f0f6842f4.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t0119e7a28f0f6842f4.png)
 
 图2.1
 
@@ -162,7 +162,7 @@ IO模块前面的LED指示灯的状态说明：
 
 在用EP_MAIN机箱替换现有的高密度（HD_MAIN）机箱之前，必须将3006 / N或3007型主处理器（如果有）替换为3008或3009型主处理器。如果您拥有目标系统版本早于Tricon 10.3.x的Model 3008主处理器，请将目标系统版本升级到Tricon 10.3.x或更高版本，或将其替换为Model 3009主处理器。处理方法如下图。
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p0.ssl.qhimg.com/t017f1e8948320faa36.png)
+[![](https://p0.ssl.qhimg.com/t017f1e8948320faa36.png)](https://p0.ssl.qhimg.com/t017f1e8948320faa36.png)
 
 图2.7
 
@@ -240,7 +240,7 @@ IO模块前面的LED指示灯的状态说明：
 
 12、在使用Triconex SOE Recorder软件时，创建SED文件显示如下图。状态显示没反应。可能原因是未配置SOE块、SOE配置文件不是最新的或者设置错误。
 
-[![](https://p1.ssl.qhimg.com/t0196da253245a7b86f.png)](https://p1.ssl.qhimg.com/t0196da253245a7b86f.png)
+[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t0196da253245a7b86f.png)
 
 图2.19
 
@@ -270,7 +270,7 @@ IO模块前面的LED指示灯的状态说明：
 
 （2）确认SOE文件是否最新的。打开文件夹C:\Users\Public\Documents\Triconex\TriStation 1131 4.16.0\Projects和C:\Users\Public\Documents\Triconex\Triconex SOE Recorder\SoeConfig，确认SOE文件是否都是最新的。
 
-[![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC)](https://p1.ssl.qhimg.com/t01aabbea82dfd6ba83.png)
+[![](https://p1.ssl.qhimg.com/t01aabbea82dfd6ba83.png)](https://p1.ssl.qhimg.com/t01aabbea82dfd6ba83.png)
 
 图2.24
 
