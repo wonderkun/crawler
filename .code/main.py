@@ -309,7 +309,7 @@ class Anquanke(Article):
 
 config = {
     "Anquanke":"www.anquanke.com",
-    "Xianzhi":"xz.aliyun.com"
+    # "Xianzhi":"xz.aliyun.com"
 }
 
 def main():
