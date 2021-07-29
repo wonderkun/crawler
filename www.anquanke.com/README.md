@@ -1,3 +1,8 @@
+# 2021-07-30
+1. [php parser与lexical scanner分析](./php parser与lexical scanner分析.html)
+1. [Apk加固原理学习与复现](./Apk加固原理学习与复现.html)
+1. [论漏洞管理平台的自我修养](./论漏洞管理平台的自我修养.html)
+1. [2021强网杯easyheap](./2021强网杯easyheap.html)
 # 2021-07-29
 1. [从Github一开源项目ADSEC学习域渗透攻防基础](./从Github一开源项目ADSEC学习域渗透攻防基础.html)
 1. [梨子带你刷burpsuite官方网络安全学院靶场(练兵场)系列之服务器端漏洞篇 - XML外部实体注入(XXE)专题](./梨子带你刷burpsuite官方网络安全学院靶场(练兵场)系列之服务器端漏洞篇 - XML外部实体注入(XXE)专题.html)
