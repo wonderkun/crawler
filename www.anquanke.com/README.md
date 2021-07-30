@@ -1,3 +1,8 @@
+# 2021-07-31
+1. [Linksys EA6100 固件解密分析](./Linksys EA6100 固件解密分析.html)
+1. [DDoS介绍与防御](./DDoS介绍与防御.html)
+1. [ForgeRock OpenAM RCE（CVE-2021-35464）分析](./ForgeRock OpenAM RCE（CVE-2021-35464）分析.html)
+1. [SSTI漏洞学习 (上)——基础知识和一些不常见的模板引擎介绍](./SSTI漏洞学习 (上)——基础知识和一些不常见的模板引擎介绍.html)
 # 2021-07-30
 1. [php parser与lexical scanner分析](./php parser与lexical scanner分析.html)
 1. [Apk加固原理学习与复现](./Apk加固原理学习与复现.html)
