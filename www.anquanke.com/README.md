@@ -1,3 +1,12 @@
+# 2021-08-03
+1. [Chrome 在野0day_CVE-2021-30551的分析与利用](./Chrome 在野0day_CVE-2021-30551的分析与利用.html)
+1. [如何分析X64的SEH](./如何分析X64的SEH.html)
+1. [程序分析理论 初实践 抽象化 CFG AST](./程序分析理论 初实践 抽象化 CFG AST.html)
+1. [SpringMVC配合Fastjson的内存马利用与分析](./SpringMVC配合Fastjson的内存马利用与分析.html)
+1. [定制化 Android kernel 绕过用户层 check](./定制化 Android kernel 绕过用户层 check.html)
+1. [P2P僵尸网络深度追踪——Mozi（三）](./P2P僵尸网络深度追踪——Mozi（三）.html)
+1. [杀软的无奈-构建更具有欺骗性的ELF文件（五）](./杀软的无奈-构建更具有欺骗性的ELF文件（五）.html)
+1. [CVE-2021-33514_Netgear 多款交换机命令注入漏洞](./CVE-2021-33514_Netgear 多款交换机命令注入漏洞.html)
 # 2021-08-02
 # 2021-08-01
 1. [记一次从鸡肋SSRF到RCE的代码审计过程](./记一次从鸡肋SSRF到RCE的代码审计过程.html)
