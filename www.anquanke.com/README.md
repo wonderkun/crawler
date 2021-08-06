@@ -1,3 +1,12 @@
+# 2021-08-07
+1. [WebLogic CVE-2021-2135分析及POC构造遇到的问题](./WebLogic CVE-2021-2135分析及POC构造遇到的问题.html)
+1. [医疗气动管道(PTS)系统中的PwnedPiper漏洞使美国80%以上医院受到影响](./医疗气动管道(PTS)系统中的PwnedPiper漏洞使美国80%以上医院受到影响.html)
+1. [HTTP_2降级走私攻击](./HTTP_2降级走私攻击.html)
+1. [ISC2021 _ “后门”寻找之旅_表里不一的Android权限认证机制](./ISC2021 _ “后门”寻找之旅_表里不一的Android权限认证机制.html)
+1. [巅峰极客线上赛部分WP](./巅峰极客线上赛部分WP.html)
+1. [Golang实现RMI协议自动化检测Fastjson](./Golang实现RMI协议自动化检测Fastjson.html)
+1. [Writeup for Web-Checkin in CyBRICS CTF 2021](./Writeup for Web-Checkin in CyBRICS CTF 2021.html)
+1. [『P2P僵尸网络漏洞研究——mozi』 netgear路由器漏洞复现](./『P2P僵尸网络漏洞研究——mozi』 netgear路由器漏洞复现.html)
 # 2021-08-06
 1. [re2c浅探](./re2c浅探.html)
 1. [利用CVE-2020-0986实现IE沙箱逃逸](./利用CVE-2020-0986实现IE沙箱逃逸.html)
