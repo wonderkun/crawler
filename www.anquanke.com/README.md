@@ -1,3 +1,11 @@
+# 2021-08-12
+1. [Cisco命令注入漏洞CVE-2021-1414分析](./Cisco命令注入漏洞CVE-2021-1414分析.html)
+1. [Black Hat USA 2021议题解读｜基带利用_远程5G智能手机代码执行](./Black Hat USA 2021议题解读｜基带利用_远程5G智能手机代码执行.html)
+1. [深度伪造(Deepfake)原理分析及实战](./深度伪造(Deepfake)原理分析及实战.html)
+1. [针对CPU片上环互联的侧信道攻击](./针对CPU片上环互联的侧信道攻击.html)
+1. [TCTF线上赛how2mutate学习条件竞争DoubleFree的利用](./TCTF线上赛how2mutate学习条件竞争DoubleFree的利用.html)
+1. [程序分析理论 第三部分  上下文敏感的引入数据的控制流分析](./程序分析理论 第三部分  上下文敏感的引入数据的控制流分析.html)
+1. [基于Linux连接器的审计进程事件实现方案](./基于Linux连接器的审计进程事件实现方案.html)
 # 2021-08-11
 1. [从强网杯线下easygo看栈中off-by-null的利用](./从强网杯线下easygo看栈中off-by-null的利用.html)
 1. [CVE-2017-11826 漏洞分析及利用](./CVE-2017-11826 漏洞分析及利用.html)
