@@ -1,3 +1,11 @@
+# 2021-08-13
+1. [域渗透_攻击活动目录从 0 到 0.9（一）](./域渗透_攻击活动目录从 0 到 0.9（一）.html)
+1. [Golang逆向分析 & 第五届XMan选拔赛 ezCM Writeup](./Golang逆向分析 & 第五届XMan选拔赛 ezCM Writeup.html)
+1. [梨子带你刷burpsuite官方网络安全学院靶场(练兵场)系列之客户端漏洞篇 - 跨域资源共享(CORS)专题](./梨子带你刷burpsuite官方网络安全学院靶场(练兵场)系列之客户端漏洞篇 - 跨域资源共享(CORS)专题.html)
+1. [红队实战攻防技术（一）](./红队实战攻防技术（一）.html)
+1. [黑客们的夏天——IoT Dev Hacking Vol.1](./黑客们的夏天——IoT Dev Hacking Vol.1.html)
+1. [路由器溢出漏洞分析](./路由器溢出漏洞分析.html)
+1. [Fastjson三种利用链对比分析](./Fastjson三种利用链对比分析.html)
 # 2021-08-12
 1. [Cisco命令注入漏洞CVE-2021-1414分析](./Cisco命令注入漏洞CVE-2021-1414分析.html)
 1. [Black Hat USA 2021议题解读｜基带利用_远程5G智能手机代码执行](./Black Hat USA 2021议题解读｜基带利用_远程5G智能手机代码执行.html)
