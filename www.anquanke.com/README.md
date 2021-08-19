@@ -1,3 +1,12 @@
+# 2021-08-20
+1. [从Chrysaor看移动端间谍软件](./从Chrysaor看移动端间谍软件.html)
+1. [浅谈 CTF-Web 中常见的 Python 题型与解题姿势](./浅谈 CTF-Web 中常见的 Python 题型与解题姿势.html)
+1. [梨子带你刷burpsuite官方网络安全学院靶场(练兵场)系列之客户端漏洞篇 - WebSocket专题](./梨子带你刷burpsuite官方网络安全学院靶场(练兵场)系列之客户端漏洞篇 - WebSocket专题.html)
+1. [某办公处理软件公式编辑器漏洞复现](./某办公处理软件公式编辑器漏洞复现.html)
+1. [区块链CTF OJ平台ChainFlag -Counter-Strike Writeup](./区块链CTF OJ平台ChainFlag -Counter-Strike Writeup.html)
+1. [DEFCON 29 FINAL shooow-your-shell 总结](./DEFCON 29 FINAL shooow-your-shell 总结.html)
+1. [差分隐私实战-以保护新冠数据隐私为例](./差分隐私实战-以保护新冠数据隐私为例.html)
+1. [GHOST漏洞解析与题解](./GHOST漏洞解析与题解.html)
 # 2021-08-19
 1. [spring-boot-thymeleaf-ssti](./spring-boot-thymeleaf-ssti.html)
 1. [在MSSQL中使用CLR组件提权](./在MSSQL中使用CLR组件提权.html)
