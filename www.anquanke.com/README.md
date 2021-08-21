@@ -1,3 +1,5 @@
+# 2021-08-22
+1. [Chrome-V8-CVE-2020-6468](./Chrome-V8-CVE-2020-6468.html)
 # 2021-08-21
 1. [反序列化入口PriorityQueue分析及相关Gadget总结](./反序列化入口PriorityQueue分析及相关Gadget总结.html)
 1. [浅谈云上攻防——Kubelet访问控制机制与提权方法研究](./浅谈云上攻防——Kubelet访问控制机制与提权方法研究.html)
