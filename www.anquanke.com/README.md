@@ -1,3 +1,11 @@
+# 2021-08-25
+1. [CTF 中如何欺骗 AI](./CTF 中如何欺骗 AI.html)
+1. [BalsnCTF 2020 IdleGame](./BalsnCTF 2020 IdleGame.html)
+1. [cybrics2021逆向walker](./cybrics2021逆向walker.html)
+1. [MITRE Engage对手交战知识库](./MITRE Engage对手交战知识库.html)
+1. [基于Mastercard-Visa混合的银行卡品牌混淆攻击](./基于Mastercard-Visa混合的银行卡品牌混淆攻击.html)
+1. [说说JAVA反序列化](./说说JAVA反序列化.html)
+1. [网络刷单诈骗“进化史”，手法“长进”不少](./网络刷单诈骗“进化史”，手法“长进”不少.html)
 # 2021-08-24
 1. [第二届_祥云杯_ WEB WP](./第二届_祥云杯_ WEB WP.html)
 1. [Golang 的字符编码与 regexp](./Golang 的字符编码与 regexp.html)
