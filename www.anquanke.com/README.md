@@ -1,3 +1,10 @@
+# 2021-08-26
+1. [“土法”排查与修复一个 Linux 内核 Bug](./“土法”排查与修复一个 Linux 内核 Bug.html)
+1. [从 Lodash 原型链污染到模板 RCE](./从 Lodash 原型链污染到模板 RCE.html)
+1. [0RAYS-祥云杯writeup-misc](./0RAYS-祥云杯writeup-misc.html)
+1. [企业内网中的横向移动](./企业内网中的横向移动.html)
+1. [2021 祥云杯 Crypto-Write Up](./2021 祥云杯 Crypto-Write Up.html)
+1. [MSSQL数据库注入全方位利用](./MSSQL数据库注入全方位利用.html)
 # 2021-08-25
 1. [CTF 中如何欺骗 AI](./CTF 中如何欺骗 AI.html)
 1. [BalsnCTF 2020 IdleGame](./BalsnCTF 2020 IdleGame.html)
