@@ -1,3 +1,11 @@
+# 2021-08-27
+1. [CVE-2021-20090（华硕DSL-AC3100）身份验证绕过漏洞分析](./CVE-2021-20090（华硕DSL-AC3100）身份验证绕过漏洞分析.html)
+1. [FTP在ssrf中的应用](./FTP在ssrf中的应用.html)
+1. [thinkphp5.0._反序列化链分析（5.0全版本覆盖）](./thinkphp5.0._反序列化链分析（5.0全版本覆盖）.html)
+1. [基于编码注入的对抗性NLP攻击](./基于编码注入的对抗性NLP攻击.html)
+1. [从祥云杯PassWordBox_ProVersion看GLIBC2.31 LargeBin Attack](./从祥云杯PassWordBox_ProVersion看GLIBC2.31 LargeBin Attack.html)
+1. [SM2国密算法应用的高危漏洞——CVE-2021-3711](./SM2国密算法应用的高危漏洞——CVE-2021-3711.html)
+1. [再探MS-SAMR协议](./再探MS-SAMR协议.html)
 # 2021-08-26
 1. [“土法”排查与修复一个 Linux 内核 Bug](./“土法”排查与修复一个 Linux 内核 Bug.html)
 1. [从 Lodash 原型链污染到模板 RCE](./从 Lodash 原型链污染到模板 RCE.html)
