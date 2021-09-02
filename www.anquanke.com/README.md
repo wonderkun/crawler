@@ -1,3 +1,9 @@
+# 2021-09-03
+1. [新版musl-libc malloc源码分析与调试](./新版musl-libc malloc源码分析与调试.html)
+1. [对cisco路由器漏洞分析过程分享](./对cisco路由器漏洞分析过程分享.html)
+1. [Linux的系统调用机制](./Linux的系统调用机制.html)
+1. [Golang开发端口扫描器一些常用技术](./Golang开发端口扫描器一些常用技术.html)
+1. [蓝帽杯-final WEB题解](./蓝帽杯-final WEB题解.html)
 # 2021-09-02
 1. [二进制角度构造Java反序列化Payload](./二进制角度构造Java反序列化Payload.html)
 1. [ysoserial系列-Commons-Collections1链分析](./ysoserial系列-Commons-Collections1链分析.html)
