@@ -1,3 +1,9 @@
+# 2021-09-08
+1. [转储lsass的方法原理和实现学习](./转储lsass的方法原理和实现学习.html)
+1. [Glibc2.29源码分析以及常见攻击简析](./Glibc2.29源码分析以及常见攻击简析.html)
+1. [反制爬虫之Burp Suite RCE](./反制爬虫之Burp Suite RCE.html)
+1. [2021 蓝帽杯 Final PWN Writeup](./2021 蓝帽杯 Final PWN Writeup.html)
+1. [前尘——流量中的无法捕捉的蝎子](./前尘——流量中的无法捕捉的蝎子.html)
 # 2021-09-07
 1. [针对恶意软件分类器的可解释性后门投毒攻击](./针对恶意软件分类器的可解释性后门投毒攻击.html)
 1. [Linux内核中利用msg_msg结构实现任意地址读写](./Linux内核中利用msg_msg结构实现任意地址读写.html)
