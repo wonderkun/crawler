@@ -1,3 +1,10 @@
+# 2021-09-09
+1. [梨子带你刷burpsuite靶场之高级漏洞篇 - HTTP请求走私专题](./梨子带你刷burpsuite靶场之高级漏洞篇 - HTTP请求走私专题.html)
+1. [影像篡改与识别（二）_数字时代](./影像篡改与识别（二）_数字时代.html)
+1. [一种利用LTE_5G的新型隐蔽通信方案及其补救策略](./一种利用LTE_5G的新型隐蔽通信方案及其补救策略.html)
+1. [记ctf中利用IDA构建结构体解VM虚拟机（含源码）](./记ctf中利用IDA构建结构体解VM虚拟机（含源码）.html)
+1. [PWN——House Of Einherjar CTF Wiki例题详解](./PWN——House Of Einherjar CTF Wiki例题详解.html)
+1. [Jenkins Nested View插件XXE漏洞（CVE-2021-21680）分析](./Jenkins Nested View插件XXE漏洞（CVE-2021-21680）分析.html)
 # 2021-09-08
 1. [转储lsass的方法原理和实现学习](./转储lsass的方法原理和实现学习.html)
 1. [Glibc2.29源码分析以及常见攻击简析](./Glibc2.29源码分析以及常见攻击简析.html)
