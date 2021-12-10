@@ -1,3 +1,14 @@
+# 2021-12-11
+1. [深入理解win32（二）](./深入理解win32（二）.html)
+1. [《Chrome V8源码》33. Lazy Compile 的技术细节](./《Chrome V8源码》33. Lazy Compile 的技术细节.html)
+1. [深入理解win32（一）](./深入理解win32（一）.html)
+1. [Apache Log4j2 远程代码执行漏洞分析](./Apache Log4j2 远程代码执行漏洞分析.html)
+1. [东亚黑客组织BlackTech针对金融、教育等行业展开攻击](./东亚黑客组织BlackTech针对金融、教育等行业展开攻击.html)
+1. [《Chrome V8源码》32.字节码和 Compiler Pipeline 的细节](./《Chrome V8源码》32.字节码和 Compiler Pipeline 的细节.html)
+1. [2021-西湖论剑-逆向（部分）-Writeup](./2021-西湖论剑-逆向（部分）-Writeup.html)
+1. [比特翻转攻击](./比特翻转攻击.html)
+1. [N1CTF2021 Jerry  WP](./N1CTF2021 Jerry  WP.html)
+1. [边界设备SNMP服务攻击思考](./边界设备SNMP服务攻击思考.html)
 # 2021-09-09
 1. [梨子带你刷burpsuite靶场之高级漏洞篇 - HTTP请求走私专题](./梨子带你刷burpsuite靶场之高级漏洞篇 - HTTP请求走私专题.html)
 1. [影像篡改与识别（二）_数字时代](./影像篡改与识别（二）_数字时代.html)
